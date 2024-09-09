@@ -59,6 +59,14 @@ class CustomTextStyles {
         fontWeight: FontWeight.w400);
   }
 
+  static TextStyle f14W600({Color? color}) {
+    return TextStyle(
+        color: color,
+        fontFamily: "Poppins",
+        fontSize: 14,
+        fontWeight: FontWeight.w600);
+  }
+
   static TextStyle f16W400({Color? color}) {
     return TextStyle(
         color: color,
