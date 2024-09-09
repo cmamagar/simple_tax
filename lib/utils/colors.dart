@@ -6,10 +6,6 @@ class AppColors {
   static const Color whiteColor = Color(0xFFFFFFFF);
   static const Color TextFormField = Color(0x7C7A7A);
   
-
-
-  
-  
   static const Color lGrey = Color(0xFF7D7D7D);
   static const Color textColor = Color(0xFF000000);
   static const Color secondaryTextColor = Color(0xFFAAAAAA);
