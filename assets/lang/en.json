@@ -1,10 +1,13 @@
 {
-    "testimonials": {
-      "title": "Testimonials",
-      "review1_name": "James P.",
-      "review1_text": "Highly recommend! This calculator simplifies tax deductions and credits with clear explanations—truly a lifesaver during tax season!",
-      "review2_name": "Sarah R.",
-      "review2_text": "As someone with little financial knowledge, I was worried about understanding interest rates. This app simplifies everything, making it easy to calculate and compare. It’s saved me time and helped me avoid bad deals!"
-    }
+    "welcome": "Welcome 👋",
+    "have_a_nice_day": "Have a nice Day!",
+    "what_are_you_looking_for": "What are you looking for?",
+    "income_tax_calculator": "Income Tax Calculator",
+    "interest_rate_calculator": "Interest Rate Calculator",
+    "product_billing_with_tax": "Product Billing With Tax",
+    "testimonials": "Testimonials",
+    "testimonial_james": "Highly recommend! This calculator simplifies tax deductions and credits with clear explanations—truly a lifesaver during tax season!",
+    "testimonial_sarah": "As someone new to finance, I found this app easy to use for calculating and comparing interest rates. It saved me time and helped me avoid poor deals!"
   }
+  
   

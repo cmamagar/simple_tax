@@ -10,6 +10,7 @@ import 'package:simple_tax/widgets/home_screen_widget.dart';
 
 class HomePage extends StatelessWidget {
   final c = Get.put(HomeScreenController());
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -28,13 +29,13 @@ class HomePage extends StatelessWidget {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
-                          'Welcome 👋',
+                          'welcome'.tr, // Use the localized string
                           style: CustomTextStyles.f18W600(
                               color: AppColors.textColor1),
                         ),
                         SizedBox(height: 2),
                         Text(
-                          "Have a nice Day!",
+                          "have_a_nice_day".tr, // Use the localized string
                           style: CustomTextStyles.f12W600(
                               color: AppColors.textColor),
                         ),
@@ -94,7 +95,7 @@ class HomePage extends StatelessWidget {
                 HomeFirstImageWidget(),
                 SizedBox(height: 16),
                 Text(
-                  'What are you looking for?',
+                  'what_are_you_looking_for'.tr, // Use the localized string
                   style: CustomTextStyles.f14W600(color: AppColors.textColor1),
                 ),
                 SizedBox(height: 16),
@@ -103,21 +104,21 @@ class HomePage extends StatelessWidget {
                   children: [
                     CustomContainer(
                         imagePath: ImagePath.Incometaxcalc,
-                        containerName: "Income Tax",
+                        containerName: "income_tax_calculator".tr, // Localized
                         text2: 'Calculator'),
                     CustomContainer(
                         imagePath: ImagePath.Interestcalc,
-                        containerName: "Interest Rate",
+                        containerName: "interest_rate_calculator".tr, // Localized
                         text2: 'Calculator'),
                     CustomContainer(
                         imagePath: ImagePath.Billing,
-                        containerName: "Product Billing",
+                        containerName: "product_billing_with_tax".tr, // Localized
                         text2: 'With Tax')
                   ],
                 ),
                 SizedBox(height: 16),
                 Text(
-                  'Testimonials',
+                  'testimonials'.tr, // Localized
                   style: CustomTextStyles.f14W600(color: AppColors.textColor1),
                 ),
                 SizedBox(height: 10),
@@ -127,13 +128,11 @@ class HomePage extends StatelessWidget {
                     SizedBox(width: 5),
                     buildTestimonialCard(
                         name: "James P.",
-                        review:
-                            "Highly recommend! This calculator simplifies tax deductions and credits with clear explanations—truly a lifesaver during tax season!"),
+                        review: "testimonial_james".tr), // Localized
                     SizedBox(width: 15),
                     buildTestimonialCard(
                         name: "Sarah R.",
-                        review:
-                            "As someone new to finance, I found this app easy to use for calculating and comparing interest rates. It saved me time and helped me avoid poor deals!")
+                        review: "testimonial_sarah".tr), // Localized
                   ]),
                 ),
               ],
