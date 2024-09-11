@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:simple_tax/utils/colors.dart';
 import 'package:simple_tax/utils/custom_text_styles.dart';
 import 'package:simple_tax/utils/image_path.dart';
@@ -12,7 +13,7 @@ class HomeFirstImageWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       margin: EdgeInsets.only(top: 16),
-      height: 142,
+      height: 180,
       width: 341,
       decoration: BoxDecoration(
         color: AppColors.whiteColor,
@@ -36,22 +37,23 @@ class HomeFirstImageWidget extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   Text(
-                    'Simplify Your Finances with Instant Tax, Rate, and Billing Solutions.',
+                    "banner".tr,
                     style:
                         CustomTextStyles.f12W600(color: AppColors.textColor1),
                   ),
-                  SizedBox(height: 20),
+                  SizedBox(height: 25),
                   Container(
-                    height: 22,
-                    width: 75,
+                    padding: EdgeInsets.all(10),
+                    height: 38,
+                    width: 150,
                     decoration: BoxDecoration(
                       color: AppColors.primaryColor, // Background color
                       borderRadius:
-                          BorderRadius.circular(10), // Circular radius
+                          BorderRadius.circular(20), // Circular radius
                     ),
                     child: Center(
                       child: Text(
-                        "Explore",
+                        "explore".tr,
                         style: CustomTextStyles.f12W600(
                             color: AppColors.whiteColor),
                       ),
@@ -102,8 +104,8 @@ class buildTestimonialCard extends StatelessWidget {
                   height: 50,
                   width: 50,
                   child: ClipOval(
-                    child: Image.network(
-                      'https://feji.us/k18l6u',
+                    child: Image.asset(
+                      ImagePath.pp,
                       height: 50,
                       width: 50,
                       fit: BoxFit.cover,

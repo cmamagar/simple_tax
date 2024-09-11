@@ -10,6 +10,7 @@ import 'package:simple_tax/widgets/home_screen_widget.dart';
 
 class HomePage extends StatelessWidget {
   final c = Get.put(HomeScreenController());
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -28,13 +29,14 @@ class HomePage extends StatelessWidget {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
-                          'Welcome 👋',
+                          'welcome'.tr, // Dynamic translation for 'Welcome 👋'
                           style: CustomTextStyles.f18W600(
                               color: AppColors.textColor1),
                         ),
                         SizedBox(height: 2),
                         Text(
-                          "Have a nice Day!",
+                          'have_a_nice_day'
+                              .tr, // Dynamic translation for 'Have a nice Day!'
                           style: CustomTextStyles.f12W600(
                               color: AppColors.textColor),
                         ),
@@ -44,9 +46,9 @@ class HomePage extends StatelessWidget {
                       icon: Icon(Icons.language, color: AppColors.textColor),
                       onSelected: (String value) {
                         if (value == 'en') {
-                          c.onLocaleChange(Locale('en'));
+                          Get.updateLocale(Locale('en')); // Update to English
                         } else if (value == 'ne') {
-                          c.onLocaleChange(Locale('ne'));
+                          Get.updateLocale(Locale('ne')); // Update to Nepali
                         }
                       },
                       itemBuilder: (BuildContext context) =>
@@ -60,9 +62,9 @@ class HomePage extends StatelessWidget {
                                 height: 20,
                                 width: 20,
                               ),
-                              SizedBox(width: 8),
+                              SizedBox(width: 10),
                               Text(
-                                'English',
+                                'english_language'.tr,
                                 style: CustomTextStyles.f12W600(
                                     color: AppColors.textColor),
                               ),
@@ -78,9 +80,9 @@ class HomePage extends StatelessWidget {
                                 height: 20,
                                 width: 20,
                               ),
-                              SizedBox(width: 8),
+                              SizedBox(width: 10),
                               Text(
-                                'नेपाली',
+                                'nepali_lanaguage'.tr,
                                 style: CustomTextStyles.f12W600(
                                     color: AppColors.textColor),
                               ),
@@ -91,10 +93,12 @@ class HomePage extends StatelessWidget {
                     ),
                   ],
                 ),
+                SizedBox(height: 16),
                 HomeFirstImageWidget(),
                 SizedBox(height: 16),
                 Text(
-                  'What are you looking for?',
+                  'what_are_you_looking_for'
+                      .tr, // Translation for 'What are you looking for?'
                   style: CustomTextStyles.f14W600(color: AppColors.textColor1),
                 ),
                 SizedBox(height: 16),
@@ -103,21 +107,21 @@ class HomePage extends StatelessWidget {
                   children: [
                     CustomContainer(
                         imagePath: ImagePath.Incometaxcalc,
-                        containerName: "Income Tax",
-                        text2: 'Calculator'),
+                        containerName: "income_tax".tr,
+                        text2: 'calculator'.tr),
                     CustomContainer(
                         imagePath: ImagePath.Interestcalc,
-                        containerName: "Interest Rate",
-                        text2: 'Calculator'),
+                        containerName: "interest_rate".tr,
+                        text2: 'calculator'.tr),
                     CustomContainer(
                         imagePath: ImagePath.Billing,
-                        containerName: "Product Billing",
-                        text2: 'With Tax')
+                        containerName: "product_billing".tr,
+                        text2: 'with_tax'.tr),
                   ],
                 ),
                 SizedBox(height: 16),
                 Text(
-                  'Testimonials',
+                  'testimonials'.tr, // Translation for 'Testimonials'
                   style: CustomTextStyles.f14W600(color: AppColors.textColor1),
                 ),
                 SizedBox(height: 10),
@@ -126,14 +130,10 @@ class HomePage extends StatelessWidget {
                   child: Row(children: [
                     SizedBox(width: 5),
                     buildTestimonialCard(
-                        name: "James P.",
-                        review:
-                            "Highly recommend! This calculator simplifies tax deductions and credits with clear explanations—truly a lifesaver during tax season!"),
+                        name: "james_p".tr, review: "testimonial_james".tr),
                     SizedBox(width: 15),
                     buildTestimonialCard(
-                        name: "Sarah R.",
-                        review:
-                            "As someone new to finance, I found this app easy to use for calculating and comparing interest rates. It saved me time and helped me avoid poor deals!")
+                        name: "sara_r".tr, review: "testimonial_sarah".tr),
                   ]),
                 ),
               ],
