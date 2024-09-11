@@ -10,7 +10,7 @@ class CustomTextField extends StatelessWidget {
   final String hint;
   final IconData? preIconPath;
   final String? suffixIconPath;
-  final Color? prefixIconColor; 
+  final Color? prefixIconColor;
   final double? prefixIconSize;
   final TextEditingController? controller;
   final String? Function(String?)? validator;
@@ -22,6 +22,7 @@ class CustomTextField extends StatelessWidget {
   final bool? showError;
   final bool? autofocus;
   final String? labelText;
+  final Function(String)? onChanged;
   final Function()? onTap;
   final Function(String)? onSubmitted;
   final int? maxCharacters;
@@ -47,7 +48,10 @@ class CustomTextField extends StatelessWidget {
     this.autofocus = false,
     this.maxCharacters,
     this.focusNode,
-    this.labelText, this.prefixIconColor, this.prefixIconSize,
+    this.labelText,
+    this.prefixIconColor,
+    this.prefixIconSize,
+    this.onChanged,
   }) : super(key: key);
 
   @override
@@ -92,23 +96,21 @@ class CustomTextField extends StatelessWidget {
             ? SvgPicture.asset(suffixIconPath!, fit: BoxFit.scaleDown)
             : null,
         enabledBorder: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(10),
-          borderSide: BorderSide(
-              width: 1, color: border ?? AppColors.secondaryTextColor),
+          borderRadius: BorderRadius.circular(5),
+          borderSide:
+              BorderSide(width: 1, color: border ?? AppColors.borderColor),
         ),
         focusedErrorBorder: OutlineInputBorder(
           borderSide:
               BorderSide(width: 1, color: border ?? AppColors.errorColor),
         ),
         focusedBorder: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(10),
-
+          borderRadius: BorderRadius.circular(5),
           borderSide:
               BorderSide(width: 1, color: border ?? AppColors.primaryColor),
         ),
         errorBorder: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(10),
-
+          borderRadius: BorderRadius.circular(5),
           borderSide:
               BorderSide(width: 1, color: border ?? AppColors.errorColor),
         ),
@@ -122,6 +124,5 @@ class CustomTextField extends StatelessWidget {
       style: CustomTextStyles.f16W400(
           color: (readOnly ?? false) ? AppColors.secondaryTextColor : null),
     );
-    
   }
 }

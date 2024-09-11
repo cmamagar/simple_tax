@@ -3,11 +3,13 @@ import 'package:simple_tax/utils/colors.dart';
 import 'package:simple_tax/utils/custom_text_styles.dart';
 
 Widget CustomContainer(
-    {required String imagePath, required String containerName, required String text2}) {
+    {required String imagePath,
+    required String containerName,
+    required String text2}) {
   return Expanded(
     child: Container(
       margin: EdgeInsets.symmetric(horizontal: 5),
-      width: 102,
+      width: 95,
       height: 106,
       decoration: BoxDecoration(
         color: AppColors.whiteColor,

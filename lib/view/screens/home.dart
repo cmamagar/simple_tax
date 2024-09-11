@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
+import 'package:simple_tax/ProductBilling/prodBillTaxCalc%20.dart';
 import 'package:simple_tax/controller/home_screen_controller.dart';
+import 'package:simple_tax/incomeTaxCalculator/incomeTaxCalc.dart';
+import 'package:simple_tax/interestCalculator/interestCalc.dart';
 import 'package:simple_tax/utils/colors.dart';
 import 'package:simple_tax/utils/custom_text_styles.dart';
 import 'package:simple_tax/utils/image_path.dart';
@@ -105,18 +108,33 @@ class HomePage extends StatelessWidget {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    CustomContainer(
-                        imagePath: ImagePath.Incometaxcalc,
-                        containerName: "income_tax".tr,
-                        text2: 'calculator'.tr),
-                    CustomContainer(
-                        imagePath: ImagePath.Interestcalc,
-                        containerName: "interest_rate".tr,
-                        text2: 'calculator'.tr),
-                    CustomContainer(
-                        imagePath: ImagePath.Billing,
-                        containerName: "product_billing".tr,
-                        text2: 'with_tax'.tr),
+                    InkWell(
+                      onTap: () {
+                        Get.to(() => IncomeTaxCalculator());
+                      },
+                      child: CustomContainer(
+                          imagePath: ImagePath.Incometaxcalc,
+                          containerName: "income_tax".tr,
+                          text2: 'calculator'.tr),
+                    ),
+                    InkWell(
+                      onTap: () {
+                        Get.to(() => InterestCalculator());
+                      },
+                      child: CustomContainer(
+                          imagePath: ImagePath.Interestcalc,
+                          containerName: "interest_rate".tr,
+                          text2: 'calculator'.tr),
+                    ),
+                    InkWell(
+                      onTap: () {
+                        Get.to(() => Prodbilltaxcalc());
+                      },
+                      child: CustomContainer(
+                          imagePath: ImagePath.Billing,
+                          containerName: "product_billing".tr,
+                          text2: 'with_tax'.tr),
+                    ),
                   ],
                 ),
                 SizedBox(height: 16),

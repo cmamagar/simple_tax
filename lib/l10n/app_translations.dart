@@ -23,7 +23,14 @@ class AppTranslations extends Translations {
               "As someone new to finance, I found this app easy to use for calculating and comparing interest rates. It saved me time and helped me avoid poor deals!",
           "banner":
               "Simplify Your Finances with Instant Tax, Rate, and Billing Solutions.",
-          "explore": "Explore"
+          "explore": "Explore",
+          "interest_calculator": "Interest Calculator",
+          "principal_amount": "Principal Amount",
+          "time_period": "Time Period",
+          "year": "Year",
+          "month": "Month",
+          "submit": "Submit",
+          "result_label": "Calculated Interest: "
         },
         'ne': {
           "welcome": 'स्वागतम् 👋',
@@ -46,6 +53,13 @@ class AppTranslations extends Translations {
           "banner":
               "तपाईको वित्त व्यवस्थापन सजिलो बनाउनुहोस् तुरुन्त कर, ब्याज दर, र बिलिङ्ग समाधानहरूसँग।",
           "explore": "अनुसन्धान गर्नुहोस्",
+          "interest_calculator": "वृत्तिकारक गणक",
+          "principal_amount": "मुख्य राशि",
+          "time_period": "समय अवधि",
+          "year": "वर्ष",
+          "month": "महिना",
+          "submit": "पेश गर्नुहोस्",
+          "result_label": "गणना गरिएको ब्याज: "
         }
       };
 }
