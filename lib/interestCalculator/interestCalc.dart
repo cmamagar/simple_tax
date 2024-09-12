@@ -227,7 +227,7 @@ class InterestCalculator extends StatelessWidget {
                 ElevatedButton(
                   onPressed: controller.calculateInterest,
                   child: Text(
-                    ('calculate'),
+                    ('Submit'),
                     style: CustomTextStyles.f12W600(),
                   ),
                   style: ElevatedButton.styleFrom(

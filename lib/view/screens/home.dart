@@ -108,32 +108,41 @@ class HomePage extends StatelessWidget {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    InkWell(
-                      onTap: () {
-                        Get.to(() => IncomeTaxCalculator());
-                      },
-                      child: CustomContainer(
+                    Expanded(
+                      child: InkWell(
+                        onTap: () {
+                          Get.to(() => IncomeTaxCalculator());
+                        },
+                        child: CustomContainer(
                           imagePath: ImagePath.Incometaxcalc,
                           containerName: "income_tax".tr,
-                          text2: 'calculator'.tr),
+                          text2: 'calculator'.tr,
+                        ),
+                      ),
                     ),
-                    InkWell(
-                      onTap: () {
-                        Get.to(() => InterestCalculator());
-                      },
-                      child: CustomContainer(
+                    Expanded(
+                      child: InkWell(
+                        onTap: () {
+                          Get.to(() => InterestCalculator());
+                        },
+                        child: CustomContainer(
                           imagePath: ImagePath.Interestcalc,
                           containerName: "interest_rate".tr,
-                          text2: 'calculator'.tr),
+                          text2: 'calculator'.tr,
+                        ),
+                      ),
                     ),
-                    InkWell(
-                      onTap: () {
-                        Get.to(() => Prodbilltaxcalc());
-                      },
-                      child: CustomContainer(
+                    Expanded(
+                      child: InkWell(
+                        onTap: () {
+                          Get.to(() => Prodbilltaxcalc());
+                        },
+                        child: CustomContainer(
                           imagePath: ImagePath.Billing,
                           containerName: "product_billing".tr,
-                          text2: 'with_tax'.tr),
+                          text2: 'with_tax'.tr,
+                        ),
+                      ),
                     ),
                   ],
                 ),
@@ -149,6 +158,9 @@ class HomePage extends StatelessWidget {
                     SizedBox(width: 5),
                     buildTestimonialCard(
                         name: "james_p".tr, review: "testimonial_james".tr),
+                    SizedBox(width: 15),
+                    buildTestimonialCard(
+                        name: "sara_r".tr, review: "testimonial_sarah".tr),
                     SizedBox(width: 15),
                     buildTestimonialCard(
                         name: "sara_r".tr, review: "testimonial_sarah".tr),

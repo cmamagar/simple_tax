@@ -19,13 +19,19 @@ class IncomeTaxCalculator extends StatelessWidget {
       appBar: AppBar(
         backgroundColor: AppColors.primaryColor,
         title: Text(
-          'Income Tax Calculator',
+          ('incomeTaxCalculator').tr, // JSON key for "Income Tax Calculator"
           style: CustomTextStyles.f18W600(color: AppColors.whiteColor),
         ),
         leading: InkWell(
           onTap: () => Get.back(),
           child: Icon(Icons.arrow_back, color: AppColors.whiteColor),
         ),
+        actions: [
+          Icon(
+            Icons.restart_alt_rounded,
+            color: AppColors.whiteColor,
+          )
+        ],
       ),
       body: Container(
         margin: EdgeInsets.only(top: 20),
@@ -38,102 +44,151 @@ class IncomeTaxCalculator extends StatelessWidget {
           child: Form(
             key: controller.formKey,
             child: SingleChildScrollView(
+              padding: EdgeInsets.only(top: 20),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: [
                   Row(
                     children: [
+                      Text(
+                        ('selectYear').tr, // JSON key for "Select Year"
+                        style: CustomTextStyles.f14W600(
+                            color: AppColors.borderColor),
+                      ),
+                      SizedBox(
+                        width: 93,
+                      ),
+                      Text(
+                        ('selectStatus').tr, // JSON key for "Select Status"
+                        style: CustomTextStyles.f14W600(
+                            color: AppColors.borderColor),
+                      ),
+                    ],
+                  ),
+                  SizedBox(height: 2),
+                  Row(
+                    children: [
                       Expanded(
-                        child: Obx(
-                          () => DropdownButtonFormField(
-                            value: controller.selectedYear.value,
-                            decoration: InputDecoration(
-                              labelText: ('SelectYear').tr,
-                              labelStyle: CustomTextStyles.f16W400(
-                                  color: AppColors.secondaryTextColor),
-                              border: OutlineInputBorder(
-                                borderRadius: BorderRadius.circular(8.0),
-                              ),
-                              contentPadding: EdgeInsets.symmetric(
-                                  horizontal: 12.0, vertical: 8.0),
-                            ),
-                            icon: SvgPicture.asset(
-                              ImagePath.textFieldIcon, // Path to your SVG file
-                              height: 20, // Customize the size of the SVG
-                              width: 20,
-                            ),
-                            items: [
-                              DropdownMenuItem(
+                        child: Theme(
+                          data: Theme.of(context)
+                              .copyWith(canvasColor: AppColors.whiteColor),
+                          child: Obx(() => DropdownButtonFormField<String>(
                                 value:
-                                    'year1', // Use non-translated keys for value
-                                child: Text(('year1').tr),
-                              ),
-                              DropdownMenuItem(
-                                value: 'year2',
-                                child: Text(('year2').tr),
-                              ),
-                              DropdownMenuItem<String>(
-                                value: 'year3',
-                                child: Text(('year3').tr),
-                              ),
-                            ],
-                            onChanged: (newValue) {
-                              controller.selectedYear.value = newValue ?? '';
-                            },
-                            validator: (value) => value == null
-                                ? ('selectYearAndStatus').tr
-                                : null,
-                          ),
+                                    controller.selectedYearOption.value.isEmpty
+                                        ? null
+                                        : controller.selectedYearOption.value,
+                                hint: Text(
+                                  "Select year",
+                                  style: CustomTextStyles.f12W400(
+                                      color: AppColors.secondaryTextColor),
+                                ),
+                                decoration: InputDecoration(
+                                  contentPadding: EdgeInsets.symmetric(
+                                      horizontal: 12, vertical: 15),
+                                  enabledBorder: const OutlineInputBorder(
+                                    borderSide: BorderSide(
+                                        color: AppColors.borderColor, width: 1),
+                                  ),
+                                  focusedBorder: const OutlineInputBorder(
+                                    borderSide: BorderSide(
+                                        color: AppColors.primaryColor,
+                                        width: 1),
+                                  ),
+                                ),
+                                icon: SvgPicture.asset(
+                                  ImagePath.textFieldIcon,
+                                  color: AppColors.borderColor,
+                                ),
+                                items: controller.yearOptions
+                                    .map((option) => DropdownMenuItem<String>(
+                                          value: option,
+                                          child: Text(option.tr),
+                                        ))
+                                    .toList(),
+                                onChanged: (value) {
+                                  controller.updateSelected(value!);
+                                },
+                                validator: (value) => value == null
+                                    ? 'Please select a year'
+                                    : null,
+                              )),
                         ),
                       ),
                       SizedBox(width: 8),
                       Expanded(
-                        child: Obx(
-                          () => DropdownButtonFormField<String>(
-                            value: controller.selectedTaxStatus.value,
-                            decoration: InputDecoration(
-                              hintText: 'Select Status',
-                              hintStyle: CustomTextStyles.f16W400(
-                                  color: AppColors.secondaryTextColor),
-                              border: OutlineInputBorder(
-                                borderRadius: BorderRadius.circular(8.0),
-                              ),
-                              contentPadding: EdgeInsets.symmetric(
-                                  horizontal: 12.0, vertical: 8.0),
-                            ),
-                            icon: SvgPicture.asset(
-                              ImagePath.textFieldIcon, // Path to your SVG file
-                              height: 20, // Customize the size of the SVG
-                              width: 20,
-                            ),
-                            items: <String>['Single', 'Married']
-                                .map<DropdownMenuItem<String>>((String value) {
-                              return DropdownMenuItem<String>(
-                                value: value,
-                                child: Text(
-                                  value,
-                                  overflow: TextOverflow.ellipsis,
-                                  style: CustomTextStyles.f16W400(),
+                        child: Theme(
+                          data: Theme.of(context)
+                              .copyWith(canvasColor: AppColors.whiteColor),
+                          child: Obx(() => DropdownButtonFormField<String>(
+                                value:
+                                    controller.selectStatusOption.value.isEmpty
+                                        ? null
+                                        : controller.selectStatusOption.value,
+                                hint: Text(
+                                  "Select Status",
+                                  style: CustomTextStyles.f12W400(
+                                      color: AppColors.secondaryTextColor),
                                 ),
-                              );
-                            }).toList(),
-                            onChanged: (String? newValue) {
-                              controller.selectedTaxStatus.value =
-                                  newValue ?? '';
-                            },
-                            validator: (value) =>
-                                value == null ? 'Please select a status' : null,
-                          ),
+                                decoration: InputDecoration(
+                                  contentPadding: EdgeInsets.symmetric(
+                                      horizontal: 12, vertical: 15),
+                                  enabledBorder: const OutlineInputBorder(
+                                    borderSide: BorderSide(
+                                        color: AppColors.borderColor, width: 1),
+                                  ),
+                                  focusedBorder: const OutlineInputBorder(
+                                    borderSide: BorderSide(
+                                        color: AppColors.primaryColor,
+                                        width: 1),
+                                  ),
+                                ),
+                                icon: SvgPicture.asset(
+                                  ImagePath.textFieldIcon,
+                                  color: AppColors.borderColor,
+                                ),
+                                items: controller.statusOptions
+                                    .map((option) => DropdownMenuItem<String>(
+                                          value: option,
+                                          child: Text(option.tr),
+                                        ))
+                                    .toList(),
+                                onChanged: (value) {
+                                  controller.updateSelectedStatus(value!);
+                                },
+                                validator: (value) => value == null
+                                    ? 'Please select a status'
+                                    : null,
+                              )),
                         ),
                       ),
                     ],
                   ),
-                  SizedBox(height: 8),
+                  SizedBox(height: 20),
+                  Row(
+                    children: [
+                      Text(
+                        ('enterIncome').tr, // JSON key for "Enter Income"
+                        style: CustomTextStyles.f14W600(
+                            color: AppColors.borderColor),
+                      ),
+                      SizedBox(
+                        width: 75,
+                      ),
+                      Text(
+                        ('selectTimePeriod')
+                            .tr, // JSON key for "Select Time Period"
+                        style: CustomTextStyles.f14W600(
+                            color: AppColors.borderColor),
+                      ),
+                    ],
+                  ),
+                  SizedBox(height: 2),
                   Row(
                     children: [
                       Expanded(
                         child: CustomTextField(
-                          hint: "Enter Income",
+                          hint:
+                              ('enterIncome').tr, // JSON key for "Enter Income"
                           textInputAction: TextInputAction.done,
                           textInputType: TextInputType.number,
                           controller: TextEditingController(
@@ -144,10 +199,12 @@ class IncomeTaxCalculator extends StatelessWidget {
                                 : value ?? '';
 
                             if (actualValue.isEmpty) {
-                              return 'Please enter income';
+                              return ('enterIncome')
+                                  .tr; // JSON key for "Please enter income"
                             }
                             if (double.tryParse(actualValue) == null) {
-                              return 'Invalid income';
+                              return ('invalidIncome')
+                                  .tr; // JSON key for "Invalid income"
                             }
                             return null;
                           },
@@ -171,74 +228,116 @@ class IncomeTaxCalculator extends StatelessWidget {
                       ),
                       SizedBox(width: 8),
                       Expanded(
-                        child: Obx(
-                          () => DropdownButtonFormField<String>(
-                            style: CustomTextStyles.f16W400(),
-                            value: controller.selectedYear.value,
-                            decoration: InputDecoration(
-                              hintText: "Time Period",
-                              hintStyle: CustomTextStyles.f16W400(
-                                  color: AppColors.secondaryTextColor),
-                              border: OutlineInputBorder(
-                                borderRadius: BorderRadius.circular(8.0),
+                          child: Theme(
+                        data: Theme.of(context)
+                            .copyWith(canvasColor: AppColors.whiteColor),
+                        child: Obx(() => DropdownButtonFormField<String>(
+                              value:
+                                  controller.selectYearMonthOption.value.isEmpty
+                                      ? null
+                                      : controller.selectYearMonthOption.value,
+                              hint: Text(
+                                "Select option",
+                                style: CustomTextStyles.f12W400(
+                                    color: AppColors.secondaryTextColor),
                               ),
-                              contentPadding: EdgeInsets.all(16.0),
-                            ),
-                            icon: SvgPicture.asset(
-                              ImagePath.textFieldIcon,
-                              height: 20,
-                              width: 20,
-                            ),
-                            items: <String>['Months', 'Years']
-                                .map<DropdownMenuItem<String>>((String value) {
-                              return DropdownMenuItem<String>(
-                                value: value,
-                                child: Text(value),
-                              );
-                            }).toList(),
-                            onChanged: (String? newValue) {
-                              controller.isYearly.value = newValue == 'Years';
-                            },
-                          ),
-                        ),
-                      ),
+                              decoration: InputDecoration(
+                                contentPadding: EdgeInsets.symmetric(
+                                    horizontal: 12, vertical: 15),
+                                enabledBorder: const OutlineInputBorder(
+                                  borderSide: BorderSide(
+                                      color: AppColors.borderColor, width: 1),
+                                ),
+                                focusedBorder: const OutlineInputBorder(
+                                  borderSide: BorderSide(
+                                      color: AppColors.primaryColor, width: 1),
+                                ),
+                              ),
+                              icon: SvgPicture.asset(
+                                ImagePath.textFieldIcon,
+                                color: AppColors.borderColor,
+                              ),
+                              items: controller.yearMonthOptions
+                                  .map((option) => DropdownMenuItem<String>(
+                                        value: option,
+                                        child: Text(option.tr),
+                                      ))
+                                  .toList(),
+                              onChanged: (value) {
+                                controller.updateSelectedYearMonth(value!);
+                              },
+                              validator: (value) => value == null
+                                  ? 'Please select year or months'
+                                  : null,
+                            )),
+                      ))
                     ],
                   ),
-                  SizedBox(height: 16),
+                  SizedBox(height: 20),
+                  Text(
+                    ('annualAddition')
+                        .tr, // JSON key for "Annual Addition (Bonus)"
+                    style:
+                        CustomTextStyles.f14W600(color: AppColors.borderColor),
+                  ),
+                  SizedBox(height: 2),
                   CustomTextField(
-                      onChanged: (value) {
-                        if (controller.isNepali.value && value.isNotEmpty) {
-                          String nepaliNumber = convertToNepaliNumber(value);
-                          if (nepaliNumber != controller.bonus.value) {
-                            controller.bonus.value = nepaliNumber;
-                          }
-                        } else if (!controller.isNepali.value &&
-                            value.isNotEmpty) {
-                          String englishNumber = convertToEnglishNumber(value);
-                          if (englishNumber != controller.bonus.value) {
-                            controller.bonus.value = englishNumber;
-                          }
+                    hint: ('enterAdditionalBonus')
+                        .tr, // JSON key for "Enter Additional Bonus"
+                    textInputAction: TextInputAction.done,
+                    textInputType: TextInputType.number,
+                    controller:
+                        TextEditingController(text: controller.bonus.value),
+                    onChanged: (value) {
+                      if (controller.isNepali.value && value.isNotEmpty) {
+                        String nepaliNumber = convertToNepaliNumber(value);
+                        if (nepaliNumber != controller.bonus.value) {
+                          controller.bonus.value = nepaliNumber;
                         }
-                      },
-                      validator: (value) {
-                        String actualValue = controller.isNepali.value
-                            ? convertToEnglishNumber(value ?? '')
-                            : value ?? '';
-                        if (actualValue.isEmpty) {
-                          return 'Invalid input';
+                      } else if (!controller.isNepali.value &&
+                          value.isNotEmpty) {
+                        String englishNumber = convertToEnglishNumber(value);
+                        if (englishNumber != controller.bonus.value) {
+                          controller.bonus.value = englishNumber;
                         }
-                        if (double.tryParse(actualValue) == null) {
-                          return 'Invalid input';
-                        }
-                        return null;
-                      },
-                      controller:
-                          TextEditingController(text: controller.bonus.value),
-                      hint: "Enter Additional Bonus",
-                      textInputAction: TextInputAction.done,
-                      textInputType: TextInputType.number),
-                  SizedBox(height: 16),
+                      }
+                    },
+                    validator: (value) {
+                      String actualValue = controller.isNepali.value
+                          ? convertToEnglishNumber(value ?? '')
+                          : value ?? '';
+                      if (actualValue.isEmpty) {
+                        return ('invalidInput')
+                            .tr; // JSON key for "Invalid input"
+                      }
+                      if (double.tryParse(actualValue) == null) {
+                        return ('invalidInput')
+                            .tr; // JSON key for "Invalid input"
+                      }
+                      return null;
+                    },
+                  ),
+                  SizedBox(height: 20),
+                  Text(
+                    ('annualDeduction').tr, // JSON key for "Annual Deduction"
+                    style:
+                        CustomTextStyles.f14W600(color: AppColors.borderColor),
+                  ),
+                  SizedBox(height: 2),
+                  Text(
+                    ('deductionsInfo')
+                        .tr, // JSON key for "(EPF+SSF+CIT+insurance)"
+                    style: CustomTextStyles.f12W400(
+                        color: AppColors.secondaryTextColor),
+                  ),
+                  SizedBox(height: 2),
                   CustomTextField(
+                    hint: ('enterDeductions')
+                        .tr, // JSON key for "Enter Deductions"
+                    textInputAction: TextInputAction.done,
+                    textInputType: TextInputType.number,
+                    controller: TextEditingController(
+                        text: controller.deductions.value),
                     onChanged: (value) {
                       if (controller.isNepali.value && value.isNotEmpty) {
                         String nepaliNumber = convertToNepaliNumber(value);
@@ -258,26 +357,233 @@ class IncomeTaxCalculator extends StatelessWidget {
                           ? convertToEnglishNumber(value ?? '')
                           : value ?? '';
                       if (actualValue.isEmpty) {
-                        return 'Invalid input';
+                        return ('invalidInput')
+                            .tr; // JSON key for "Invalid input"
                       }
                       if (double.tryParse(actualValue) == null) {
-                        return 'Invalid input';
+                        return ('invalidInput')
+                            .tr; // JSON key for "Invalid input"
                       }
                       return null;
                     },
-                    hint: "Enter Deductions",
-                    textInputAction: TextInputAction.done,
-                    textInputType: TextInputType.number,
+                  ),
+                  SizedBox(
+                    height: 20,
+                  ),
+                  Text(
+                    "slabs_and_rate".tr,
+                    style:
+                        CustomTextStyles.f14W600(color: AppColors.borderColor),
+                  ),
+                  SizedBox(
+                    height: 20,
+                  ),
+                  Container(
+                    child: Table(border: TableBorder.all(), columnWidths: {
+                      0: FixedColumnWidth(135.0),
+                      1: FixedColumnWidth(30.0),
+                      2: FixedColumnWidth(55.0),
+                      3: FixedColumnWidth(65.0),
+                    }, children: [
+                      TableRow(
+                        decoration: BoxDecoration(
+                          color: Colors.grey[300],
+                        ),
+                        children: [
+                          TableCell(
+                              child: Padding(
+                                  padding: EdgeInsets.all(8.0),
+                                  child: Text('salary_slab'.tr,
+                                      style: TextStyle(
+                                          fontWeight: FontWeight.bold)))),
+                          TableCell(
+                              child: Padding(
+                                  padding: EdgeInsets.all(04.0),
+                                  child: Text('rate'.tr,
+                                      style: TextStyle(
+                                          fontWeight: FontWeight.bold)))),
+                          TableCell(
+                              child: Padding(
+                                  padding: EdgeInsets.all(04.0),
+                                  child: Text('taxable_amt'.tr,
+                                      style: TextStyle(
+                                          fontWeight: FontWeight.bold)))),
+                          TableCell(
+                              child: Padding(
+                                  padding: EdgeInsets.all(04.0),
+                                  child: Text('tax_at_slab'.tr,
+                                      style: TextStyle(
+                                          fontWeight: FontWeight.bold)))),
+                        ],
+                      ),
+                      TableRow(
+                        children: [
+                          TableCell(
+                              child: Padding(
+                                  padding: EdgeInsets.all(04.0),
+                                  child: Text('0 - 500,000'.tr))),
+                          TableCell(
+                              child: Padding(
+                                  padding: EdgeInsets.all(04.0),
+                                  child: Text('1%'))),
+                          TableCell(
+                              child: Padding(
+                                  padding: EdgeInsets.all(04.0),
+                                  child: Text('0.0'))),
+                          TableCell(
+                              child: Padding(
+                                  padding: EdgeInsets.all(04.0),
+                                  child: Text('0.00'))),
+                        ],
+                      ),
+                      TableRow(
+                        children: [
+                          TableCell(
+                              child: Padding(
+                                  padding: EdgeInsets.all(04.0),
+                                  child: Text('500,000 - 700,000'))),
+                          TableCell(
+                              child: Padding(
+                                  padding: EdgeInsets.all(04.0),
+                                  child: Text('10%'))),
+                          TableCell(
+                              child: Padding(
+                                  padding: EdgeInsets.all(04.0),
+                                  child: Text('0'))),
+                          TableCell(
+                              child: Padding(
+                                  padding: EdgeInsets.all(04.0),
+                                  child: Text('N/A'))),
+                        ],
+                      ),
+                      TableRow(
+                        children: [
+                          TableCell(
+                              child: Padding(
+                                  padding: EdgeInsets.all(04.0),
+                                  child: Text('700,000 - 1,000,000'))),
+                          TableCell(
+                              child: Padding(
+                                  padding: EdgeInsets.all(04.0),
+                                  child: Text('20%'))),
+                          TableCell(
+                              child: Padding(
+                                  padding: EdgeInsets.all(04.0),
+                                  child: Text('0'))),
+                          TableCell(
+                              child: Padding(
+                                  padding: EdgeInsets.all(04.0),
+                                  child: Text('N/A'))),
+                        ],
+                      ),
+                      TableRow(
+                        children: [
+                          TableCell(
+                              child: Padding(
+                                  padding: EdgeInsets.all(04.0),
+                                  child: Text('1,000,000 - 2,000,000'))),
+                          TableCell(
+                              child: Padding(
+                                  padding: EdgeInsets.all(04.0),
+                                  child: Text('30%'))),
+                          TableCell(
+                              child: Padding(
+                                  padding: EdgeInsets.all(04.0),
+                                  child: Text('0'))),
+                          TableCell(
+                              child: Padding(
+                                  padding: EdgeInsets.all(04.0),
+                                  child: Text('N/A'))),
+                        ],
+                      ),
+                      TableRow(
+                        children: [
+                          TableCell(
+                              child: Padding(
+                                  padding: EdgeInsets.all(04.0),
+                                  child: Text('2,000,000 - 5,000,000'))),
+                          TableCell(
+                              child: Padding(
+                                  padding: EdgeInsets.all(04.0),
+                                  child: Text('36%'))),
+                          TableCell(
+                              child: Padding(
+                                  padding: EdgeInsets.all(04.0),
+                                  child: Text('0'))),
+                          TableCell(
+                              child: Padding(
+                                  padding: EdgeInsets.all(04.0),
+                                  child: Text('N/A'))),
+                        ],
+                      ),
+                      TableRow(
+                        children: [
+                          TableCell(
+                              child: Padding(
+                                  padding: EdgeInsets.all(04.0),
+                                  child: Text('Above 5,000,000'))),
+                          TableCell(
+                              child: Padding(
+                                  padding: EdgeInsets.all(04.0),
+                                  child: Text('39%'))),
+                          TableCell(
+                              child: Padding(
+                                  padding: EdgeInsets.all(04.0),
+                                  child: Text('0'))),
+                          TableCell(
+                              child: Padding(
+                                  padding: EdgeInsets.all(04.0),
+                                  child: Text('N/A'))),
+                        ],
+                      ),
+                    ]),
+                  ),
+                  SizedBox(
+                    height: 20,
+                  ),
+                  Center(
+                    child: Column(
+                      children: [
+                        Text(
+                          "effective_tax_rate".tr,
+                          style: CustomTextStyles.f14W600(),
+                        ),
+                        Text(
+                          "amount_in_hand".tr,
+                          style: CustomTextStyles.f14W600(),
+                        ),
+                      ],
+                    ),
                   ),
                   SizedBox(height: 24),
-                  CustomElevatedButton(
-                    title: "Submit",
-                    onTap: () {
-                      if (controller.formKey.currentState?.validate() ??
-                          false) {
-                        controller.calculateTax();
-                      }
-                    },
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Expanded(
+                        child: CustomElevatedButton(
+                          title: "submit".tr,
+                          onTap: () {
+                            if (controller.formKey.currentState?.validate() ??
+                                false) {
+                              controller.calculateTax();
+                            }
+                          },
+                        ),
+                      ),
+                      SizedBox(width: 10),
+                      Expanded(
+                        child: CustomElevatedButton(
+                          title: "reset".tr,
+                          onTap: () {
+                            if (controller.formKey.currentState?.validate() ??
+                                false) {
+                              controller
+                                  .result(); // Assuming a reset method exists in your controller
+                            }
+                          },
+                        ),
+                      ),
+                    ],
                   ),
                   SizedBox(height: 24),
                   Obx(
