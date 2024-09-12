@@ -25,15 +25,20 @@ class IncomeTaxController extends GetxController {
 
   void calculateTax() {
     if (formKey.currentState?.validate() ?? false) {
-      final double incomeValue = double.tryParse(convertToEnglishNumber(income.value)) ?? 0;
-      final double bonusValue = double.tryParse(convertToEnglishNumber(bonus.value)) ?? 0;
-      final double deductionsValue = double.tryParse(convertToEnglishNumber(deductions.value)) ?? 0;
+      final double incomeValue =
+          double.tryParse(convertToEnglishNumber(income.value)) ?? 0;
+      final double bonusValue =
+          double.tryParse(convertToEnglishNumber(bonus.value)) ?? 0;
+      final double deductionsValue =
+          double.tryParse(convertToEnglishNumber(deductions.value)) ?? 0;
 
       final double totalIncome = incomeValue + bonusValue - deductionsValue;
-      double taxAmount = isYearly.value ? totalIncome * 0.13 : totalIncome * 0.13 * 12;
+      double taxAmount =
+          isYearly.value ? totalIncome * 0.13 : totalIncome * 0.13 * 12;
 
       if (isNepali.value) {
-        result.value = '${'Tax Amount'}: ${convertToNepaliNumber(taxAmount.toStringAsFixed(2))}';
+        result.value =
+            '${'Tax Amount'}: ${convertToNepaliNumber(taxAmount.toStringAsFixed(2))}';
       } else {
         result.value = '${'Tax Amount'}: Rs ${taxAmount.toStringAsFixed(2)}';
       }

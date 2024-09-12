@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 import 'package:simple_tax/controller/income_screen_controller.dart';
 import 'package:simple_tax/l10n/nepali_numbers.dart';
 import 'package:simple_tax/utils/colors.dart';
 import 'package:simple_tax/utils/custom_text_styles.dart';
+import 'package:simple_tax/utils/image_path.dart';
 import 'package:simple_tax/widgets/custom/custom_textfield.dart';
 import 'package:simple_tax/widgets/custom/elevated_button.dart';
 
@@ -43,30 +45,44 @@ class IncomeTaxCalculator extends StatelessWidget {
                     children: [
                       Expanded(
                         child: Obx(
-                          () => DropdownButtonFormField<String>(
+                          () => DropdownButtonFormField(
                             value: controller.selectedYear.value,
                             decoration: InputDecoration(
-                              labelText: 'Select Year',
-                              labelStyle:
-                                  CustomTextStyles.f12W600(color: Colors.black),
+                              labelText: ('SelectYear').tr,
+                              labelStyle: CustomTextStyles.f16W400(
+                                  color: AppColors.secondaryTextColor),
                               border: OutlineInputBorder(
                                 borderRadius: BorderRadius.circular(8.0),
                               ),
                               contentPadding: EdgeInsets.symmetric(
                                   horizontal: 12.0, vertical: 8.0),
                             ),
-                            items: <String>['Year 1', 'Year 2', 'Year 3']
-                                .map<DropdownMenuItem<String>>((String value) {
-                              return DropdownMenuItem<String>(
-                                value: value,
-                                child: Text(value),
-                              );
-                            }).toList(),
-                            onChanged: (String? newValue) {
+                            icon: SvgPicture.asset(
+                              ImagePath.textFieldIcon, // Path to your SVG file
+                              height: 20, // Customize the size of the SVG
+                              width: 20,
+                            ),
+                            items: [
+                              DropdownMenuItem(
+                                value:
+                                    'year1', // Use non-translated keys for value
+                                child: Text(('year1').tr),
+                              ),
+                              DropdownMenuItem(
+                                value: 'year2',
+                                child: Text(('year2').tr),
+                              ),
+                              DropdownMenuItem<String>(
+                                value: 'year3',
+                                child: Text(('year3').tr),
+                              ),
+                            ],
+                            onChanged: (newValue) {
                               controller.selectedYear.value = newValue ?? '';
                             },
-                            validator: (value) =>
-                                value == null ? 'Please select a year' : null,
+                            validator: (value) => value == null
+                                ? ('selectYearAndStatus').tr
+                                : null,
                           ),
                         ),
                       ),
@@ -76,14 +92,19 @@ class IncomeTaxCalculator extends StatelessWidget {
                           () => DropdownButtonFormField<String>(
                             value: controller.selectedTaxStatus.value,
                             decoration: InputDecoration(
-                              labelText: 'Select Status',
-                              labelStyle:
-                                  CustomTextStyles.f12W600(color: Colors.black),
+                              hintText: 'Select Status',
+                              hintStyle: CustomTextStyles.f16W400(
+                                  color: AppColors.secondaryTextColor),
                               border: OutlineInputBorder(
                                 borderRadius: BorderRadius.circular(8.0),
                               ),
                               contentPadding: EdgeInsets.symmetric(
                                   horizontal: 12.0, vertical: 8.0),
+                            ),
+                            icon: SvgPicture.asset(
+                              ImagePath.textFieldIcon, // Path to your SVG file
+                              height: 20, // Customize the size of the SVG
+                              width: 20,
                             ),
                             items: <String>['Single', 'Married']
                                 .map<DropdownMenuItem<String>>((String value) {
@@ -92,7 +113,7 @@ class IncomeTaxCalculator extends StatelessWidget {
                                 child: Text(
                                   value,
                                   overflow: TextOverflow.ellipsis,
-                                  style: CustomTextStyles.f12W600(),
+                                  style: CustomTextStyles.f16W400(),
                                 ),
                               );
                             }).toList(),
@@ -152,16 +173,21 @@ class IncomeTaxCalculator extends StatelessWidget {
                       Expanded(
                         child: Obx(
                           () => DropdownButtonFormField<String>(
-                            style: CustomTextStyles.f12W600(),
-                            value:
-                                controller.isYearly.value ? 'Years' : 'Months',
+                            style: CustomTextStyles.f16W400(),
+                            value: controller.selectedYear.value,
                             decoration: InputDecoration(
-                              labelStyle:
-                                  CustomTextStyles.f12W600(color: Colors.black),
+                              hintText: "Time Period",
+                              hintStyle: CustomTextStyles.f16W400(
+                                  color: AppColors.secondaryTextColor),
                               border: OutlineInputBorder(
                                 borderRadius: BorderRadius.circular(8.0),
                               ),
                               contentPadding: EdgeInsets.all(16.0),
+                            ),
+                            icon: SvgPicture.asset(
+                              ImagePath.textFieldIcon,
+                              height: 20,
+                              width: 20,
                             ),
                             items: <String>['Months', 'Years']
                                 .map<DropdownMenuItem<String>>((String value) {

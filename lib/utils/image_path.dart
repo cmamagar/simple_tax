@@ -8,4 +8,6 @@ class ImagePath {
   static const String Interestcalc = "$baseImagePath/interestCalc.png";
   static const String Billing = "$baseImagePath/billing.png";
   static const String pp = "$baseImagePath/pp.webp";
+
+  static const String textFieldIcon = "$baseIconPath/down_arrow.svg";
 }
