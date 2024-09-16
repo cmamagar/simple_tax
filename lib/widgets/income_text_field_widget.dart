@@ -10,8 +10,8 @@ import 'package:simple_tax/widgets/custom/custom_textfield.dart';
 import 'package:simple_tax/widgets/custom/elevated_button.dart';
 import 'package:simple_tax/widgets/income_slab_table_widget.dart';
 
-class incomeTextFieldWidget extends StatelessWidget {
-  const incomeTextFieldWidget({
+class IncomeTextFieldWidget extends StatelessWidget {
+  const IncomeTextFieldWidget({
     super.key,
     required this.controller,
   });
@@ -22,7 +22,7 @@ class incomeTextFieldWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       margin: EdgeInsets.only(top: 20),
-      height: MediaQuery.of(context).size.height * 1.18,
+      height: MediaQuery.of(context).size.height * 1.3,
       decoration: BoxDecoration(
           color: AppColors.whiteColor,
           borderRadius: BorderRadius.only(topLeft: Radius.circular(15))),
@@ -42,9 +42,7 @@ class incomeTextFieldWidget extends StatelessWidget {
                       style: CustomTextStyles.f14W600(
                           color: AppColors.borderColor),
                     ),
-                    SizedBox(
-                      width: 93,
-                    ),
+                    SizedBox(width: 93),
                     Text(
                       ('selectStatus').tr, // JSON key for "Select Status"
                       style: CustomTextStyles.f14W600(
@@ -52,7 +50,7 @@ class incomeTextFieldWidget extends StatelessWidget {
                     ),
                   ],
                 ),
-                SizedBox(height: 2),
+                SizedBox(height: 7),
                 Row(
                   children: [
                     Expanded(
@@ -153,9 +151,7 @@ class incomeTextFieldWidget extends StatelessWidget {
                       style: CustomTextStyles.f14W600(
                           color: AppColors.borderColor),
                     ),
-                    SizedBox(
-                      width: 75,
-                    ),
+                    SizedBox(width: 75),
                     Text(
                       ('selectTimePeriod')
                           .tr, // JSON key for "Select Time Period"
@@ -164,43 +160,54 @@ class incomeTextFieldWidget extends StatelessWidget {
                     ),
                   ],
                 ),
-                SizedBox(height: 2),
+                SizedBox(height: 7),
                 Row(
                   children: [
                     Expanded(
                       child: CustomTextField(
-                        hint: ('enterIncome').tr, // JSON key for "Enter Income"
+                        hint: "Enter Income",
                         textInputAction: TextInputAction.done,
                         textInputType: TextInputType.number,
-                        controller: TextEditingController(
-                            text: controller.income.value),
+                        controller: controller.incomeController,
                         validator: (value) {
                           String actualValue = controller.isNepali.value
                               ? convertToEnglishNumber(value ?? '')
                               : value ?? '';
 
                           if (actualValue.isEmpty) {
-                            return ('enterIncome')
-                                .tr; // JSON key for "Please enter income"
+                            return 'Please enter income';
                           }
                           if (double.tryParse(actualValue) == null) {
-                            return ('invalidIncome')
-                                .tr; // JSON key for "Invalid income"
+                            return 'Invalid income';
                           }
                           return null;
                         },
                         onChanged: (value) {
                           if (controller.isNepali.value && value.isNotEmpty) {
                             String nepaliNumber = convertToNepaliNumber(value);
-                            if (nepaliNumber != controller.income.value) {
-                              controller.income.value = nepaliNumber;
+                            if (nepaliNumber !=
+                                controller.incomeController.text) {
+                              controller.incomeController.text = nepaliNumber;
+                              controller.incomeController.selection =
+                                  TextSelection.fromPosition(
+                                TextPosition(
+                                    offset: controller
+                                        .incomeController.text.length),
+                              ); // Move cursor to the end
                             }
                           } else if (!controller.isNepali.value &&
                               value.isNotEmpty) {
                             String englishNumber =
                                 convertToEnglishNumber(value);
-                            if (englishNumber != controller.income.value) {
-                              controller.income.value = englishNumber;
+                            if (englishNumber !=
+                                controller.incomeController.text) {
+                              controller.incomeController.text = englishNumber;
+                              controller.incomeController.selection =
+                                  TextSelection.fromPosition(
+                                TextPosition(
+                                    offset: controller
+                                        .incomeController.text.length),
+                              ); // Move cursor to the end
                             }
                           }
                         },
@@ -208,49 +215,50 @@ class incomeTextFieldWidget extends StatelessWidget {
                     ),
                     SizedBox(width: 8),
                     Expanded(
-                        child: Theme(
-                      data: Theme.of(context)
-                          .copyWith(canvasColor: AppColors.whiteColor),
-                      child: Obx(() => DropdownButtonFormField<String>(
-                            value:
-                                controller.selectYearMonthOption.value.isEmpty
-                                    ? null
-                                    : controller.selectYearMonthOption.value,
-                            hint: Text(
-                              "Select option",
-                              style: CustomTextStyles.f12W400(
-                                  color: AppColors.secondaryTextColor),
-                            ),
-                            decoration: InputDecoration(
-                              contentPadding: EdgeInsets.symmetric(
-                                  horizontal: 12, vertical: 15),
-                              enabledBorder: const OutlineInputBorder(
-                                borderSide: BorderSide(
-                                    color: AppColors.borderColor, width: 1),
+                      child: Theme(
+                        data: Theme.of(context)
+                            .copyWith(canvasColor: AppColors.whiteColor),
+                        child: Obx(() => DropdownButtonFormField<String>(
+                              value:
+                                  controller.selectYearMonthOption.value.isEmpty
+                                      ? null
+                                      : controller.selectYearMonthOption.value,
+                              hint: Text(
+                                "Select Status",
+                                style: CustomTextStyles.f12W400(
+                                    color: AppColors.secondaryTextColor),
                               ),
-                              focusedBorder: const OutlineInputBorder(
-                                borderSide: BorderSide(
-                                    color: AppColors.primaryColor, width: 1),
+                              decoration: InputDecoration(
+                                contentPadding: EdgeInsets.symmetric(
+                                    horizontal: 12, vertical: 15),
+                                enabledBorder: const OutlineInputBorder(
+                                  borderSide: BorderSide(
+                                      color: AppColors.borderColor, width: 1),
+                                ),
+                                focusedBorder: const OutlineInputBorder(
+                                  borderSide: BorderSide(
+                                      color: AppColors.primaryColor, width: 1),
+                                ),
                               ),
-                            ),
-                            icon: SvgPicture.asset(
-                              ImagePath.textFieldIcon,
-                              color: AppColors.borderColor,
-                            ),
-                            items: controller.yearMonthOptions
-                                .map((option) => DropdownMenuItem<String>(
-                                      value: option,
-                                      child: Text(option.tr),
-                                    ))
-                                .toList(),
-                            onChanged: (value) {
-                              controller.updateSelectedYearMonth(value!);
-                            },
-                            validator: (value) => value == null
-                                ? 'Please select year or months'
-                                : null,
-                          )),
-                    ))
+                              icon: SvgPicture.asset(
+                                ImagePath.textFieldIcon,
+                                color: AppColors.borderColor,
+                              ),
+                              items: controller.yearMonthOptions
+                                  .map((option) => DropdownMenuItem<String>(
+                                        value: option,
+                                        child: Text(option.tr),
+                                      ))
+                                  .toList(),
+                              onChanged: (value) {
+                                controller.updateSelectedYearMonth(value!);
+                              },
+                              validator: (value) => value == null
+                                  ? 'Please select year or months'
+                                  : null,
+                            )),
+                      ),
+                    ),
                   ],
                 ),
                 SizedBox(height: 20),
@@ -259,72 +267,82 @@ class incomeTextFieldWidget extends StatelessWidget {
                       .tr, // JSON key for "Annual Addition (Bonus)"
                   style: CustomTextStyles.f14W600(color: AppColors.borderColor),
                 ),
-                SizedBox(height: 2),
+                SizedBox(height: 7),
                 CustomTextField(
-                  hint: ('enterAdditionalBonus')
-                      .tr, // JSON key for "Enter Additional Bonus"
-                  textInputAction: TextInputAction.done,
-                  textInputType: TextInputType.number,
-                  controller:
-                      TextEditingController(text: controller.bonus.value),
-                  onChanged: (value) {
-                    if (controller.isNepali.value && value.isNotEmpty) {
-                      String nepaliNumber = convertToNepaliNumber(value);
-                      if (nepaliNumber != controller.bonus.value) {
-                        controller.bonus.value = nepaliNumber;
+                    onChanged: (value) {
+                      if (controller.isNepali.value && value.isNotEmpty) {
+                        String nepaliNumber = convertToNepaliNumber(value);
+                        if (nepaliNumber != controller.bonusController.value) {
+                          controller.bonusController.text = nepaliNumber;
+                          controller.bonusController.selection =
+                              TextSelection.fromPosition(TextPosition(
+                                  offset:
+                                      controller.bonusController.text.length));
+                        }
+                      } else if (!controller.isNepali.value &&
+                          value.isNotEmpty) {
+                        String englishNumber = convertToEnglishNumber(value);
+                        if (englishNumber != controller.bonusController.text) {
+                          controller.bonusController.text = englishNumber;
+                          controller.bonusController.selection =
+                              TextSelection.fromPosition(
+                            TextPosition(
+                                offset: controller.bonusController.text.length),
+                          ); // Move cursor to the end
+                        }
                       }
-                    } else if (!controller.isNepali.value && value.isNotEmpty) {
-                      String englishNumber = convertToEnglishNumber(value);
-                      if (englishNumber != controller.bonus.value) {
-                        controller.bonus.value = englishNumber;
+                    },
+                    validator: (value) {
+                      String actualValue = controller.isNepali.value
+                          ? convertToEnglishNumber(value ?? '')
+                          : value ?? '';
+                      if (actualValue.isEmpty) {
+                        return 'Invalid input';
                       }
-                    }
-                  },
-                  validator: (value) {
-                    String actualValue = controller.isNepali.value
-                        ? convertToEnglishNumber(value ?? '')
-                        : value ?? '';
-                    if (actualValue.isEmpty) {
-                      return ('invalidInput')
-                          .tr; // JSON key for "Invalid input"
-                    }
-                    if (double.tryParse(actualValue) == null) {
-                      return ('invalidInput')
-                          .tr; // JSON key for "Invalid input"
-                    }
-                    return null;
-                  },
-                ),
-                SizedBox(height: 20),
+                      if (double.tryParse(actualValue) == null) {
+                        return 'Invalid input';
+                      }
+                      return null;
+                    },
+                    controller: controller.bonusController,
+                    hint: "Enter Additional Bonus",
+                    textInputAction: TextInputAction.done,
+                    textInputType: TextInputType.number),
+                SizedBox(height: 16),
                 Text(
-                  ('annualDeduction').tr, // JSON key for "Annual Deduction"
+                  ('annualDeduction')
+                      .tr, // JSON key for "Annual Addition (Bonus)"
                   style: CustomTextStyles.f14W600(color: AppColors.borderColor),
                 ),
-                SizedBox(height: 2),
                 Text(
                   ('deductionsInfo')
-                      .tr, // JSON key for "(EPF+SSF+CIT+insurance)"
-                  style: CustomTextStyles.f12W400(
-                      color: AppColors.secondaryTextColor),
+                      .tr, // JSON key for "Annual Addition (Bonus)"
+                  style: CustomTextStyles.f14W600(color: AppColors.borderColor),
                 ),
-                SizedBox(height: 2),
+                SizedBox(height: 7),
                 CustomTextField(
-                  hint:
-                      ('enterDeductions').tr, // JSON key for "Enter Deductions"
-                  textInputAction: TextInputAction.done,
-                  textInputType: TextInputType.number,
-                  controller:
-                      TextEditingController(text: controller.deductions.value),
                   onChanged: (value) {
                     if (controller.isNepali.value && value.isNotEmpty) {
                       String nepaliNumber = convertToNepaliNumber(value);
-                      if (nepaliNumber != controller.deductions.value) {
-                        controller.deductions.value = nepaliNumber;
+                      if (nepaliNumber != controller.deductionController.text) {
+                        controller.deductionController.text = nepaliNumber;
+                        controller.deductionController.selection =
+                            TextSelection.fromPosition(
+                          TextPosition(
+                              offset:
+                                  controller.deductionController.text.length),
+                        ); // Move cursor to the end
                       }
                     } else if (!controller.isNepali.value && value.isNotEmpty) {
                       String englishNumber = convertToEnglishNumber(value);
-                      if (englishNumber != controller.deductions.value) {
-                        controller.deductions.value = englishNumber;
+                      if (englishNumber !=
+                          controller.deductionController.text) {
+                        controller.deductionController.text = englishNumber;
+                        controller.deductionController.selection =
+                            TextSelection.fromPosition(
+                          TextPosition(
+                              offset: controller.incomeController.text.length),
+                        ); // Move cursor to the end
                       }
                     }
                   },
@@ -333,45 +351,26 @@ class incomeTextFieldWidget extends StatelessWidget {
                         ? convertToEnglishNumber(value ?? '')
                         : value ?? '';
                     if (actualValue.isEmpty) {
-                      return ('invalidInput')
-                          .tr; // JSON key for "Invalid input"
+                      return 'Invalid input';
                     }
                     if (double.tryParse(actualValue) == null) {
-                      return ('invalidInput')
-                          .tr; // JSON key for "Invalid input"
+                      return 'Invalid input';
                     }
                     return null;
                   },
+                  hint: "Enter Deductions",
+                  controller: controller.deductionController,
+                  textInputAction: TextInputAction.done,
+                  textInputType: TextInputType.number,
                 ),
-                SizedBox(
-                  height: 20,
-                ),
+                SizedBox(height: 20),
                 Text(
                   "slabs_and_rate".tr,
                   style: CustomTextStyles.f14W600(color: AppColors.borderColor),
                 ),
-                SizedBox(
-                  height: 20,
-                ),
+                SizedBox(height: 20),
                 SlabRateTable(),
-                SizedBox(
-                  height: 20,
-                ),
-                Center(
-                  child: Column(
-                    children: [
-                      Text(
-                        "effective_tax_rate".tr,
-                        style: CustomTextStyles.f14W600(),
-                      ),
-                      Text(
-                        "amount_in_hand".tr,
-                        style: CustomTextStyles.f14W600(),
-                      ),
-                    ],
-                  ),
-                ),
-                SizedBox(height: 24),
+                SizedBox(height: 20),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
@@ -394,14 +393,14 @@ class incomeTextFieldWidget extends StatelessWidget {
                           if (controller.formKey.currentState?.validate() ??
                               false) {
                             controller
-                                .result(); // Assuming a reset method exists in your controller
+                                .clearFields(); // Assuming a reset method exists in your controller
                           }
                         },
                       ),
                     ),
                   ],
                 ),
-                SizedBox(height: 24),
+                SizedBox(height: 20),
                 Obx(
                   () => Text(
                     controller.result.value,

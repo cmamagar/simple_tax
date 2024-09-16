@@ -24,7 +24,7 @@ class IncomeTaxCalculator extends StatelessWidget {
         ),
       ),
       body: SingleChildScrollView(
-        child: incomeTextFieldWidget(controller: controller),
+        child: IncomeTextFieldWidget(controller: controller),
       ),
     );
   }

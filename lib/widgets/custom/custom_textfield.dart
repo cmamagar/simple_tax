@@ -121,7 +121,7 @@ class CustomTextField extends StatelessWidget {
         hintStyle:
             CustomTextStyles.f12W400(color: AppColors.secondaryTextColor),
       ),
-      style: CustomTextStyles.f12W400(
+      style: CustomTextStyles.f14W600(
           color: (readOnly ?? false) ? AppColors.secondaryTextColor : null),
     );
   }

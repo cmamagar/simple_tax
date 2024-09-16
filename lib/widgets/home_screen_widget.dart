@@ -12,9 +12,9 @@ class HomeFirstImageWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: EdgeInsets.only(top: 16),
-      height: 180,
-      width: 341,
+      margin: EdgeInsets.only(left: 18, right: 18),
+      height: 142,
+      width: double.infinity,
       decoration: BoxDecoration(
         color: AppColors.whiteColor,
         borderRadius: BorderRadius.circular(20),
@@ -27,39 +27,40 @@ class HomeFirstImageWidget extends StatelessWidget {
         ],
       ),
       child: Padding(
-        padding: EdgeInsets.all(16.0),
+        padding: EdgeInsets.only(left: 16, right: 16),
         child: Row(
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             Expanded(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Text(
-                    "banner".tr,
-                    style:
-                        CustomTextStyles.f12W600(color: AppColors.textColor1),
-                  ),
-                  SizedBox(height: 25),
-                  Container(
-                    padding: EdgeInsets.all(10),
-                    height: 38,
-                    width: 150,
-                    decoration: BoxDecoration(
-                      color: AppColors.primaryColor, // Background color
-                      borderRadius:
-                          BorderRadius.circular(20), // Circular radius
+              child: Padding(
+                padding: const EdgeInsets.only(top: 24),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      "banner".tr,
+                      style:
+                          CustomTextStyles.f14W600(color: AppColors.textColor1),
                     ),
-                    child: Center(
-                      child: Text(
-                        "explore".tr,
-                        style: CustomTextStyles.f12W600(
-                            color: AppColors.whiteColor),
+                    SizedBox(height: 13),
+                    Container(
+                      height: 30,
+                      width: 85,
+                      decoration: BoxDecoration(
+                        color: AppColors.primaryColor, // Background color
+                        borderRadius:
+                            BorderRadius.circular(15), // Circular radius
+                      ),
+                      child: Center(
+                        child: Text(
+                          "explore".tr,
+                          style: CustomTextStyles.f12W600(
+                              color: AppColors.whiteColor),
+                        ),
                       ),
                     ),
-                  ),
-                ],
+                  ],
+                ),
               ),
             ),
             SizedBox(width: 16),

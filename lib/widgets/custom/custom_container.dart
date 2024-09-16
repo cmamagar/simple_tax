@@ -8,36 +8,30 @@ Widget CustomContainer(
     required String text2}) {
   return Expanded(
     child: Container(
-      margin: EdgeInsets.symmetric(horizontal: 5),
-      width: 95,
-      height: 106,
+      width: 169,
+      height: 52,
       decoration: BoxDecoration(
-        color: AppColors.whiteColor,
-        borderRadius: BorderRadius.circular(15),
-        boxShadow: [
-          BoxShadow(
-            color: AppColors.primaryColor,
-            blurRadius: 1,
-          )
-        ],
-      ),
-      child: Column(
+          color: AppColors.whiteColor,
+          borderRadius: BorderRadius.circular(10),
+          border: Border.all(width: 1, color: AppColors.border1Color)),
+      child: Row(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          Image.asset(imagePath, width: 44, height: 44),
-          SizedBox(height: 10),
           Center(
             child: Text(
               containerName,
               style: CustomTextStyles.f10W400(color: AppColors.textColor1),
             ),
           ),
+          SizedBox(width: 3),
           Center(
             child: Text(
               text2,
               style: CustomTextStyles.f10W400(color: AppColors.textColor1),
             ),
           ),
+          SizedBox(width: 10),
+          Image.asset(imagePath, width: 36, height: 36),
         ],
       ),
     ),

@@ -6,11 +6,11 @@ import 'package:simple_tax/l10n/nepali_numbers.dart';
 
 class IncomeTaxController extends GetxController {
   final formKey = GlobalKey<FormState>();
-  var income = ''.obs;
-  var bonus = ''.obs;
-  var deductions = ''.obs;
+
+  final incomeController = TextEditingController();
+  final bonusController = TextEditingController();
+  final deductionController = TextEditingController();
   var result = ''.obs;
-  var isYearly = true.obs;
   var isNepali = false.obs;
 
   void updateLocale(String value) {
@@ -26,27 +26,38 @@ class IncomeTaxController extends GetxController {
   void calculateTax() {
     if (formKey.currentState?.validate() ?? false) {
       final double incomeValue =
-          double.tryParse(convertToEnglishNumber(income.value)) ?? 0;
+          double.tryParse(convertToEnglishNumber(incomeController.text)) ?? 0;
       final double bonusValue =
-          double.tryParse(convertToEnglishNumber(bonus.value)) ?? 0;
+          double.tryParse(convertToEnglishNumber(bonusController.text)) ?? 0;
       final double deductionsValue =
-          double.tryParse(convertToEnglishNumber(deductions.value)) ?? 0;
+          double.tryParse(convertToEnglishNumber(deductionController.text)) ??
+              0;
+      // Debugging: Print parsed values
+      log('Income: $incomeValue, Bonus: $bonusValue, Deductions: $deductionsValue');
+      //log('Total Income: $totalIncome');
 
-      final double totalIncome = incomeValue + bonusValue - deductionsValue;
-      double taxAmount =
-          isYearly.value ? totalIncome * 0.13 : totalIncome * 0.13 * 12;
-      log("Income value ${incomeValue}");
-      log("Bonus value ${bonusValue}");
-      log("Debuctions value ${deductionsValue}");
-      log("Total tax amount ${taxAmount}");
-      log("Total Income ${totalIncome}");
+      // Determine the tax rate based on selectYearMonthOption value
+      double taxAmount;
+      if (selectYearMonthOption.value == 'Year') {
+        taxAmount = (incomeValue + bonusValue - deductionsValue) * 0.13 * 12;
+        log("Tax Amount0");
+      } else if (selectYearMonthOption.value == 'Month') {
+        taxAmount = (incomeValue + bonusValue - deductionsValue) * 0.13;
+      } else {
+        taxAmount = 0;
+        log('Invalid selectYearMonthOption value: ${selectYearMonthOption.value}');
+      }
 
+      // Debugging: Print the calculated tax amount
+      log('Tax Amount: $taxAmount');
       if (isNepali.value) {
         result.value =
             '${'Tax Amount'}: ${convertToNepaliNumber(taxAmount.toStringAsFixed(2))}';
       } else {
         result.value = '${'Tax Amount'}: Rs ${taxAmount.toStringAsFixed(2)}';
       }
+    } else {
+      log('Form validation failed');
     }
   }
 
@@ -62,21 +73,29 @@ class IncomeTaxController extends GetxController {
   // Method to update selected status
   void updateSelectedStatus(String value) {
     selectStatusOption.value = value;
-    log("selectedYearOption1${selectedYearOption}");
   }
 
   // Method to update selected year or months
 
   void updateSelectedYearMonth(String value) {
     selectYearMonthOption.value = value;
-    log("selectedYearOption2${selectYearMonthOption}");
+    log("Select Year or Months: ${selectYearMonthOption}");
   }
 
   // Method to update the selected value
   void updateSelected(String value) {
     selectedYearOption.value = value;
-    log("selectedYearOption3${selectedYearOption}");
+  }
+
+  void clearFields() {
+    // If incomeController, bonusController, and deductionController are TextEditingControllers
+    incomeController.clear();
+    bonusController.clear();
+    deductionController.clear();
+
+    // If selectedYearOption, selectStatusOption, and selectYearMonthOption are RxStrings
+    selectedYearOption.value = ''; // Clear the selected year option
+    selectStatusOption.value = ''; // Clear the selected status option
+    selectYearMonthOption.value = ''; // Clear the year/month option
   }
 }
-
-void reset() {}

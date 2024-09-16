@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
-import 'package:simple_tax/ProductBilling/prodBillTaxCalc%20.dart';
 import 'package:simple_tax/controller/home_screen_controller.dart';
 import 'package:simple_tax/incomeTaxCalculator/incomeTaxCalc.dart';
 import 'package:simple_tax/interestCalculator/interestCalc.dart';
@@ -11,7 +10,7 @@ import 'package:simple_tax/utils/image_path.dart';
 import 'package:simple_tax/widgets/custom/custom_container.dart';
 import 'package:simple_tax/widgets/home_screen_widget.dart';
 
-class HomePage extends StatelessWidget {
+class HomeScreen extends StatelessWidget {
   final c = Get.put(HomeScreenController());
 
   @override
@@ -20,26 +19,25 @@ class HomePage extends StatelessWidget {
       backgroundColor: AppColors.whiteColor,
       body: SingleChildScrollView(
         child: SafeArea(
-          child: Padding(
-            padding: const EdgeInsets.all(16.0),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Row(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Padding(
+                padding: const EdgeInsets.only(left: 18, right: 18, top: 18),
+                child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
-                          'welcome'.tr, // Dynamic translation for 'Welcome 👋'
+                          'welcome'.tr,
                           style: CustomTextStyles.f18W600(
                               color: AppColors.textColor1),
                         ),
                         SizedBox(height: 2),
                         Text(
-                          'have_a_nice_day'
-                              .tr, // Dynamic translation for 'Have a nice Day!'
+                          'have_a_nice_day'.tr,
                           style: CustomTextStyles.f12W600(
                               color: AppColors.textColor),
                         ),
@@ -49,9 +47,9 @@ class HomePage extends StatelessWidget {
                       icon: Icon(Icons.language, color: AppColors.textColor),
                       onSelected: (String value) {
                         if (value == 'en') {
-                          Get.updateLocale(Locale('en')); // Update to English
+                          Get.updateLocale(Locale('en'));
                         } else if (value == 'ne') {
-                          Get.updateLocale(Locale('ne')); // Update to Nepali
+                          Get.updateLocale(Locale('ne'));
                         }
                       },
                       itemBuilder: (BuildContext context) =>
@@ -96,16 +94,21 @@ class HomePage extends StatelessWidget {
                     ),
                   ],
                 ),
-                SizedBox(height: 16),
-                HomeFirstImageWidget(),
-                SizedBox(height: 16),
-                Text(
-                  'what_are_you_looking_for'
-                      .tr, // Translation for 'What are you looking for?'
+              ),
+              SizedBox(height: 16),
+              HomeFirstImageWidget(),
+              SizedBox(height: 16),
+              Padding(
+                padding: const EdgeInsets.only(
+                    left: 18, right: 18, top: 7, bottom: 14),
+                child: Text(
+                  'what_are_you_looking_for'.tr,
                   style: CustomTextStyles.f14W600(color: AppColors.textColor1),
                 ),
-                SizedBox(height: 16),
-                Row(
+              ),
+              Padding(
+                padding: const EdgeInsets.only(left: 18, right: 18, bottom: 14),
+                child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Expanded(
@@ -120,6 +123,7 @@ class HomePage extends StatelessWidget {
                         ),
                       ),
                     ),
+                    SizedBox(width: 12),
                     Expanded(
                       child: InkWell(
                         onTap: () {
@@ -132,10 +136,31 @@ class HomePage extends StatelessWidget {
                         ),
                       ),
                     ),
+                  ],
+                ),
+              ),
+              Padding(
+                padding: const EdgeInsets.only(left: 18, right: 18, bottom: 14),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
                     Expanded(
                       child: InkWell(
                         onTap: () {
-                          Get.to(() => Prodbilltaxcalc());
+                          Get.to(() => IncomeTaxCalculator());
+                        },
+                        child: CustomContainer(
+                          imagePath: ImagePath.Billing,
+                          containerName: "product_billing".tr,
+                          text2: 'with_tax'.tr,
+                        ),
+                      ),
+                    ),
+                    SizedBox(width: 12),
+                    Expanded(
+                      child: InkWell(
+                        onTap: () {
+                          Get.to(() => InterestCalculator());
                         },
                         child: CustomContainer(
                           imagePath: ImagePath.Billing,
@@ -146,28 +171,29 @@ class HomePage extends StatelessWidget {
                     ),
                   ],
                 ),
-                SizedBox(height: 16),
-                Text(
-                  'testimonials'.tr, // Translation for 'Testimonials'
+              ),
+              Padding(
+                padding: const EdgeInsets.only(left: 18, right: 18, bottom: 12),
+                child: Text(
+                  'testimonials'.tr,
                   style: CustomTextStyles.f14W600(color: AppColors.textColor1),
                 ),
-                SizedBox(height: 10),
-                SingleChildScrollView(
-                  scrollDirection: Axis.horizontal,
-                  child: Row(children: [
-                    SizedBox(width: 5),
-                    buildTestimonialCard(
-                        name: "james_p".tr, review: "testimonial_james".tr),
-                    SizedBox(width: 15),
-                    buildTestimonialCard(
-                        name: "sara_r".tr, review: "testimonial_sarah".tr),
-                    SizedBox(width: 15),
-                    buildTestimonialCard(
-                        name: "sara_r".tr, review: "testimonial_sarah".tr),
-                  ]),
-                ),
-              ],
-            ),
+              ),
+              SingleChildScrollView(
+                scrollDirection: Axis.horizontal,
+                child: Row(children: [
+                  SizedBox(width: 5),
+                  buildTestimonialCard(
+                      name: "james_p".tr, review: "testimonial_james".tr),
+                  SizedBox(width: 15),
+                  buildTestimonialCard(
+                      name: "sara_r".tr, review: "testimonial_sarah".tr),
+                  SizedBox(width: 15),
+                  buildTestimonialCard(
+                      name: "sara_r".tr, review: "testimonial_sarah".tr),
+                ]),
+              ),
+            ],
           ),
         ),
       ),

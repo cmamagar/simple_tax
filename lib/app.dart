@@ -24,7 +24,7 @@ class MyApp extends StatelessWidget {
         Locale('np', ''),
       ],
       debugShowCheckedModeBanner: false,
-      home: HomePage(),
+      home: HomeScreen(),
     );
   }
 }
