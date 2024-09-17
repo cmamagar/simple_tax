@@ -1,8 +1,6 @@
 import 'dart:developer';
-
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:simple_tax/l10n/nepali_numbers.dart';
 
 class IncomeTaxController extends GetxController {
   final formKey = GlobalKey<FormState>();
@@ -10,7 +8,7 @@ class IncomeTaxController extends GetxController {
   final incomeController = TextEditingController();
   final bonusController = TextEditingController();
   final deductionController = TextEditingController();
-  var result = ''.obs;
+  RxString result = ''.obs;
   var isNepali = false.obs;
 
   void updateLocale(String value) {
@@ -32,43 +30,68 @@ class IncomeTaxController extends GetxController {
       final double deductionsValue =
           double.tryParse(convertToEnglishNumber(deductionController.text)) ??
               0;
-      // Debugging: Print parsed values
-      log('Income: $incomeValue, Bonus: $bonusValue, Deductions: $deductionsValue');
-      //log('Total Income: $totalIncome');
 
-      // Determine the tax rate based on selectYearMonthOption value
+      double totalIncome = incomeValue + bonusValue - deductionsValue;
+
       double taxAmount;
       if (selectYearMonthOption.value == 'Year') {
-        taxAmount = (incomeValue + bonusValue - deductionsValue) * 0.13 * 12;
-        log("Tax Amount0");
-      } else if (selectYearMonthOption.value == 'Month') {
-        taxAmount = (incomeValue + bonusValue - deductionsValue) * 0.13;
+        taxAmount = totalIncome * 0.13 * 12; // Annual tax rate
       } else {
-        taxAmount = 0;
-        log('Invalid selectYearMonthOption value: ${selectYearMonthOption.value}');
+        taxAmount = totalIncome * 0.13; // Monthly tax rate
       }
 
-      // Debugging: Print the calculated tax amount
-      log('Tax Amount: $taxAmount');
+      double effectiveTaxRate = (taxAmount / totalIncome) * 100;
+
       if (isNepali.value) {
         result.value =
-            '${'Tax Amount'}: ${convertToNepaliNumber(taxAmount.toStringAsFixed(2))}';
+            '${'Tax Amount'}: ${convertToNepaliNumber(taxAmount.toStringAsFixed(2))}\n${'Effective Tax Rate'}: ${convertToNepaliNumber(effectiveTaxRate.toStringAsFixed(2))}%';
       } else {
-        result.value = '${'Tax Amount'}: Rs ${taxAmount.toStringAsFixed(2)}';
+        result.value =
+            '${'Tax Amount'}: Rs ${taxAmount.toStringAsFixed(2)}\n${'Effective Tax Rate'}: ${effectiveTaxRate.toStringAsFixed(2)}%';
       }
     } else {
-      log('Form validation failed');
+      result.value = ''; // Clear the result if form validation fails
     }
   }
 
-  var selectedYearOption = "".obs;
-  var selectStatusOption = "".obs;
-  var selectYearMonthOption = "".obs;
+  String convertToEnglishNumber(String value) {
+    // Implement if needed to handle conversions from Nepali to English numbers
+    return value;
+  }
 
-  // Options for the dropdown
-  final List<String> yearOptions = ['Year 1', 'Year 2', 'Year 3'];
+  String convertToNepaliNumber(String value) {
+    // Implement to handle conversions from English to Nepali numbers
+    return value;
+  }
+
+  final List<String> yearOptions = ['2024', '2025', '2026'];
   final List<String> statusOptions = ['Single', 'Married'];
   final List<String> yearMonthOptions = ['Year', 'Month'];
+
+  var selectedYearOption = "".obs;
+  var selectYearMonthOption = "".obs;
+  var selectStatusOption = "".obs;
+
+  final singleSlabs = [
+    ['1.', '0_500000', '1_percent', '5,000'],
+    ['2.', '500000_700000', '10_percent', '20,000'],
+    ['3.', '700000_1000000', '20_percent', '60,0000'],
+    ['4.', '1000000_2000000', '30_percent', '3,00,000'],
+    ['5.', '2000000_5000000', '36_percent(plus 30% : 20% added)', '10,80,000'],
+    ['6.', 'above_5000000', '39_percent(plus 30% : 30% added)', '3,90,0000'],
+  ];
+
+  final marriedSlabs = [
+    ['1.', '0_600000', '1_percent', '6,000'],
+    ['2.', '600000_800000', '10_percent', '20,000'],
+    ['3.', '800000_1100000', '20_percent', '60,0000'],
+    ['4.', '1100000_2000000', '30_percent', '2,70,000'],
+    ['5.', '2000000_5000000', '36_percent(plus 30% : 20% added)', '10,80,000'],
+    ['6.', 'above_5000000', '39_percent(plus 30% : 30% added)', '3,90,0000'],
+  ];
+
+  List<List<String>> get currentSlabs =>
+      selectStatusOption.value == 'Single' ? singleSlabs : marriedSlabs;
 
   // Method to update selected status
   void updateSelectedStatus(String value) {
@@ -96,6 +119,8 @@ class IncomeTaxController extends GetxController {
     // If selectedYearOption, selectStatusOption, and selectYearMonthOption are RxStrings
     selectedYearOption.value = ''; // Clear the selected year option
     selectStatusOption.value = ''; // Clear the selected status option
-    selectYearMonthOption.value = ''; // Clear the year/month option
+    selectYearMonthOption.value = '';
+    result.value = "";
+    // Clear the year/month option
   }
 }

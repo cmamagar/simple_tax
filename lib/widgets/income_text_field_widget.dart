@@ -62,7 +62,7 @@ class IncomeTextFieldWidget extends StatelessWidget {
                                   ? null
                                   : controller.selectedYearOption.value,
                               hint: Text(
-                                "Select year",
+                                "selectYear".tr,
                                 style: CustomTextStyles.f12W400(
                                     color: AppColors.secondaryTextColor),
                               ),
@@ -92,21 +92,22 @@ class IncomeTextFieldWidget extends StatelessWidget {
                                 controller.updateSelected(value!);
                               },
                               validator: (value) =>
-                                  value == null ? 'Please select a year' : null,
+                                  value == null ? 'PleaseSelectYear'.tr : null,
                             )),
                       ),
                     ),
                     SizedBox(width: 8),
                     Expanded(
                       child: Theme(
-                        data: Theme.of(context)
-                            .copyWith(canvasColor: AppColors.whiteColor),
+                        data: Theme.of(context).copyWith(
+                          canvasColor: AppColors.whiteColor,
+                        ),
                         child: Obx(() => DropdownButtonFormField<String>(
                               value: controller.selectStatusOption.value.isEmpty
                                   ? null
                                   : controller.selectStatusOption.value,
                               hint: Text(
-                                "Select Status",
+                                "selectStatus".tr,
                                 style: CustomTextStyles.f12W400(
                                     color: AppColors.secondaryTextColor),
                               ),
@@ -133,10 +134,13 @@ class IncomeTextFieldWidget extends StatelessWidget {
                                       ))
                                   .toList(),
                               onChanged: (value) {
-                                controller.updateSelectedStatus(value!);
+                                if (value == 'Single' || value == 'Married') {
+                                  controller.selectStatusOption.value = value!;
+                                  // Update the salary slab table based on the selection
+                                }
                               },
                               validator: (value) => value == null
-                                  ? 'Please select a status'
+                                  ? 'PleaseSelectStatus'.tr
                                   : null,
                             )),
                       ),
@@ -165,7 +169,7 @@ class IncomeTextFieldWidget extends StatelessWidget {
                   children: [
                     Expanded(
                       child: CustomTextField(
-                        hint: "Enter Income",
+                        hint: "enterIncome".tr,
                         textInputAction: TextInputAction.done,
                         textInputType: TextInputType.number,
                         controller: controller.incomeController,
@@ -175,10 +179,10 @@ class IncomeTextFieldWidget extends StatelessWidget {
                               : value ?? '';
 
                           if (actualValue.isEmpty) {
-                            return 'Please enter income';
+                            return 'PleaseEnterIncome'.tr;
                           }
                           if (double.tryParse(actualValue) == null) {
-                            return 'Invalid income';
+                            return 'invalidIncome';
                           }
                           return null;
                         },
@@ -224,7 +228,7 @@ class IncomeTextFieldWidget extends StatelessWidget {
                                       ? null
                                       : controller.selectYearMonthOption.value,
                               hint: Text(
-                                "Select Status",
+                                "selectTimePeriod".tr,
                                 style: CustomTextStyles.f12W400(
                                     color: AppColors.secondaryTextColor),
                               ),
@@ -254,7 +258,7 @@ class IncomeTextFieldWidget extends StatelessWidget {
                                 controller.updateSelectedYearMonth(value!);
                               },
                               validator: (value) => value == null
-                                  ? 'Please select year or months'
+                                  ? 'PleaseSelectYearOrMonths'.tr
                                   : null,
                             )),
                       ),
@@ -296,118 +300,128 @@ class IncomeTextFieldWidget extends StatelessWidget {
                       String actualValue = controller.isNepali.value
                           ? convertToEnglishNumber(value ?? '')
                           : value ?? '';
+
                       if (actualValue.isEmpty) {
-                        return 'Invalid input';
+                        return 'PleaseEnterAnnualAddition'.tr;
                       }
                       if (double.tryParse(actualValue) == null) {
-                        return 'Invalid input';
+                        return 'invalidInput';
                       }
                       return null;
                     },
                     controller: controller.bonusController,
-                    hint: "Enter Additional Bonus",
-                    textInputAction: TextInputAction.done,
+                    hint: ('enterAdditionalBonus').tr,
+                    textInputAction: TextInputAction.next,
                     textInputType: TextInputType.number),
-                SizedBox(height: 16),
+                SizedBox(height: 20),
                 Text(
                   ('annualDeduction')
-                      .tr, // JSON key for "Annual Addition (Bonus)"
+                      .tr, // JSON key for "Annual Deduction (Insurance)"
                   style: CustomTextStyles.f14W600(color: AppColors.borderColor),
                 ),
                 Text(
                   ('deductionsInfo')
-                      .tr, // JSON key for "Annual Addition (Bonus)"
+                      .tr, // JSON key for "Annual Deduction (Insurance)"
                   style: CustomTextStyles.f14W600(color: AppColors.borderColor),
                 ),
                 SizedBox(height: 7),
                 CustomTextField(
-                  onChanged: (value) {
-                    if (controller.isNepali.value && value.isNotEmpty) {
-                      String nepaliNumber = convertToNepaliNumber(value);
-                      if (nepaliNumber != controller.deductionController.text) {
-                        controller.deductionController.text = nepaliNumber;
-                        controller.deductionController.selection =
-                            TextSelection.fromPosition(
-                          TextPosition(
-                              offset:
-                                  controller.deductionController.text.length),
-                        ); // Move cursor to the end
+                    onChanged: (value) {
+                      if (controller.isNepali.value && value.isNotEmpty) {
+                        String nepaliNumber = convertToNepaliNumber(value);
+                        if (nepaliNumber !=
+                            controller.deductionController.value) {
+                          controller.deductionController.text = nepaliNumber;
+                          controller.deductionController.selection =
+                              TextSelection.fromPosition(TextPosition(
+                                  offset: controller
+                                      .deductionController.text.length));
+                        }
+                      } else if (!controller.isNepali.value &&
+                          value.isNotEmpty) {
+                        String englishNumber = convertToEnglishNumber(value);
+                        if (englishNumber !=
+                            controller.deductionController.text) {
+                          controller.deductionController.text = englishNumber;
+                          controller.deductionController.selection =
+                              TextSelection.fromPosition(
+                            TextPosition(
+                                offset:
+                                    controller.deductionController.text.length),
+                          ); // Move cursor to the end
+                        }
                       }
-                    } else if (!controller.isNepali.value && value.isNotEmpty) {
-                      String englishNumber = convertToEnglishNumber(value);
-                      if (englishNumber !=
-                          controller.deductionController.text) {
-                        controller.deductionController.text = englishNumber;
-                        controller.deductionController.selection =
-                            TextSelection.fromPosition(
-                          TextPosition(
-                              offset: controller.incomeController.text.length),
-                        ); // Move cursor to the end
+                    },
+                    validator: (value) {
+                      String actualValue = controller.isNepali.value
+                          ? convertToEnglishNumber(value ?? '')
+                          : value ?? '';
+
+                      if (actualValue.isEmpty) {
+                        return 'PleaseEnterAnnualDeduction'.tr;
                       }
-                    }
-                  },
-                  validator: (value) {
-                    String actualValue = controller.isNepali.value
-                        ? convertToEnglishNumber(value ?? '')
-                        : value ?? '';
-                    if (actualValue.isEmpty) {
-                      return 'Invalid input';
-                    }
-                    if (double.tryParse(actualValue) == null) {
-                      return 'Invalid input';
-                    }
-                    return null;
-                  },
-                  hint: "Enter Deductions",
-                  controller: controller.deductionController,
-                  textInputAction: TextInputAction.done,
-                  textInputType: TextInputType.number,
+                      if (double.tryParse(actualValue) == null) {
+                        return 'invalidInput';
+                      }
+                      return null;
+                    },
+                    controller: controller.deductionController,
+                    hint: ('enterDeductions').tr,
+                    textInputAction: TextInputAction.done,
+                    textInputType: TextInputType.number),
+                SizedBox(height: 20),
+                SlabRateTable(
+                  controller: controller,
                 ),
                 SizedBox(height: 20),
-                Text(
-                  "slabs_and_rate".tr,
-                  style: CustomTextStyles.f14W600(color: AppColors.borderColor),
-                ),
-                SizedBox(height: 20),
-                SlabRateTable(),
-                SizedBox(height: 20),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                Column(
                   children: [
-                    Expanded(
-                      child: CustomElevatedButton(
-                        title: "submit".tr,
-                        onTap: () {
-                          if (controller.formKey.currentState?.validate() ??
-                              false) {
-                            controller.calculateTax();
-                          }
-                        },
-                      ),
-                    ),
-                    SizedBox(width: 10),
-                    Expanded(
-                      child: CustomElevatedButton(
-                        title: "reset".tr,
-                        onTap: () {
-                          if (controller.formKey.currentState?.validate() ??
-                              false) {
-                            controller
-                                .clearFields(); // Assuming a reset method exists in your controller
-                          }
-                        },
-                      ),
+                    // Display result after calculation
+                    Obx(() {
+                      return controller.result.isNotEmpty
+                          ? Padding(
+                              padding:
+                                  const EdgeInsets.symmetric(vertical: 16.0),
+                              child: Text(
+                                controller.result
+                                    .value, // Displays both tax amount and effective tax rate
+                                style: CustomTextStyles.f14W600(
+                                  color: AppColors.textColor,
+                                ),
+                                textAlign:
+                                    TextAlign.center, // Center-align the text
+                              ),
+                            )
+                          : Container(); // Empty container when result is not available
+                    }),
+
+                    // Row containing the buttons (Reset and Submit)
+                    Row(
+                      children: [
+                        Expanded(
+                          child: CustomElevatedButton(
+                            title: ('reset').tr,
+                            textColor: AppColors.whiteColor,
+                            onTap: controller.clearFields,
+                          ),
+                        ),
+                        SizedBox(width: 12),
+                        Expanded(
+                          child: CustomElevatedButton(
+                            title: ('submit').tr,
+                            textColor: AppColors.whiteColor,
+                            onTap: () {
+                              if (controller.formKey.currentState!.validate()) {
+                                controller
+                                    .calculateTax(); // Perform tax calculation
+                              }
+                            },
+                          ),
+                        ),
+                      ],
                     ),
                   ],
-                ),
-                SizedBox(height: 20),
-                Obx(
-                  () => Text(
-                    controller.result.value,
-                    style: CustomTextStyles.f18W600(),
-                    textAlign: TextAlign.center,
-                  ),
-                ),
+                )
               ],
             ),
           ),

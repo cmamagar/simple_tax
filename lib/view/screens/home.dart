@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:simple_tax/controller/home_screen_controller.dart';
 import 'package:simple_tax/incomeTaxCalculator/incomeTaxCalc.dart';
@@ -43,55 +42,50 @@ class HomeScreen extends StatelessWidget {
                         ),
                       ],
                     ),
-                    PopupMenuButton<String>(
-                      icon: Icon(Icons.language, color: AppColors.textColor),
-                      onSelected: (String value) {
-                        if (value == 'en') {
-                          Get.updateLocale(Locale('en'));
-                        } else if (value == 'ne') {
-                          Get.updateLocale(Locale('ne'));
-                        }
-                      },
-                      itemBuilder: (BuildContext context) =>
-                          <PopupMenuEntry<String>>[
-                        PopupMenuItem<String>(
-                          value: 'en',
-                          child: Row(
-                            children: [
-                              SvgPicture.asset(
-                                'assets/flags/usa.svg',
-                                height: 20,
-                                width: 20,
-                              ),
-                              SizedBox(width: 10),
-                              Text(
-                                'english_language'.tr,
-                                style: CustomTextStyles.f12W600(
-                                    color: AppColors.textColor),
-                              ),
-                            ],
+                    Obx(() => PopupMenuButton<String>(
+                          icon: Image.asset(
+                            c.currentFlag
+                                .value, // Observe and display selected flag icon
+                            height: 24,
+                            width: 24,
                           ),
-                        ),
-                        PopupMenuItem<String>(
-                          value: 'ne',
-                          child: Row(
-                            children: [
-                              SvgPicture.asset(
-                                'assets/flags/nepal.svg',
-                                height: 20,
-                                width: 20,
+                          onSelected: (String value) {
+                            c.switchLanguage(value); // Update language and flag
+                          },
+                          itemBuilder: (BuildContext context) =>
+                              <PopupMenuEntry<String>>[
+                            PopupMenuItem<String>(
+                              value: 'en',
+                              child: Row(
+                                children: [
+                                  Image.asset('assets/images/usa.png',
+                                      height: 20, width: 20),
+                                  SizedBox(width: 10),
+                                  Text(
+                                    'english_language'.tr,
+                                    style: CustomTextStyles.f12W600(
+                                        color: AppColors.textColor),
+                                  ),
+                                ],
                               ),
-                              SizedBox(width: 10),
-                              Text(
-                                'nepali_lanaguage'.tr,
-                                style: CustomTextStyles.f12W600(
-                                    color: AppColors.textColor),
+                            ),
+                            PopupMenuItem<String>(
+                              value: 'ne',
+                              child: Row(
+                                children: [
+                                  Image.asset('assets/images/nepal.png',
+                                      height: 20, width: 20),
+                                  SizedBox(width: 10),
+                                  Text(
+                                    'nepali_language'.tr,
+                                    style: CustomTextStyles.f12W600(
+                                        color: AppColors.textColor),
+                                  ),
+                                ],
                               ),
-                            ],
-                          ),
-                        ),
-                      ],
-                    ),
+                            ),
+                          ],
+                        )),
                   ],
                 ),
               ),
