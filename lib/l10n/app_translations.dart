@@ -102,7 +102,15 @@ class AppTranslations extends Translations {
           "Single": "Single",
           "Married": "Married",
           "Year": "Year",
-          "Month": "Month"
+          "Month": "Month",
+          "Interest Rate Calculator": "Interest Rate Calculator",
+          "Principal Amount": "Principal Amount",
+          "Enter Principal": "Enter Principal",
+          "Interest Rate (%)": "Interest Rate (%)",
+          "Enter Interest Rate": "Enter Interest Rate",
+          "Time Period": "Time Period",
+          "Enter Time Period": "Enter Time Period",
+          "Calculated Interest: ": "Calculated Interest: ",
         },
         'ne': {
           "welcome": 'स्वागतम् 👋',
@@ -209,7 +217,15 @@ class AppTranslations extends Translations {
           "Single": "एकल",
           "Married": "विवाहित",
           "Year": "वर्ष",
-          "Month": "महिना"
+          "Month": "महिना",
+          "Interest Rate Calculator": "सुदी दर गणक",
+          "Principal Amount": "मुख्य रकम",
+          "Enter Principal": "मुख्य रकम प्रविष्ट गर्नुहोस्",
+          "Interest Rate (%)": "सुदी दर (%)",
+          "Enter Interest Rate": "सुदी दर प्रविष्ट गर्नुहोस्",
+          "Time Period": "समय अवधि",
+          "Enter Time Period": "समय अवधि प्रविष्ट गर्नुहोस्",
+          "Calculated Interest: ": "गणना गरिएको सुदी: "
         }
       };
 }

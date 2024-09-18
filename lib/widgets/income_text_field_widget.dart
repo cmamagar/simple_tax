@@ -169,53 +169,61 @@ class IncomeTextFieldWidget extends StatelessWidget {
                   children: [
                     Expanded(
                       child: CustomTextField(
-                        hint: "enterIncome".tr,
-                        textInputAction: TextInputAction.done,
-                        textInputType: TextInputType.number,
-                        controller: controller.incomeController,
-                        validator: (value) {
-                          String actualValue = controller.isNepali.value
-                              ? convertToEnglishNumber(value ?? '')
-                              : value ?? '';
+                          hint: "enterIncome".tr,
+                          textInputAction: TextInputAction.done,
+                          textInputType: TextInputType.number,
+                          controller: controller.incomeController,
+                          validator: (value) {
+                            // Convert to English if input is in Nepali before validation
+                            String actualValue = controller.isNepali.value
+                                ? convertToEnglishNumber(value ?? '')
+                                : value ?? '';
 
-                          if (actualValue.isEmpty) {
-                            return 'PleaseEnterIncome'.tr;
-                          }
-                          if (double.tryParse(actualValue) == null) {
-                            return 'invalidIncome';
-                          }
-                          return null;
-                        },
-                        onChanged: (value) {
-                          if (controller.isNepali.value && value.isNotEmpty) {
-                            String nepaliNumber = convertToNepaliNumber(value);
-                            if (nepaliNumber !=
-                                controller.incomeController.text) {
-                              controller.incomeController.text = nepaliNumber;
-                              controller.incomeController.selection =
-                                  TextSelection.fromPosition(
-                                TextPosition(
-                                    offset: controller
-                                        .incomeController.text.length),
-                              ); // Move cursor to the end
+                            if (actualValue.isEmpty) {
+                              return 'PleaseEnterIncome'.tr;
                             }
-                          } else if (!controller.isNepali.value &&
-                              value.isNotEmpty) {
-                            String englishNumber =
-                                convertToEnglishNumber(value);
-                            if (englishNumber !=
-                                controller.incomeController.text) {
-                              controller.incomeController.text = englishNumber;
-                              controller.incomeController.selection =
-                                  TextSelection.fromPosition(
-                                TextPosition(
-                                    offset: controller
-                                        .incomeController.text.length),
-                              ); // Move cursor to the end
+                            if (double.tryParse(actualValue) == null) {
+                              return 'invalidIncome'.tr;
                             }
-                          }
-                        },
-                      ),
+                            return null;
+                          },
+                          onChanged: (value) {
+                            // If the language is set to Nepali and the input is not empty
+                            if (controller.isNepali.value && value.isNotEmpty) {
+                              // Convert English digits to Nepali
+                              String nepaliNumber =
+                                  convertToNepaliNumber(value);
+
+                              // Only update the text if the current value is different to prevent loops
+                              if (nepaliNumber !=
+                                  controller.incomeController.text) {
+                                controller.incomeController.value =
+                                    controller.incomeController.value.copyWith(
+                                  text: nepaliNumber,
+                                  selection: TextSelection.collapsed(
+                                      offset: nepaliNumber.length),
+                                );
+                              }
+                            }
+                            // If the language is set to English and the input is not empty
+                            else if (!controller.isNepali.value &&
+                                value.isNotEmpty) {
+                              // Convert Nepali digits to English
+                              String englishNumber =
+                                  convertToEnglishNumber(value);
+
+                              // Only update the text if the current value is different to prevent loops
+                              if (englishNumber !=
+                                  controller.incomeController.text) {
+                                controller.incomeController.value =
+                                    controller.incomeController.value.copyWith(
+                                  text: englishNumber,
+                                  selection: TextSelection.collapsed(
+                                      offset: englishNumber.length),
+                                );
+                              }
+                            }
+                          }),
                     ),
                     SizedBox(width: 8),
                     Expanded(

@@ -1,249 +1,120 @@
-// lib/screens/interest_calculator.dart
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:simple_tax/controller/interest_screen_controller.dart';
-import 'package:simple_tax/l10n/nepali_numbers.dart';
+import 'package:simple_tax/utils/colors.dart';
 import 'package:simple_tax/utils/custom_text_styles.dart';
+import 'package:simple_tax/widgets/custom/custom_textfield.dart';
+import 'package:simple_tax/widgets/custom/elevated_button.dart';
 
-class InterestCalculator extends StatelessWidget {
-  final controller = Get.put(InterestCalculatorController());
+class Interestcalc extends StatelessWidget {
+  final InterestCalculatorController controller =
+      Get.put(InterestCalculatorController());
+
+  Interestcalc({super.key});
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: AppColors.primaryColor,
       appBar: AppBar(
+        backgroundColor: AppColors.primaryColor,
         title: Text(
-          ('Interest Rate Calculator'),
-          style: CustomTextStyles.f18W600(),
+          'Interest Rate Calculator'.tr,
+          style: CustomTextStyles.f18W600(color: AppColors.whiteColor),
+        ),
+        leading: InkWell(
+          onTap: () => Get.back(),
+          child: Icon(
+            Icons.arrow_back,
+            color: AppColors.whiteColor,
+          ),
         ),
       ),
-      body: Padding(
-        padding: const EdgeInsets.all(16.0),
-        child: Form(
-          key: controller.formKey,
-          child: SingleChildScrollView(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.stretch,
-              children: [
-                // Principal Amount TextField
-                Container(
-                  decoration: BoxDecoration(
-                    border: Border.all(color: Colors.black),
-                    borderRadius: BorderRadius.circular(8.0),
-                  ),
-                  child: TextFormField(
-                    controller: controller.principalController,
-                    style: CustomTextStyles.f12W600(), // Apply text style
-                    decoration: InputDecoration(
-                      labelText: ('principal_amount'),
-                      labelStyle: CustomTextStyles.f12W600(color: Colors.black),
-                      border: InputBorder.none,
-                      contentPadding: EdgeInsets.all(16.0),
+      body: Container(
+        margin: EdgeInsets.only(top: 20),
+        height: MediaQuery.of(context).size.height * 1.3,
+        decoration: BoxDecoration(
+          color: AppColors.whiteColor,
+          borderRadius: BorderRadius.only(topLeft: Radius.circular(15)),
+        ),
+        child: Padding(
+          padding: const EdgeInsets.all(20),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                'Principal Amount'.tr,
+                style: CustomTextStyles.f14W600(color: AppColors.borderColor),
+              ),
+              SizedBox(height: 7),
+              CustomTextField(
+                hint: 'Enter Principal'.tr,
+                textInputAction: TextInputAction.done,
+                textInputType: TextInputType.number,
+                controller: controller.principalController,
+              ),
+              SizedBox(height: 20),
+              Text(
+                'Interest Rate (%)'.tr,
+                style: CustomTextStyles.f14W600(color: AppColors.borderColor),
+              ),
+              SizedBox(height: 7),
+              CustomTextField(
+                hint: 'Enter Interest Rate'.tr,
+                textInputAction: TextInputAction.done,
+                textInputType: TextInputType.number,
+                controller: controller.rateController,
+              ),
+              SizedBox(height: 20),
+              Text(
+                'Time Period'.tr,
+                style: CustomTextStyles.f14W600(color: AppColors.borderColor),
+              ),
+              SizedBox(height: 7),
+              CustomTextField(
+                hint: 'Enter Time Period'.tr,
+                textInputAction: TextInputAction.done,
+                textInputType: TextInputType.number,
+                controller: controller.timeController,
+              ),
+              SizedBox(height: 30),
+              Row(
+                children: [
+                  Expanded(
+                    child: CustomElevatedButton(
+                      title: 'reset'.tr,
+                      textColor: AppColors.whiteColor,
+                      onTap: controller.onClose,
                     ),
-                    keyboardType: TextInputType.number,
-                    validator: (value) {
-                      String actualValue = controller.isNepali.value
-                          ? convertToEnglishNumber(value ?? '')
-                          : value ?? '';
+                  ),
+                  SizedBox(width: 12),
+                  Expanded(
+                    child: CustomElevatedButton(
+                      title: 'submit'.tr,
+                      textColor: AppColors.whiteColor,
+                      onTap: () {
+                        if (controller.formKey.currentState!.validate()) {
+                          controller
+                              .calculateInterest(); // Perform interest calculation
+                        }
+                      },
+                    ),
+                  ),
+                ],
+              ),
+              SizedBox(height: 30),
 
-                      if (actualValue.isEmpty) {
-                        return ('enter_principal');
-                      }
-                      if (double.tryParse(actualValue) == null) {
-                        return ('enter_principal');
-                      }
-                      return null;
-                    },
-                    onChanged: (value) {
-                      if (controller.isNepali.value) {
-                        String nepaliNumber = convertToNepaliNumber(value);
-                        controller.principalController.value = TextEditingValue(
-                          text: nepaliNumber,
-                          selection: TextSelection.collapsed(
-                              offset: nepaliNumber.length),
-                        );
-                      } else {
-                        controller.principalController.value = TextEditingValue(
-                          text: value,
-                          selection:
-                              TextSelection.collapsed(offset: value.length),
-                        );
-                      }
-                    },
-                  ),
-                ),
-                SizedBox(height: 16),
-                // Interest Rate TextField
-                Container(
-                  decoration: BoxDecoration(
-                    border: Border.all(color: Colors.black),
-                    borderRadius: BorderRadius.circular(8.0),
-                  ),
-                  child: TextFormField(
-                    controller: controller.rateController,
-                    style: CustomTextStyles.f12W600(), // Apply text style
-                    decoration: InputDecoration(
-                      labelText: ('interest_rate'),
-                      labelStyle: CustomTextStyles.f12W600(color: Colors.black),
-                      border: InputBorder.none,
-                      contentPadding: EdgeInsets.all(16.0),
-                    ),
-                    keyboardType: TextInputType.number,
-                    validator: (value) {
-                      String actualValue = controller.isNepali.value
-                          ? convertToEnglishNumber(value ?? '')
-                          : value ?? '';
-                      if (actualValue.isEmpty) {
-                        return ('enter_rate');
-                      }
-                      if (double.tryParse(actualValue) == null) {
-                        return ('enter_rate');
-                      }
-                      return null;
-                    },
-                    onChanged: (value) {
-                      if (controller.isNepali.value) {
-                        String nepaliNumber = convertToNepaliNumber(value);
-                        controller.rateController.value = TextEditingValue(
-                          text: nepaliNumber,
-                          selection: TextSelection.collapsed(
-                              offset: nepaliNumber.length),
-                        );
-                      } else {
-                        controller.rateController.value = TextEditingValue(
-                          text: value,
-                          selection:
-                              TextSelection.collapsed(offset: value.length),
-                        );
-                      }
-                    },
-                  ),
-                ),
-                SizedBox(height: 16),
-                // Time Period TextField with Dropdown
-                Row(
-                  children: [
-                    Expanded(
-                      child: Container(
-                        decoration: BoxDecoration(
-                          border: Border.all(color: Colors.black),
-                          borderRadius: BorderRadius.circular(8.0),
-                        ),
-                        child: TextFormField(
-                          controller: controller.timeController,
-                          style: CustomTextStyles.f12W600(), // Apply text style
-                          decoration: InputDecoration(
-                            labelText: ('time_period'),
-                            labelStyle:
-                                CustomTextStyles.f12W600(color: Colors.black),
-                            border: InputBorder.none,
-                            contentPadding: EdgeInsets.all(16.0),
-                          ),
-                          keyboardType: TextInputType.number,
-                          validator: (value) {
-                            String actualValue = controller.isNepali.value
-                                ? convertToEnglishNumber(value ?? '')
-                                : value ?? '';
-                            if (actualValue.isEmpty) {
-                              return ('enter_time');
-                            }
-                            if (double.tryParse(actualValue) == null) {
-                              return ('enter_time');
-                            }
-                            return null;
-                          },
-                          onChanged: (value) {
-                            if (controller.isNepali.value) {
-                              String nepaliNumber =
-                                  convertToNepaliNumber(value);
-                              controller.timeController.value =
-                                  TextEditingValue(
-                                text: nepaliNumber,
-                                selection: TextSelection.collapsed(
-                                    offset: nepaliNumber.length),
-                              );
-                            } else {
-                              controller.timeController.value =
-                                  TextEditingValue(
-                                text: value,
-                                selection: TextSelection.collapsed(
-                                    offset: value.length),
-                              );
-                            }
-                          },
-                        ),
-                      ),
-                    ),
-                    SizedBox(width: 8),
-                    Container(
-                      width: 110,
-                      height: 56,
-                      decoration: BoxDecoration(
-                        border: Border.all(color: Colors.black),
-                        borderRadius: BorderRadius.circular(8.0),
-                      ),
-                      child: DropdownButtonHideUnderline(
-                        child: Obx(() => DropdownButton<String>(
-                              value: controller.timePeriodType.value,
-                              isExpanded: true,
-                              items: [
-                                DropdownMenuItem(
-                                  value: 'Years',
-                                  child: Padding(
-                                    padding: const EdgeInsets.symmetric(
-                                        horizontal: 8.0),
-                                    child: Text(
-                                      ('years'),
-                                      textAlign: TextAlign.center,
-                                      style: CustomTextStyles.f12W600(),
-                                    ),
-                                  ),
-                                ),
-                                DropdownMenuItem(
-                                  value: 'Months',
-                                  child: Padding(
-                                    padding: const EdgeInsets.symmetric(
-                                        horizontal: 8.0),
-                                    child: Text(
-                                      ('months'),
-                                      textAlign: TextAlign.center,
-                                      style: CustomTextStyles.f12W600(),
-                                    ),
-                                  ),
-                                ),
-                              ],
-                              onChanged: (value) {
-                                controller.timePeriodType.value =
-                                    value ?? 'Years';
-                                controller.isYearly.value = value == 'Years';
-                              },
-                            )),
-                      ),
-                    ),
-                  ],
-                ),
-                SizedBox(height: 16),
-                // Calculate Button
-                ElevatedButton(
-                  onPressed: controller.calculateInterest,
-                  child: Text(
-                    ('Submit'),
-                    style: CustomTextStyles.f12W600(),
-                  ),
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor: Colors.blue,
-                    padding: EdgeInsets.symmetric(vertical: 16.0),
-                  ),
-                ),
-                SizedBox(height: 16),
-                // Result
-                Obx(() => Text(
-                      '${('result')}: ${controller.result.value} ${('currency')}',
-                      style: CustomTextStyles.f18W600(),
-                      textAlign: TextAlign.center,
-                    )),
-              ],
-            ),
+              // Display the result
+              Obx(() {
+                return Text(
+                  controller.result.value.isEmpty
+                      ? ''
+                      : 'Calculated Interest: ${controller.result.value}'.tr,
+                  style:
+                      CustomTextStyles.f16W600(color: AppColors.primaryColor),
+                );
+              }),
+            ],
           ),
         ),
       ),

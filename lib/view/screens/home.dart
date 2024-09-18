@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:simple_tax/EMICalculator/emiCalc.dart';
+import 'package:simple_tax/ProductBilling/prodBillTaxCalc%20.dart';
 import 'package:simple_tax/controller/home_screen_controller.dart';
 import 'package:simple_tax/incomeTaxCalculator/incomeTaxCalc.dart';
 import 'package:simple_tax/interestCalculator/interestCalc.dart';
@@ -121,7 +123,7 @@ class HomeScreen extends StatelessWidget {
                     Expanded(
                       child: InkWell(
                         onTap: () {
-                          Get.to(() => InterestCalculator());
+                          Get.to(() => Interestcalc());
                         },
                         child: CustomContainer(
                           imagePath: ImagePath.Interestcalc,
@@ -141,7 +143,7 @@ class HomeScreen extends StatelessWidget {
                     Expanded(
                       child: InkWell(
                         onTap: () {
-                          Get.to(() => IncomeTaxCalculator());
+                          Get.to(() => Prodbilltaxcalc());
                         },
                         child: CustomContainer(
                           imagePath: ImagePath.Billing,
@@ -154,12 +156,12 @@ class HomeScreen extends StatelessWidget {
                     Expanded(
                       child: InkWell(
                         onTap: () {
-                          Get.to(() => InterestCalculator());
+                          Get.to(() => Emicalc());
                         },
                         child: CustomContainer(
                           imagePath: ImagePath.Billing,
-                          containerName: "product_billing".tr,
-                          text2: 'with_tax'.tr,
+                          containerName: "EMI".tr,
+                          text2: 'Calculator'.tr,
                         ),
                       ),
                     ),

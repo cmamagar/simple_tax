@@ -1,43 +1,31 @@
-// lib/controller/interest_calculator_controller.dart
-import 'package:get/get.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
 class InterestCalculatorController extends GetxController {
-  final formKey = GlobalKey<FormState>();
   final principalController = TextEditingController();
   final rateController = TextEditingController();
   final timeController = TextEditingController();
+  final formKey = GlobalKey<FormState>();
 
   var result = ''.obs;
-  var isYearly = true.obs;
-  var timePeriodType = 'Years'.obs;
-  var isNepali = false.obs;
-
-  void onLocaleChange(Locale locale) {
-    // Logic to handle locale change
-    isNepali.value = locale.languageCode == 'ne';
-  }
 
   void calculateInterest() {
-    if (formKey.currentState?.validate() ?? false) {
-      double principal = double.parse(principalController.text.replaceAll(',', ''));
-      double rate = double.parse(rateController.text.replaceAll(',', ''));
-      double time = double.parse(timeController.text.replaceAll(',', ''));
+    final principal = double.tryParse(principalController.text) ?? 0;
+    final rate = double.tryParse(rateController.text) ?? 0;
+    final time = double.tryParse(timeController.text) ?? 0;
 
-      double interest = (principal * rate * time) / 100;
-      if (!isYearly.value) {
-        interest = interest / 12;
-      }
-
+    if (principal > 0 && rate > 0 && time > 0) {
+      final interest = (principal * rate * time) / 100;
       result.value = interest.toStringAsFixed(2);
+    } else {
+      result.value = 'Invalid input';
     }
   }
 
-  @override
   void onClose() {
-    principalController.dispose();
-    rateController.dispose();
-    timeController.dispose();
-    super.onClose();
+    principalController.clear();
+    rateController.clear();
+    timeController.clear();
+    result.value = '';
   }
 }
