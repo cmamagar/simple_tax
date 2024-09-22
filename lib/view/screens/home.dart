@@ -1,3 +1,4 @@
+import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:simple_tax/EMICalculator/emiCalc.dart';
@@ -10,6 +11,7 @@ import 'package:simple_tax/utils/custom_text_styles.dart';
 import 'package:simple_tax/utils/image_path.dart';
 import 'package:simple_tax/widgets/custom/custom_container.dart';
 import 'package:simple_tax/widgets/home_screen_widget.dart';
+import 'package:simple_tax/widgets/testimonial_card_widget.dart';
 
 class HomeScreen extends StatelessWidget {
   final c = Get.put(HomeScreenController());
@@ -93,7 +95,7 @@ class HomeScreen extends StatelessWidget {
               ),
               SizedBox(height: 16),
               HomeFirstImageWidget(),
-              SizedBox(height: 16),
+              SizedBox(height: 20),
               Padding(
                 padding: const EdgeInsets.only(
                     left: 18, right: 18, top: 7, bottom: 14),
@@ -175,20 +177,29 @@ class HomeScreen extends StatelessWidget {
                   style: CustomTextStyles.f14W600(color: AppColors.textColor1),
                 ),
               ),
-              SingleChildScrollView(
-                scrollDirection: Axis.horizontal,
-                child: Row(children: [
-                  SizedBox(width: 5),
-                  buildTestimonialCard(
-                      name: "james_p".tr, review: "testimonial_james".tr),
-                  SizedBox(width: 15),
-                  buildTestimonialCard(
-                      name: "sara_r".tr, review: "testimonial_sarah".tr),
-                  SizedBox(width: 15),
-                  buildTestimonialCard(
-                      name: "sara_r".tr, review: "testimonial_sarah".tr),
-                ]),
-              ),
+              Container(
+                //margin: EdgeInsets.all(15),
+                child: CarouselSlider.builder(
+                  itemCount: c.testimonials.length,
+                  options: CarouselOptions(
+                    enlargeCenterPage: true,
+                    height: 300,
+                    autoPlay: false,
+                    autoPlayInterval: Duration(seconds: 3),
+                    reverse: false,
+                    // aspectRatio: 10,
+                  ),
+                  itemBuilder: (context, index, realIndex) {
+                    final testimonial = c.testimonials[index];
+                    return TestimonialCard(
+                      name: testimonial['name'],
+                      imageUrl: testimonial['image'],
+                      review: testimonial['review'],
+                      rating: double.parse(testimonial['rating']),
+                    );
+                  },
+                ),
+              )
             ],
           ),
         ),

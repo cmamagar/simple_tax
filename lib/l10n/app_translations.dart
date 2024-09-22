@@ -13,14 +13,8 @@ class AppTranslations extends Translations {
           "product_billing": "Product Billing",
           "with_tax": "With Tax",
           "testimonials": "Testimonials",
-          "james_p": "James P.",
-          "sara_r": "Sarah R.",
           "english_language": "English",
           "nepali_language": "Nepali",
-          "testimonial_james":
-              "Highly recommend! This calculator simplifies tax deductions and credits with clear explanations—truly a lifesaver during tax season!",
-          "testimonial_sarah":
-              "As someone new to finance, I found this app easy to use for calculating and comparing interest rates. It saved me time and helped me avoid poor deals!",
           "banner":
               "Simplify Your Finances with Instant Tax, Rate, and Billing Solutions.",
           "explore": "Explore",
@@ -103,6 +97,15 @@ class AppTranslations extends Translations {
           "Married": "Married",
           "Year": "Year",
           "Month": "Month",
+          "david_r": "David R.",
+          "sarah_l": "Sarah L.",
+          "michael_t": "Michael T.",
+          "testimonial1":
+              "Easy to use! This calculator quickly showed me my loan savings and helped me understand how different payment options would affect my finances. It's user-friendly and makes managing money easier.",
+          "testimonial2":
+              "I love this tool! It made everything about managing my budget clear. I highly recommend it to anyone looking to easily track and optimize their financial planning.",
+          "testimonial3":
+              "Excellent tool! This calculator allowed me to easily see my loan savings and understand my financial options. It's intuitive and simple, making financial management much easier.",
           "Interest Rate Calculator": "Interest Rate Calculator",
           "Principal Amount": "Principal Amount",
           "Enter Principal": "Enter Principal",
@@ -122,14 +125,17 @@ class AppTranslations extends Translations {
           "product_billing": "उत्पादन बिलिङ्ग ",
           "with_tax": "कर सहित",
           "testimonials": "प्रशंसापत्रहरू",
-          "james_p": "जेम्स पी.",
-          "sara_r": "सारा आर.",
+          "david_r": "डेविड आर.",
+          "sarah_l": "सारा एल.",
+          "michael_t": "माइकल टी.",
+          "testimonial1":
+              "प्रयोग गर्न सजिलो! यस क्याल्कुलेटरले मेरो ऋण बचतलाई छिट्टै देखायो र विभिन्न भुक्तानी विकल्पहरूले मेरो वित्तलाई कसरी असर पार्छ भन्ने कुरा बुझ्न मद्दत गर्यो। यो प्रयोगकर्ता-मैत्री छ र पैसाको व्यवस्थापन सजिलो बनाउँछ।",
+          "testimonial2":
+              "मलाई यो उपकरण मन पर्यो! यसले मेरो बजेट व्यवस्थापनको सबै कुरा स्पष्ट बनायो। कुनै पनि व्यक्तिले सजिलैसँग आफ्नो वित्तीय योजना ट्र्याक र अनुकूलित गर्न खोजिरहेको छ भने यो अत्यधिक सिफारिस गर्दछ।",
+          "testimonial3":
+              "उत्कृष्ट उपकरण! यस क्याल्कुलेटरले मलाई सजिलैसँग मेरो ऋण बचतलाई देखाउन र मेरा वित्तीय विकल्पहरू बुझ्न सक्षम बनायो। यो सहज र सरल छ, जसले वित्तीय व्यवस्थापनलाई धेरै सजिलो बनाउँछ।",
           "english_language": "अंग्रेजी",
           "nepali_language": "नेपाली",
-          "testimonial_james":
-              "उच्च सिफारिस! यो कैलकुलेटरले कर कटौती र क्रेडिटहरूलाई स्पष्ट व्याख्याको साथ सरल बनाउँछ—कर सिजनमा साँच्चै जीवनरक्षक!",
-          "testimonial_sarah":
-              "अर्थशास्त्रमा नयाँ भएकाले, मैले यो अनुप्रयोग ब्याज दरहरू गणना गर्न र तुलना गर्न प्रयोग गर्न सजिलो पाएँ। यसले मलाई समय बचत गर्यो र खराब सम्झौताहरूबाट जोगाउन मद्दत गर्यो!",
           "banner":
               "तपाईको वित्त व्यवस्थापन सजिलो बनाउनुहोस् तुरुन्त कर, ब्याज दर, र बिलिङ्ग समाधानहरूसँग।",
           "explore": "अनुसन्धान गर्नुहोस्",

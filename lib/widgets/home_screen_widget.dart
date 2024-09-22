@@ -13,7 +13,7 @@ class HomeFirstImageWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       margin: EdgeInsets.only(left: 18, right: 18),
-      height: 142,
+      height: 170,
       width: double.infinity,
       decoration: BoxDecoration(
         color: AppColors.whiteColor,
@@ -27,13 +27,13 @@ class HomeFirstImageWidget extends StatelessWidget {
         ],
       ),
       child: Padding(
-        padding: EdgeInsets.only(left: 16, right: 16),
+        padding: EdgeInsets.only(left: 16),
         child: Row(
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             Expanded(
               child: Padding(
-                padding: const EdgeInsets.only(top: 24),
+                padding: const EdgeInsets.only(top: 35),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
@@ -42,7 +42,7 @@ class HomeFirstImageWidget extends StatelessWidget {
                       style:
                           CustomTextStyles.f14W600(color: AppColors.textColor1),
                     ),
-                    SizedBox(height: 13),
+                    SizedBox(height: 16),
                     Container(
                       height: 30,
                       width: 85,
@@ -63,11 +63,11 @@ class HomeFirstImageWidget extends StatelessWidget {
                 ),
               ),
             ),
-            SizedBox(width: 16),
+            //SizedBox(width: 16),
             Image.asset(
               ImagePath.first, // Ensure this path is correct
               height: 105,
-              width: 108,
+              width: 138,
             ),
           ],
         ),
@@ -76,76 +76,3 @@ class HomeFirstImageWidget extends StatelessWidget {
   }
 }
 
-class buildTestimonialCard extends StatelessWidget {
-  const buildTestimonialCard(
-      {super.key, required this.name, required this.review});
-  final String name;
-  final String review;
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-        padding: EdgeInsets.all(10),
-        margin: EdgeInsets.only(bottom: 10),
-        height: 165,
-        width: 235,
-        decoration: BoxDecoration(
-            color: AppColors.lightGrey,
-            borderRadius: BorderRadius.circular(15),
-            border: Border.all(width: 1, color: AppColors.borderColor),
-            boxShadow: [
-              BoxShadow(
-                  color: AppColors.lGrey, blurRadius: 4, offset: Offset(2, 2))
-            ]),
-        child: Column(
-          children: [
-            Row(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Container(
-                  height: 50,
-                  width: 50,
-                  child: ClipOval(
-                    child: Image.asset(
-                      ImagePath.pp,
-                      height: 50,
-                      width: 50,
-                      fit: BoxFit.cover,
-                    ),
-                  ),
-                ),
-                SizedBox(width: 30),
-                // Column for name and star rating
-                Expanded(
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        '$name',
-                        style: CustomTextStyles.f12W600(
-                            color: AppColors.textColor1),
-                      ),
-                      SizedBox(height: 4),
-                      Row(
-                        children: List.generate(5, (index) {
-                          return Icon(
-                            Icons.star,
-                            size: 16,
-                            color: Colors.amber,
-                          );
-                        }),
-                      ),
-                      SizedBox(height: 8),
-                    ],
-                  ),
-                ),
-              ],
-            ),
-            SizedBox(height: 5),
-            Text(
-              review,
-              style: CustomTextStyles.f12W400(color: AppColors.textColor1),
-            ),
-          ],
-        ));
-  }
-}
