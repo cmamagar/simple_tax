@@ -161,7 +161,7 @@ class HomeScreen extends StatelessWidget {
                           Get.to(() => Emicalc());
                         },
                         child: CustomContainer(
-                          imagePath: ImagePath.Billing,
+                          imagePath: ImagePath.emi,
                           containerName: "EMI".tr,
                           text2: 'Calculator'.tr,
                         ),

@@ -16,7 +16,7 @@ class Emicalc extends StatelessWidget {
       appBar: AppBar(
         backgroundColor: AppColors.primaryColor,
         title: Text(
-          "EMI Calculator",
+          "emi_calculator".tr,
           style: CustomTextStyles.f18W600(color: AppColors.whiteColor),
         ),
         leading: InkWell(
@@ -38,49 +38,49 @@ class Emicalc extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(
-                "Loan Amount",
+                "loan_amount".tr,
                 style: CustomTextStyles.f14W600(color: AppColors.borderColor),
               ),
               SizedBox(
                 height: 7,
               ),
               CustomTextField(
-                  hint: "Loan Amount",
+                  hint: "loan_amount".tr,
                   textInputAction: TextInputAction.done,
                   textInputType: TextInputType.number),
               SizedBox(
                 height: 20,
               ),
               Text(
-                "Tenure(Years)",
+                "tenure_years".tr,
                 style: CustomTextStyles.f14W600(color: AppColors.borderColor),
               ),
               SizedBox(
                 height: 7,
               ),
               CustomTextField(
-                  hint: "years",
+                  hint: "Year".tr,
                   textInputAction: TextInputAction.done,
                   textInputType: TextInputType.number),
               SizedBox(
-                height: 7,
+                height: 20,
               ),
               Text(
-                "Interest Rates(%)",
+                "Interest Rate (%)".tr,
                 style: CustomTextStyles.f14W600(color: AppColors.borderColor),
               ),
               SizedBox(
-                height: 20,
+                height: 7,
               ),
               CustomTextField(
-                  hint: "Rate(%)",
+                  hint: "rate(%)".tr,
                   textInputAction: TextInputAction.done,
                   textInputType: TextInputType.number),
               SizedBox(
                 height: 20,
               ),
               Text(
-                "EMI Type",
+                "emi_type".tr,
                 style: CustomTextStyles.f14W600(color: AppColors.borderColor),
               ),
               SizedBox(
@@ -90,7 +90,7 @@ class Emicalc extends StatelessWidget {
                 children: [
                   Expanded(
                     child: CustomTextField(
-                        hint: "In Advance",
+                        hint: "in_advance".tr,
                         textInputAction: TextInputAction.done,
                         textInputType: TextInputType.name),
                   ),
@@ -99,7 +99,7 @@ class Emicalc extends StatelessWidget {
                   ),
                   Expanded(
                     child: CustomTextField(
-                        hint: "In Arrears",
+                        hint: "in_arrears".tr,
                         textInputAction: TextInputAction.done,
                         textInputType: TextInputType.name),
                   ),
@@ -109,9 +109,9 @@ class Emicalc extends StatelessWidget {
                 height: 20,
               ),
               CustomElevatedButton(
-                  title: "submit",
-                  onTap: () {Get.to(()=>EmiBill());
-                    
+                  title: "submit".tr,
+                  onTap: () {
+                    Get.to(() => EmiBill());
                   })
             ],
           ),

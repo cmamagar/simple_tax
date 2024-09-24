@@ -13,7 +13,7 @@ class EmiBill extends StatelessWidget {
       appBar: AppBar(
         backgroundColor: AppColors.primaryColor,
         title: Text(
-          "EMI Bill",
+          "emi_bill".tr,
           style: CustomTextStyles.f18W600(color: AppColors.whiteColor),
         ),
         leading: InkWell(
@@ -48,11 +48,11 @@ class EmiBill extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                        "EMI/month",
+                        "emi_month".tr,
                         style: CustomTextStyles.f14W400(
                             color: AppColors.whiteColor),
                       ),
-                      Text("Rs.14,500",
+                      Text("Rs.14,500".tr,
                           style: CustomTextStyles.f24W600(
                               color: AppColors.whiteColor)),
                       SizedBox(
@@ -64,20 +64,20 @@ class EmiBill extends StatelessWidget {
                           Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              Text("Loan Amount",
+                              Text("loan_amount".tr,
                                   style: CustomTextStyles.f14W400(
                                       color: AppColors.whiteColor)),
-                              Text("Rs 2,50,000",
+                              Text("Rs 2,50,000".tr,
                                   style: CustomTextStyles.f18W600(
                                       color: AppColors.whiteColor)),
                             ],
                           ),
                           Column(
                             children: [
-                              Text("Tenure",
+                              Text("tenure".tr,
                                   style: CustomTextStyles.f14W400(
                                       color: AppColors.whiteColor)),
-                              Text("4 Years",
+                              Text("4 Years".tr,
                                   style: CustomTextStyles.f18W600(
                                       color: AppColors.whiteColor)),
                             ],
@@ -93,20 +93,20 @@ class EmiBill extends StatelessWidget {
                           Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              Text("Interest Rate",
+                              Text("Interest Rate (%)".tr,
                                   style: CustomTextStyles.f14W400(
                                       color: AppColors.whiteColor)),
-                              Text("12%",
+                              Text("12%".tr,
                                   style: CustomTextStyles.f18W600(
                                       color: AppColors.whiteColor)),
                             ],
                           ),
                           Column(
                             children: [
-                              Text("EMI Type",
+                              Text("emi_type".tr,
                                   style: CustomTextStyles.f14W400(
                                       color: AppColors.whiteColor)),
-                              Text("In Advance",
+                              Text("in_advance".tr,
                                   style: CustomTextStyles.f18W600(
                                       color: AppColors.whiteColor)),
                             ],
@@ -125,12 +125,12 @@ class EmiBill extends StatelessWidget {
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         Text(
-                          "Total amount with Interest",
+                          "total_amount_with_interest".tr,
                           style: CustomTextStyles.f12W600(
                               color: AppColors.borderColor),
                         ),
                         Text(
-                          "रु 7,20,000",
+                          "रु 7,20,000".tr,
                           style: CustomTextStyles.f12W600(
                               color: AppColors.secondaryTextColor),
                         ),
@@ -143,12 +143,12 @@ class EmiBill extends StatelessWidget {
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         Text(
-                          "Interest rate / y",
+                          "interest_rate_year".tr,
                           style: CustomTextStyles.f12W600(
                               color: AppColors.borderColor),
                         ),
                         Text(
-                          "9.2%",
+                          "9.2%".tr,
                           style: CustomTextStyles.f12W600(
                               color: AppColors.secondaryTextColor),
                         ),
@@ -161,12 +161,12 @@ class EmiBill extends StatelessWidget {
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         Text(
-                          "Interest rate / m",
+                          "interest_rate_month".tr,
                           style: CustomTextStyles.f12W600(
                               color: AppColors.borderColor),
                         ),
                         Text(
-                          "12%",
+                          "12%".tr,
                           style: CustomTextStyles.f12W600(
                               color: AppColors.secondaryTextColor),
                         ),
@@ -179,12 +179,12 @@ class EmiBill extends StatelessWidget {
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         Text(
-                          "Total Interest Amount",
+                          "total_interest_amount".tr,
                           style: CustomTextStyles.f12W600(
                               color: AppColors.borderColor),
                         ),
                         Text(
-                          "Rs 1,12,000",
+                          "Rs 1,12,000".tr,
                           style: CustomTextStyles.f12W600(
                               color: AppColors.secondaryTextColor),
                         ),
@@ -197,12 +197,12 @@ class EmiBill extends StatelessWidget {
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         Text(
-                          "Yearly Interest Amount",
+                          "yearly_interest_amount".tr,
                           style: CustomTextStyles.f12W600(
                               color: AppColors.borderColor),
                         ),
                         Text(
-                          "Rs 17,000",
+                          "Rs 17,000".tr,
                           style: CustomTextStyles.f12W600(
                               color: AppColors.secondaryTextColor),
                         ),
