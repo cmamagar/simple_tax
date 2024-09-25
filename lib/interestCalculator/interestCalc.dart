@@ -8,7 +8,7 @@ import 'package:simple_tax/widgets/custom/elevated_button.dart';
 
 class Interestcalc extends StatelessWidget {
   final InterestCalculatorController controller =
-      Get.put(InterestCalculatorController());
+      Get.put(InterestCalculatorController()); // Initializing the controller
 
   Interestcalc({super.key});
 
@@ -31,90 +31,107 @@ class Interestcalc extends StatelessWidget {
         ),
       ),
       body: Container(
-        margin: EdgeInsets.only(top: 20),
+        margin: const EdgeInsets.only(top: 20),
         height: MediaQuery.of(context).size.height * 1.3,
         decoration: BoxDecoration(
           color: AppColors.whiteColor,
-          borderRadius: BorderRadius.only(topLeft: Radius.circular(15)),
+          borderRadius: const BorderRadius.only(topLeft: Radius.circular(15)),
         ),
         child: Padding(
           padding: const EdgeInsets.all(20),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text(
-                'Principal Amount'.tr,
-                style: CustomTextStyles.f14W600(color: AppColors.borderColor),
-              ),
-              SizedBox(height: 7),
-              CustomTextField(
-                hint: 'Enter Principal'.tr,
-                textInputAction: TextInputAction.done,
-                textInputType: TextInputType.number,
-                controller: controller.principalController,
-              ),
-              SizedBox(height: 20),
-              Text(
-                'Interest Rate (%)'.tr,
-                style: CustomTextStyles.f14W600(color: AppColors.borderColor),
-              ),
-              SizedBox(height: 7),
-              CustomTextField(
-                hint: 'Enter Interest Rate'.tr,
-                textInputAction: TextInputAction.done,
-                textInputType: TextInputType.number,
-                controller: controller.rateController,
-              ),
-              SizedBox(height: 20),
-              Text(
-                'Time Period'.tr,
-                style: CustomTextStyles.f14W600(color: AppColors.borderColor),
-              ),
-              SizedBox(height: 7),
-              CustomTextField(
-                hint: 'Enter Time Period'.tr,
-                textInputAction: TextInputAction.done,
-                textInputType: TextInputType.number,
-                controller: controller.timeController,
-              ),
-              SizedBox(height: 30),
-              Row(
-                children: [
-                  Expanded(
-                    child: CustomElevatedButton(
-                      title: 'reset'.tr,
-                      textColor: AppColors.whiteColor,
-                      onTap: controller.onClose,
+          child: Form(
+            key: controller.formKey,
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  'Principal Amount'.tr,
+                  style: CustomTextStyles.f14W600(color: AppColors.borderColor),
+                ),
+                SizedBox(
+                  height: 7,
+                ),
+                CustomTextField(
+                  hint: 'Enter Principal'.tr,
+                  textInputAction: TextInputAction.done,
+                  textInputType: TextInputType.number,
+                  controller: controller.principalController,
+                ),
+                SizedBox(
+                  height: 20,
+                ),
+                Text(
+                  'Interest Rate (%)'.tr,
+                  style: CustomTextStyles.f14W600(color: AppColors.borderColor),
+                ),
+                SizedBox(
+                  height: 7,
+                ),
+                CustomTextField(
+                  hint: 'Enter Interest Rate'.tr,
+                  textInputAction: TextInputAction.done,
+                  textInputType: TextInputType.number,
+                  controller: controller.rateController,
+                ),
+                SizedBox(
+                  height: 20,
+                ),
+                Text(
+                  'Time Period'.tr,
+                  style: CustomTextStyles.f14W600(color: AppColors.borderColor),
+                ),
+                SizedBox(
+                  height: 7,
+                ),
+                CustomTextField(
+                  hint: 'Enter Time Period'.tr,
+                  textInputAction: TextInputAction.done,
+                  textInputType: TextInputType.number,
+                  controller: controller.timeController,
+                ),
+                SizedBox(
+                  height: 20,
+                ),
+                Center(
+                  child: Obx(() {
+                    return Text(
+                      controller.result.value.isEmpty
+                          ? ''
+                          : 'Calculated Interest:Rs ${controller.result.value}'
+                              .tr,
+                      style:
+                          CustomTextStyles.f16W600(color: AppColors.textColor),
+                    );
+                  }),
+                ),
+                SizedBox(
+                  height: 20,
+                ),
+                Row(
+                  children: [
+                    Expanded(
+                      child: CustomElevatedButton(
+                        title: 'reset'.tr,
+                        textColor: AppColors.whiteColor,
+                        onTap: controller.onClose,
+                      ),
                     ),
-                  ),
-                  SizedBox(width: 12),
-                  Expanded(
-                    child: CustomElevatedButton(
-                      title: 'submit'.tr,
-                      textColor: AppColors.whiteColor,
-                      onTap: () {
-                        if (controller.formKey.currentState!.validate()) {
-                          controller
-                              .calculateInterest(); // Perform interest calculation
-                        }
-                      },
+                    const SizedBox(width: 12),
+                    Expanded(
+                      child: CustomElevatedButton(
+                        title: 'submit'.tr,
+                        textColor: AppColors.whiteColor,
+                        onTap: () {
+                          if (controller.formKey.currentState!.validate()) {
+                            controller.calculateInterest();
+                          }
+                        },
+                      ),
                     ),
-                  ),
-                ],
-              ),
-              SizedBox(height: 30),
-
-              // Display the result
-              Obx(() {
-                return Text(
-                  controller.result.value.isEmpty
-                      ? ''
-                      : 'Calculated Interest: ${controller.result.value}'.tr,
-                  style:
-                      CustomTextStyles.f16W600(color: AppColors.primaryColor),
-                );
-              }),
-            ],
+                  ],
+                ),
+              ],
+            ),
           ),
         ),
       ),

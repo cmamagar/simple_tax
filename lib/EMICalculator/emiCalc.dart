@@ -1,14 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:simple_tax/EMICalculator/emi_bill.dart';
+import 'package:simple_tax/controller/emi_screen_controller.dart';
 import 'package:simple_tax/utils/colors.dart';
 import 'package:simple_tax/utils/custom_text_styles.dart';
 import 'package:simple_tax/widgets/custom/custom_textfield.dart';
 import 'package:simple_tax/widgets/custom/elevated_button.dart';
 
 class Emicalc extends StatelessWidget {
+  final EmiController emiController = Get.put(EmiController());
   Emicalc({super.key});
 
+  @override
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -41,77 +44,78 @@ class Emicalc extends StatelessWidget {
                 "loan_amount".tr,
                 style: CustomTextStyles.f14W600(color: AppColors.borderColor),
               ),
-              SizedBox(
-                height: 7,
-              ),
+              SizedBox(height: 7),
               CustomTextField(
+                  controller:
+                      emiController.loanAmountController, // Use the controller
                   hint: "loan_amount".tr,
                   textInputAction: TextInputAction.done,
                   textInputType: TextInputType.number),
-              SizedBox(
-                height: 20,
-              ),
+              SizedBox(height: 20),
               Text(
                 "tenure_years".tr,
                 style: CustomTextStyles.f14W600(color: AppColors.borderColor),
               ),
-              SizedBox(
-                height: 7,
-              ),
+              SizedBox(height: 7),
               CustomTextField(
+                  controller:
+                      emiController.tenureYearsController, // Use the controller
                   hint: "Year".tr,
                   textInputAction: TextInputAction.done,
                   textInputType: TextInputType.number),
-              SizedBox(
-                height: 20,
-              ),
+              SizedBox(height: 20),
               Text(
                 "Interest Rate (%)".tr,
                 style: CustomTextStyles.f14W600(color: AppColors.borderColor),
               ),
-              SizedBox(
-                height: 7,
-              ),
+              SizedBox(height: 7),
               CustomTextField(
+                  controller: emiController
+                      .interestRateController, // Use the controller
                   hint: "rate(%)".tr,
                   textInputAction: TextInputAction.done,
                   textInputType: TextInputType.number),
-              SizedBox(
-                height: 20,
-              ),
+              SizedBox(height: 20),
               Text(
                 "emi_type".tr,
                 style: CustomTextStyles.f14W600(color: AppColors.borderColor),
               ),
-              SizedBox(
-                height: 07,
-              ),
+              SizedBox(height: 7),
               Row(
                 children: [
                   Expanded(
                     child: CustomTextField(
+                        controller: emiController
+                            .emiAdvanceController, // Use the controller
                         hint: "in_advance".tr,
                         textInputAction: TextInputAction.done,
                         textInputType: TextInputType.name),
                   ),
-                  SizedBox(
-                    width: 15,
-                  ),
+                  SizedBox(width: 15),
                   Expanded(
                     child: CustomTextField(
+                        controller: emiController
+                            .emiArrearsController, // Use the controller
                         hint: "in_arrears".tr,
                         textInputAction: TextInputAction.done,
                         textInputType: TextInputType.name),
                   ),
                 ],
               ),
-              SizedBox(
-                height: 20,
-              ),
+              SizedBox(height: 20),
               CustomElevatedButton(
                   title: "submit".tr,
                   onTap: () {
-                    Get.to(() => EmiBill());
+                    Get.to(() => EmiBill(
+                          loanAmount: emiController.loanAmountController.text,
+                          tenureYears: emiController.tenureYearsController.text,
+                          interestRate:
+                              emiController.interestRateController.text,
+                          emiAdvance: emiController
+                              .emiAdvanceController.text, // Add this if needed
+                          emiArrears: emiController
+                              .emiArrearsController.text, // Add this if needed
+                        ));
                   })
             ],
           ),
