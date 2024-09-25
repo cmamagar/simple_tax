@@ -192,10 +192,10 @@ class HomeScreen extends StatelessWidget {
                   itemBuilder: (context, index, realIndex) {
                     final testimonial = c.testimonials[index];
                     return TestimonialCard(
-                      name: testimonial['name'],
+                      name: testimonial['name'.tr],
                       imageUrl: testimonial['image'],
-                      review: testimonial['review'],
-                      rating: double.parse(testimonial['rating']),
+                      review: testimonial['review'.tr],
+                      rating: double.parse(testimonial['rating'.tr]),
                     );
                   },
                 ),

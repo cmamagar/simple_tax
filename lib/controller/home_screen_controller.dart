@@ -19,7 +19,7 @@ class HomeScreenController extends GetxController {
       'name': 'david_r'.tr,
       'image':
           'https://t3.ftcdn.net/jpg/02/43/12/34/360_F_243123463_zTooub557xEWABDLk0jJklDyLSGl2jrr.jpg',
-      'review': 'testimonial1'.trArgs(),
+      'review': 'testimonial1'.tr,
       'rating': "5".tr,
     },
     {

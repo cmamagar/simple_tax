@@ -44,7 +44,7 @@ class HomeFirstImageWidget extends StatelessWidget {
                     ),
                     SizedBox(height: 16),
                     Container(
-                      height: 30,
+                      height: 35,
                       width: 85,
                       decoration: BoxDecoration(
                         color: AppColors.primaryColor, // Background color
@@ -56,6 +56,7 @@ class HomeFirstImageWidget extends StatelessWidget {
                           "explore".tr,
                           style: CustomTextStyles.f12W600(
                               color: AppColors.whiteColor),
+                          textAlign: TextAlign.center,
                         ),
                       ),
                     ),
@@ -75,4 +76,3 @@ class HomeFirstImageWidget extends StatelessWidget {
     );
   }
 }
-

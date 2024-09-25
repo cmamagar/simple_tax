@@ -33,134 +33,137 @@ class Prodbilltaxcalc extends StatelessWidget {
         decoration: BoxDecoration(
             color: AppColors.whiteColor,
             borderRadius: BorderRadius.only(topLeft: Radius.circular(15))),
-        child: Padding(
-          padding: const EdgeInsets.all(20),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text(
-                "customer_name".tr, // Changed to match the JSON key
-                style: CustomTextStyles.f14W600(color: AppColors.borderColor),
-              ),
-              SizedBox(
-                height: 7,
-              ),
-              CustomTextField(
-                  hint:
-                      "enter_customer_name".tr, // Changed to match the JSON key
-                  textInputAction: TextInputAction.done,
-                  textInputType: TextInputType.name),
-              SizedBox(height: 20),
-              Row(
-                children: [
-                  Expanded(
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          "product_name".tr, // Changed to match the JSON key
-                          style: CustomTextStyles.f14W600(
-                              color: AppColors.borderColor),
-                        ),
-                        SizedBox(
-                          height: 7,
-                        ),
-                        CustomTextField(
-                            hint: "enter_product_name"
-                                .tr, // Changed to match the JSON key
-                            textInputAction: TextInputAction.done,
-                            textInputType: TextInputType.name),
-                      ],
+        child: SingleChildScrollView(
+          child: Padding(
+            padding: const EdgeInsets.all(20),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  "customer_name".tr, // Changed to match the JSON key
+                  style: CustomTextStyles.f14W600(color: AppColors.borderColor),
+                ),
+                SizedBox(
+                  height: 7,
+                ),
+                CustomTextField(
+                    hint: "enter_customer_name"
+                        .tr, // Changed to match the JSON key
+                    textInputAction: TextInputAction.done,
+                    textInputType: TextInputType.name),
+                SizedBox(height: 20),
+                Row(
+                  children: [
+                    Expanded(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            "product_name".tr, // Changed to match the JSON key
+                            style: CustomTextStyles.f14W600(
+                                color: AppColors.borderColor),
+                          ),
+                          SizedBox(
+                            height: 7,
+                          ),
+                          CustomTextField(
+                              hint: "enter_product_name"
+                                  .tr, // Changed to match the JSON key
+                              textInputAction: TextInputAction.done,
+                              textInputType: TextInputType.name),
+                        ],
+                      ),
                     ),
-                  ),
-                  SizedBox(width: 10),
-                  Expanded(
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          "product_price".tr, // Changed to match the JSON key
-                          style: CustomTextStyles.f14W600(
-                              color: AppColors.borderColor),
-                        ),
-                        SizedBox(
-                          height: 7,
-                        ),
-                        CustomTextField(
-                            hint: "enter_product_price"
-                                .tr, // Changed to match the JSON key
-                            textInputAction: TextInputAction.done,
-                            textInputType: TextInputType.number),
-                      ],
+                    SizedBox(width: 10),
+                    Expanded(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            "product_price".tr, // Changed to match the JSON key
+                            style: CustomTextStyles.f14W600(
+                                color: AppColors.borderColor),
+                          ),
+                          SizedBox(
+                            height: 7,
+                          ),
+                          CustomTextField(
+                              hint: "enter_product_price"
+                                  .tr, // Changed to match the JSON key
+                              textInputAction: TextInputAction.done,
+                              textInputType: TextInputType.number),
+                        ],
+                      ),
                     ),
-                  ),
-                ],
-              ),
-              SizedBox(height: 20),
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    "product_quantity".tr, // Changed to match the JSON key
-                    style:
-                        CustomTextStyles.f14W600(color: AppColors.borderColor),
-                  ),
-                  SizedBox(
-                    height: 7,
-                  ),
-                  CustomTextField(
-                      hint: "enter_product_quantity"
-                          .tr, // Changed to match the JSON key
-                      textInputAction: TextInputAction.done,
-                      textInputType: TextInputType.number),
-                ],
-              ),
-              SizedBox(height: 20),
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    "discount".tr, // Changed to match the JSON key
-                    style:
-                        CustomTextStyles.f14W600(color: AppColors.borderColor),
-                  ),
-                  SizedBox(
-                    height: 7,
-                  ),
-                  CustomTextField(
-                      hint:
-                          "enter_discount".tr, // Changed to match the JSON key
-                      textInputAction: TextInputAction.done,
-                      textInputType: TextInputType.number),
-                ],
-              ),
-              SizedBox(height: 20),
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    "address".tr, // Changed to match the JSON key
-                    style:
-                        CustomTextStyles.f14W600(color: AppColors.borderColor),
-                  ),
-                  SizedBox(
-                    height: 7,
-                  ),
-                  CustomTextField(
-                      hint: "enter_address".tr, // Changed to match the JSON key
-                      textInputAction: TextInputAction.done,
-                      textInputType: TextInputType.text),
-                ],
-              ),
-              SizedBox(
-                height: 20,
-              ),
-              CustomElevatedButton(
-                  title: "add_product".tr, // Changed to match the JSON key
-                  onTap: () {
-                    Get.to(() => Bill());
-                  })
-            ],
+                  ],
+                ),
+                SizedBox(height: 20),
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      "product_quantity".tr, // Changed to match the JSON key
+                      style: CustomTextStyles.f14W600(
+                          color: AppColors.borderColor),
+                    ),
+                    SizedBox(
+                      height: 7,
+                    ),
+                    CustomTextField(
+                        hint: "enter_product_quantity"
+                            .tr, // Changed to match the JSON key
+                        textInputAction: TextInputAction.done,
+                        textInputType: TextInputType.number),
+                  ],
+                ),
+                SizedBox(height: 20),
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      "discount".tr, // Changed to match the JSON key
+                      style: CustomTextStyles.f14W600(
+                          color: AppColors.borderColor),
+                    ),
+                    SizedBox(
+                      height: 7,
+                    ),
+                    CustomTextField(
+                        hint: "enter_discount"
+                            .tr, // Changed to match the JSON key
+                        textInputAction: TextInputAction.done,
+                        textInputType: TextInputType.number),
+                  ],
+                ),
+                SizedBox(height: 20),
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      "address".tr, // Changed to match the JSON key
+                      style: CustomTextStyles.f14W600(
+                          color: AppColors.borderColor),
+                    ),
+                    SizedBox(
+                      height: 7,
+                    ),
+                    CustomTextField(
+                        hint:
+                            "enter_address".tr, // Changed to match the JSON key
+                        textInputAction: TextInputAction.done,
+                        textInputType: TextInputType.text),
+                  ],
+                ),
+                SizedBox(
+                  height: 20,
+                ),
+                CustomElevatedButton(
+                    title: "add_product".tr, // Changed to match the JSON key
+                    onTap: () {
+                      Get.to(() => Bill());
+                    })
+              ],
+            ),
           ),
         ),
       ),
