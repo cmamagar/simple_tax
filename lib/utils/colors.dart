@@ -9,7 +9,7 @@ class AppColors {
   static const Color TextFormField = Color(0x7C7A7A);
 
   static const Color lGrey = Color(0xFF7D7D7D);
-  static const Color lightGrey = Color(0xFFF0F0F0);
+  static const Color lightGrey = Color(0xFFE5E5E5);
   static const Color borderColor = Color(0xFF5B6491);
   static const Color border1Color = Color(0xFF5BA5EA);
 

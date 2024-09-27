@@ -1,4 +1,3 @@
-
 import 'package:get/get.dart';
 import 'package:simple_tax/model/product.dart';
 
@@ -19,7 +18,8 @@ class ProductController extends GetxController {
     if (_editingIndex.value == -1) {
       _products.add(Product(name: name, rate: rate, quantity: quantity));
     } else {
-      _products[_editingIndex.value] = Product(name: name, rate: rate, quantity: quantity);
+      _products[_editingIndex.value] =
+          Product(name: name, rate: rate, quantity: quantity);
       _editingIndex.value = -1;
     }
     _isProceed.value = true;

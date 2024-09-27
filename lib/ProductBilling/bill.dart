@@ -1,8 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:simple_tax/controller/bill_screen_controller.dart';
 import 'package:simple_tax/utils/colors.dart';
 import 'package:simple_tax/utils/custom_text_styles.dart';
+import 'package:simple_tax/widgets/bill_screen_widget.dart';
+
 class Bill extends StatelessWidget {
+  final c = Get.put(BillScreenController());
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -33,7 +37,8 @@ class Bill extends StatelessWidget {
                           color: AppColors.borderColor),
                     ),
                     Text(
-                      "Date:".tr, // Replaced with translation key
+                      "Date:${c.formattedDate}"
+                          .tr, // Replaced with translation key
                       style: CustomTextStyles.f12W600(
                           color: AppColors.borderColor),
                     ),
@@ -57,80 +62,17 @@ class Bill extends StatelessWidget {
                 ),
 
                 SizedBox(
-                  height: 30,
+                  height: 15,
                 ),
-                Table(
-                  border: TableBorder.all(),
-                  columnWidths: {
-                    0: FixedColumnWidth(34.0),
-                    1: FixedColumnWidth(55.0),
-                    2: FixedColumnWidth(85.0),
-                    3: FixedColumnWidth(38.0),
-                    4: FixedColumnWidth(50.0),
-                    5: FixedColumnWidth(70.0),
-                  },
-                  children: [
-                    TableRow(
-                      decoration: BoxDecoration(
-                        color: Colors.grey[300],
-                      ),
-                      children: [
-                        TableCell(
-                          child: Padding(
-                            padding: EdgeInsets.all(4.0),
-                            child: Text('S.N'.tr,
-                                style: TextStyle(fontWeight: FontWeight.bold)),
-                          ),
-                        ),
-                        TableCell(
-                          child: Padding(
-                            padding: EdgeInsets.all(8.0),
-                            child: Text(
-                              'HS Code'.tr, // Replaced with translation key
-                              style: TextStyle(fontWeight: FontWeight.bold),
-                            ),
-                          ),
-                        ),
-                        TableCell(
-                          child: Padding(
-                            padding: EdgeInsets.all(4.0),
-                            child: Text('Particulars'.tr,
-                                style: TextStyle(fontWeight: FontWeight.bold)),
-                          ),
-                        ),
-                        TableCell(
-                          child: Padding(
-                            padding: EdgeInsets.all(4.0),
-                            child: Text('Oty.'.tr,
-                                style: TextStyle(fontWeight: FontWeight.bold)),
-                          ),
-                        ),
-                        TableCell(
-                          child: Padding(
-                            padding: EdgeInsets.all(4.0),
-                            child: Text('Rate.'.tr,
-                                style: TextStyle(fontWeight: FontWeight.bold)),
-                          ),
-                        ),
-                        TableCell(
-                          child: Padding(
-                            padding: EdgeInsets.all(4.0),
-                            child: Text('Amount.'.tr,
-                                style: TextStyle(fontWeight: FontWeight.bold)),
-                          ),
-                        ),
-                      ],
-                    ),
-                  ],
-                ),
-                SizedBox(height: 20),
-                Align(
-                  alignment: Alignment.centerRight,
-                  child: Text(
-                    "Signature".tr,
-                    style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
-                  ),
-                ),
+                BillWidget()
+                // SizedBox(height: 20),
+                // Align(
+                //   alignment: Alignment.centerRight,
+                //   child: Text(
+                //     "Signature".tr,
+                //     style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+                //   ),
+                // ),
               ],
             ),
           ),
