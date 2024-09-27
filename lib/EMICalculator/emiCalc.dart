@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 import 'package:simple_tax/EMICalculator/emi_bill.dart';
 import 'package:simple_tax/controller/emi_screen_controller.dart';
 import 'package:simple_tax/utils/colors.dart';
 import 'package:simple_tax/utils/custom_text_styles.dart';
+import 'package:simple_tax/utils/image_path.dart';
 import 'package:simple_tax/widgets/custom/custom_textfield.dart';
 import 'package:simple_tax/widgets/custom/elevated_button.dart';
 
@@ -11,7 +13,6 @@ class Emicalc extends StatelessWidget {
   final EmiController emiController = Get.put(EmiController());
   Emicalc({super.key});
 
-  @override
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -33,8 +34,9 @@ class Emicalc extends StatelessWidget {
       body: Container(
         margin: EdgeInsets.only(top: 20),
         decoration: BoxDecoration(
-            color: AppColors.whiteColor,
-            borderRadius: BorderRadius.only(topLeft: Radius.circular(15))),
+          color: AppColors.whiteColor,
+          borderRadius: BorderRadius.only(topLeft: Radius.circular(15)),
+        ),
         child: Padding(
           padding: EdgeInsets.all(20.0),
           child: Column(
@@ -46,11 +48,11 @@ class Emicalc extends StatelessWidget {
               ),
               SizedBox(height: 7),
               CustomTextField(
-                  controller:
-                      emiController.loanAmountController, // Use the controller
-                  hint: "loan_amount".tr,
-                  textInputAction: TextInputAction.done,
-                  textInputType: TextInputType.number),
+                controller: emiController.loanAmountController,
+                hint: "loan_amount".tr,
+                textInputAction: TextInputAction.done,
+                textInputType: TextInputType.number,
+              ),
               SizedBox(height: 20),
               Text(
                 "tenure_years".tr,
@@ -58,11 +60,11 @@ class Emicalc extends StatelessWidget {
               ),
               SizedBox(height: 7),
               CustomTextField(
-                  controller:
-                      emiController.tenureYearsController, // Use the controller
-                  hint: "Year".tr,
-                  textInputAction: TextInputAction.done,
-                  textInputType: TextInputType.number),
+                controller: emiController.tenureYearsController,
+                hint: "Year".tr,
+                textInputAction: TextInputAction.done,
+                textInputType: TextInputType.number,
+              ),
               SizedBox(height: 20),
               Text(
                 "Interest Rate (%)".tr,
@@ -70,53 +72,77 @@ class Emicalc extends StatelessWidget {
               ),
               SizedBox(height: 7),
               CustomTextField(
-                  controller: emiController
-                      .interestRateController, // Use the controller
-                  hint: "rate(%)".tr,
-                  textInputAction: TextInputAction.done,
-                  textInputType: TextInputType.number),
+                controller: emiController.interestRateController,
+                hint: "rate(%)".tr,
+                textInputAction: TextInputAction.done,
+                textInputType: TextInputType.number,
+              ),
               SizedBox(height: 20),
               Text(
                 "emi_type".tr,
                 style: CustomTextStyles.f14W600(color: AppColors.borderColor),
               ),
               SizedBox(height: 7),
-              Row(
-                children: [
-                  Expanded(
-                    child: CustomTextField(
-                        controller: emiController
-                            .emiAdvanceController, // Use the controller
-                        hint: "in_advance".tr,
-                        textInputAction: TextInputAction.done,
-                        textInputType: TextInputType.name),
+              Expanded(
+                child: Theme(
+                  data: Theme.of(context).copyWith(
+                    canvasColor: AppColors.whiteColor,
                   ),
-                  SizedBox(width: 15),
-                  Expanded(
-                    child: CustomTextField(
-                        controller: emiController
-                            .emiArrearsController, // Use the controller
-                        hint: "in_arrears".tr,
-                        textInputAction: TextInputAction.done,
-                        textInputType: TextInputType.name),
-                  ),
-                ],
+                  child: Obx(() => DropdownButtonFormField<String>(
+                        value: emiController.selectedEmiTypeOption.value.isEmpty
+                            ? null
+                            : emiController.selectedEmiTypeOption.value,
+                        hint: Text(
+                          "EmiType".tr,
+                          style: CustomTextStyles.f12W400(
+                            color: AppColors.secondaryTextColor,
+                          ),
+                        ),
+                        decoration: InputDecoration(
+                          contentPadding: EdgeInsets.symmetric(
+                              horizontal: 12, vertical: 15),
+                          enabledBorder: const OutlineInputBorder(
+                            borderSide: BorderSide(
+                                color: AppColors.borderColor, width: 1),
+                          ),
+                          focusedBorder: const OutlineInputBorder(
+                            borderSide: BorderSide(
+                                color: AppColors.primaryColor, width: 1),
+                          ),
+                        ),
+                        icon: SvgPicture.asset(
+                          ImagePath.textFieldIcon,
+                          color: AppColors.borderColor,
+                        ),
+                        items: emiController.typeOptions
+                            .map((option) => DropdownMenuItem<String>(
+                                  value: option,
+                                  child: Text(option.tr,
+                                      style: CustomTextStyles.f12W600(
+                                          color: AppColors.textColor)),
+                                ))
+                            .toList(),
+                        onChanged: (value) {
+                          emiController.updateSelected(value!);
+                        },
+                        validator: (value) =>
+                            value == null ? 'PleaseSelectEmiType'.tr : null,
+                      )),
+                ),
               ),
               SizedBox(height: 20),
               CustomElevatedButton(
-                  title: "submit".tr,
-                  onTap: () {
-                    Get.to(() => EmiBill(
-                          loanAmount: emiController.loanAmountController.text,
-                          tenureYears: emiController.tenureYearsController.text,
-                          interestRate:
-                              emiController.interestRateController.text,
-                          emiAdvance: emiController
-                              .emiAdvanceController.text, // Add this if needed
-                          emiArrears: emiController
-                              .emiArrearsController.text, // Add this if needed
-                        ));
-                  })
+                title: "submit".tr,
+                onTap: () {
+                  Get.to(() => EmiBill(
+                        loanAmount: emiController.loanAmountController.text,
+                        tenureYears: emiController.tenureYearsController.text,
+                        interestRate: emiController.interestRateController.text,
+                        emiType: emiController.selectedEmiTypeOption
+                            .value, // Pass selected EMI type
+                      ));
+                },
+              )
             ],
           ),
         ),

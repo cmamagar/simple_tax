@@ -6,23 +6,31 @@ import 'package:simple_tax/utils/custom_text_styles.dart';
 
 class EmiBill extends StatelessWidget {
   final EmiController emiController = Get.put(EmiController());
+
   final String loanAmount;
   final String tenureYears;
   final String interestRate;
-  final String emiAdvance;
-  final String emiArrears;
+  final String emiType;
 
   EmiBill({
     Key? key,
     required this.loanAmount,
     required this.tenureYears,
     required this.interestRate,
-    required this.emiAdvance,
-    required this.emiArrears,
+    required this.emiType,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
+    // Set the controller values before calculating EMI
+    emiController.loanAmountController.text = loanAmount;
+    emiController.tenureYearsController.text = tenureYears;
+    emiController.interestRateController.text = interestRate;
+    emiController.updateSelected(emiType); // Set EMI type
+
+    // Call EMI calculation
+    emiController.calculateEmi();
+
     return Scaffold(
       backgroundColor: AppColors.primaryColor,
       appBar: AppBar(
@@ -62,16 +70,22 @@ class EmiBill extends StatelessWidget {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Text(
-                        "emi_month".tr,
-                        style: CustomTextStyles.f14W400(
-                            color: AppColors.whiteColor),
-                      ),
-                      Obx(() => Text(
-                            "EMI: Rs. ${emiController.emiResult.value.toStringAsFixed(2)}",
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            "emi_month"
+                                .tr, // Localized string for "EMI per month"
+                            style: CustomTextStyles.f14W400(
+                                color: AppColors.whiteColor),
+                          ),
+                          Text(
+                            "EMI: Rs. ${emiController.emiResult.value.toStringAsFixed(2)}", // Display EMI result
                             style: CustomTextStyles.f24W600(
                                 color: AppColors.whiteColor),
-                          )),
+                          )
+                        ],
+                      ),
                       SizedBox(
                         height: 50,
                       ),
@@ -84,11 +98,11 @@ class EmiBill extends StatelessWidget {
                               Text("loan_amount".tr,
                                   style: CustomTextStyles.f14W400(
                                       color: AppColors.whiteColor)),
-                              Obx(() => Text(
-                                    "Rs ${emiController.loanAmountController.text}",
-                                    style: CustomTextStyles.f18W600(
-                                        color: AppColors.whiteColor),
-                                  )),
+                              Text(
+                                "Rs ${emiController.loanAmountController.text}",
+                                style: CustomTextStyles.f18W600(
+                                    color: AppColors.whiteColor),
+                              ),
                             ],
                           ),
                           Column(
@@ -96,11 +110,11 @@ class EmiBill extends StatelessWidget {
                               Text("tenure".tr,
                                   style: CustomTextStyles.f14W400(
                                       color: AppColors.whiteColor)),
-                              Obx(() => Text(
-                                    "${emiController.tenureYearsController.text} Years",
-                                    style: CustomTextStyles.f18W600(
-                                        color: AppColors.whiteColor),
-                                  )),
+                              Text(
+                                "${emiController.tenureYearsController.text} Years",
+                                style: CustomTextStyles.f18W600(
+                                    color: AppColors.whiteColor),
+                              ),
                             ],
                           ),
                         ],
@@ -117,11 +131,11 @@ class EmiBill extends StatelessWidget {
                               Text("Interest Rate (%)".tr,
                                   style: CustomTextStyles.f14W400(
                                       color: AppColors.whiteColor)),
-                              Obx(() => Text(
-                                    "${emiController.interestRateController.text}%",
-                                    style: CustomTextStyles.f18W600(
-                                        color: AppColors.whiteColor),
-                                  )),
+                              Text(
+                                "${emiController.interestRateController.text}%",
+                                style: CustomTextStyles.f18W600(
+                                    color: AppColors.whiteColor),
+                              ),
                             ],
                           ),
                           Column(
@@ -129,9 +143,11 @@ class EmiBill extends StatelessWidget {
                               Text("emi_type".tr,
                                   style: CustomTextStyles.f14W400(
                                       color: AppColors.whiteColor)),
-                              Text("in_advance".tr,
-                                  style: CustomTextStyles.f18W600(
-                                      color: AppColors.whiteColor)),
+                              Text(
+                                "${emiController.selectedEmiTypeOption.value}",
+                                style: CustomTextStyles.f18W600(
+                                    color: AppColors.whiteColor),
+                              ),
                             ],
                           ),
                         ],
@@ -152,11 +168,11 @@ class EmiBill extends StatelessWidget {
                           style: CustomTextStyles.f12W600(
                               color: AppColors.borderColor),
                         ),
-                        Obx(() => Text(
-                              "रु ${emiController.totalAmountWithInterest.value.toStringAsFixed(2)}",
-                              style: CustomTextStyles.f12W600(
-                                  color: AppColors.secondaryTextColor),
-                            )),
+                        Text(
+                          "Rs ${emiController.totalAmountWithInterest.value.toStringAsFixed(2)}",
+                          style: CustomTextStyles.f12W600(
+                              color: AppColors.secondaryTextColor),
+                        ),
                       ],
                     ),
                     SizedBox(
@@ -189,10 +205,10 @@ class EmiBill extends StatelessWidget {
                               color: AppColors.borderColor),
                         ),
                         Text(
-                          "${(double.tryParse(emiController.interestRateController.text) ?? 0) / 12}%",
+                          "${(double.tryParse(emiController.interestRateController.text.isEmpty ? "0" : emiController.interestRateController.text) ?? 0) / 12}%",
                           style: CustomTextStyles.f12W600(
                               color: AppColors.secondaryTextColor),
-                        ),
+                        )
                       ],
                     ),
                     SizedBox(
@@ -206,11 +222,11 @@ class EmiBill extends StatelessWidget {
                           style: CustomTextStyles.f12W600(
                               color: AppColors.borderColor),
                         ),
-                        Obx(() => Text(
-                              "Rs ${emiController.totalInterestAmount.value.toStringAsFixed(2)}",
-                              style: CustomTextStyles.f12W600(
-                                  color: AppColors.secondaryTextColor),
-                            )),
+                        Text(
+                          "Rs ${emiController.totalInterestAmount.value.toStringAsFixed(2)}",
+                          style: CustomTextStyles.f12W600(
+                              color: AppColors.secondaryTextColor),
+                        )
                       ],
                     ),
                     SizedBox(
@@ -224,11 +240,11 @@ class EmiBill extends StatelessWidget {
                           style: CustomTextStyles.f12W600(
                               color: AppColors.borderColor),
                         ),
-                        Obx(() => Text(
-                              "Rs ${(emiController.totalInterestAmount.value / double.parse(emiController.tenureYearsController.text)).toStringAsFixed(2)}",
-                              style: CustomTextStyles.f12W600(
-                                  color: AppColors.secondaryTextColor),
-                            )),
+                        Text(
+                          "Rs ${(emiController.totalInterestAmount.value / (double.tryParse(emiController.tenureYearsController.text.isEmpty ? "1" : emiController.tenureYearsController.text) ?? 1)).toStringAsFixed(2)}",
+                          style: CustomTextStyles.f12W600(
+                              color: AppColors.secondaryTextColor),
+                        )
                       ],
                     ),
                   ],

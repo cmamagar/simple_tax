@@ -8,11 +8,19 @@ class EmiController extends GetxController {
   final TextEditingController interestRateController = TextEditingController();
   final TextEditingController emiAdvanceController = TextEditingController();
   final TextEditingController emiArrearsController = TextEditingController();
+  final TextEditingController emiTypeController = TextEditingController();
 
   // Variables to hold the calculated EMI and related details
   var emiResult = 0.0.obs;
   var totalAmountWithInterest = 0.0.obs;
   var totalInterestAmount = 0.0.obs;
+
+  var selectedEmiTypeOption = "".obs;
+  final List<String> typeOptions = ['In Advance', 'In Arrear'];
+
+  void updateSelected(String value) {
+    selectedEmiTypeOption.value = value;
+  }
 
   // Method to calculate EMI
   void calculateEmi() {
@@ -29,15 +37,25 @@ class EmiController extends GetxController {
       return;
     }
 
-    // Formula to calculate EMI
+    // Common parameters
     double monthlyInterestRate = interestRate / (12 * 100);
     double tenureMonths = tenureYears * 12;
+    double emi = 0.0;
 
-    // EMI calculation using the formula: EMI = [P * r * (1+r)^n] / [(1+r)^n-1]
-    double emi = (loanAmount *
-            monthlyInterestRate *
-            (pow(1 + monthlyInterestRate, tenureMonths))) /
-        (pow(1 + monthlyInterestRate, tenureMonths) - 1);
+    // Check which EMI type is selected and apply the appropriate formula
+    if (selectedEmiTypeOption.value == 'In Arrear') {
+      // Formula for EMI in Arrears: EMI = [P * r * (1+r)^n] / [(1+r)^n-1]
+      emi = (loanAmount *
+              monthlyInterestRate *
+              pow(1 + monthlyInterestRate, tenureMonths)) /
+          (pow(1 + monthlyInterestRate, tenureMonths) - 1);
+    } else if (selectedEmiTypeOption.value == 'In Advance') {
+      // Formula for EMI in Advance: EMI = P * r * (1 + r)^n / [(1 + r)^n - 1]
+      emi = (loanAmount *
+              pow(1 + monthlyInterestRate, tenureMonths) *
+              monthlyInterestRate) /
+          (pow(1 + monthlyInterestRate, tenureMonths) - 1);
+    }
 
     emiResult.value = emi.isNaN ? 0.0 : emi;
     totalAmountWithInterest.value = emiResult.value * tenureMonths;
@@ -50,6 +68,8 @@ class EmiController extends GetxController {
     loanAmountController.dispose();
     tenureYearsController.dispose();
     interestRateController.dispose();
+    emiTypeController.dispose();
+
     super.onClose();
   }
 }
