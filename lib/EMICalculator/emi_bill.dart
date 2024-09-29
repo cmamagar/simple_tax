@@ -22,13 +22,6 @@ class EmiBill extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // Set the controller values before calculating EMI
-    emiController.loanAmountController.text = loanAmount;
-    emiController.tenureYearsController.text = tenureYears;
-    emiController.interestRateController.text = interestRate;
-    emiController.updateSelected(emiType); // Set EMI type
-
-    // Call EMI calculation
     emiController.calculateEmi();
 
     return Scaffold(

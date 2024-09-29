@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
+import 'package:get/get.dart';
 import 'package:simple_tax/utils/custom_text_styles.dart';
 
 class TestimonialCard extends StatelessWidget {
@@ -23,7 +24,7 @@ class TestimonialCard extends StatelessWidget {
       children: [
         Container(
           margin: EdgeInsets.only(top: 35, bottom: 10), // Leave space for image
-          padding: EdgeInsets.all(16),
+          padding: EdgeInsets.only(top: 16, bottom: 16, right: 20, left: 20),
           height: 300,
           decoration: BoxDecoration(
             color: Colors.white,
@@ -42,9 +43,18 @@ class TestimonialCard extends StatelessWidget {
             mainAxisSize: MainAxisSize.min,
             children: [
               SizedBox(height: 50),
-              Text(
-                '-$name',
-                style: CustomTextStyles.f12W700(),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Text(
+                    '-',
+                    style: CustomTextStyles.f12W700(),
+                  ),
+                  Text(
+                    name.tr,
+                    style: CustomTextStyles.f12W700(),
+                  ),
+                ],
               ),
               SizedBox(height: 2),
               // Rating stars
@@ -63,10 +73,16 @@ class TestimonialCard extends StatelessWidget {
                 onRatingUpdate: (rating) {},
               ),
               SizedBox(height: 10),
-              Text(
-                review,
-                style: CustomTextStyles.f12W400(),
-                textAlign: TextAlign.justify,
+              Flexible(
+                child: Text(
+                  review.tr,
+                  style: TextStyle(
+                      fontSize: 12,
+                      fontFamily: "Poppins",
+                      fontWeight: FontWeight.w400,
+                      height: 1.8),
+                  textAlign: TextAlign.justify,
+                ),
               ),
             ],
           ),

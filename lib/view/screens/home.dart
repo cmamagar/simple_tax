@@ -171,14 +171,14 @@ class HomeScreen extends StatelessWidget {
                 ),
               ),
               Padding(
-                padding: const EdgeInsets.only(left: 18, right: 18, bottom: 12),
+                padding: const EdgeInsets.only(
+                    left: 18, right: 18, top: 14, bottom: 4),
                 child: Text(
                   'testimonials'.tr,
                   style: CustomTextStyles.f14W600(color: AppColors.textColor1),
                 ),
               ),
               Container(
-                //margin: EdgeInsets.all(15),
                 child: CarouselSlider.builder(
                   itemCount: c.testimonials.length,
                   options: CarouselOptions(
@@ -192,14 +192,14 @@ class HomeScreen extends StatelessWidget {
                   itemBuilder: (context, index, realIndex) {
                     final testimonial = c.testimonials[index];
                     return TestimonialCard(
-                      name: testimonial['name'.tr],
+                      name: testimonial['name'],
                       imageUrl: testimonial['image'],
-                      review: testimonial['review'.tr],
-                      rating: double.parse(testimonial['rating'.tr]),
+                      review: testimonial['review'],
+                      rating: double.parse(testimonial['rating']),
                     );
                   },
                 ),
-              )
+              ),
             ],
           ),
         ),
