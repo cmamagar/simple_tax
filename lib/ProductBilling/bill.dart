@@ -10,6 +10,20 @@ class Bill extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        backgroundColor: AppColors.primaryColor,
+        title: Text(
+          "Billing".tr,
+          style: CustomTextStyles.f24W600(color: AppColors.whiteColor),
+        ),
+        leading: InkWell(
+          onTap: () => Get.back(),
+          child: Icon(
+            Icons.arrow_back,
+            color: AppColors.whiteColor,
+          ),
+        ),
+      ),
       backgroundColor: AppColors.whiteColor,
       body: SingleChildScrollView(
         child: SafeArea(
@@ -36,16 +50,15 @@ class Bill extends StatelessWidget {
                       style: CustomTextStyles.f12W600(
                           color: AppColors.borderColor),
                     ),
-                    Text(
-                      "Date:${c.formattedDate}"
-                          .tr, // Replaced with translation key
-                      style: CustomTextStyles.f12W600(
-                          color: AppColors.borderColor),
-                    ),
+                    Obx(() => Text(
+                          "Date: ${c.formattedDate.value}"
+                              .tr, // Replaced with translation key
+                          style: CustomTextStyles.f12W600(
+                              color: AppColors.borderColor),
+                        )),
                   ],
                 ),
                 SizedBox(height: 8),
-
                 Text(
                   "Vat no:".tr, // Replaced with translation key
                   style: CustomTextStyles.f12W600(color: AppColors.borderColor),
@@ -60,19 +73,10 @@ class Bill extends StatelessWidget {
                   "Address:".tr, // Replaced with translation key
                   style: CustomTextStyles.f12W600(color: AppColors.borderColor),
                 ),
-
                 SizedBox(
                   height: 15,
                 ),
-                BillWidget()
-                // SizedBox(height: 20),
-                // Align(
-                //   alignment: Alignment.centerRight,
-                //   child: Text(
-                //     "Signature".tr,
-                //     style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
-                //   ),
-                // ),
+                BillWidget(),
               ],
             ),
           ),

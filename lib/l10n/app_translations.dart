@@ -165,7 +165,17 @@ class AppTranslations extends Translations {
           "Oty.": "Oty.",
           "Rate.": "Rate.",
           "Amount.": "Amount.",
-          "Signature": "Signature"
+          "Signature": "Signature",
+          "H.S Code": "H.S Code",
+          "Qty.": "Qty.",
+          "Rate": "Rate",
+          "Amount": "Amount",
+          "Rs.": "Rs.",
+          "Total": "Total",
+          "Discount": "Discount",
+          "Grand Total": "Grand Total",
+          "13% VAT": "13% VAT",
+          "Billing": "Billing",
         },
         'ne': {
           "welcome": 'स्वागतम् 👋',
@@ -335,7 +345,17 @@ class AppTranslations extends Translations {
           "Oty.": "परिमाण",
           "Rate.": "दर",
           "Amount.": "रकम",
-          "Signature": "हस्ताक्षर"
+          "Signature": "हस्ताक्षर",
+          "H.S Code": "एच.एस. कोड",
+          "Qty.": "मात्रा",
+          "Rate": "दर",
+          "Amount": "रकम",
+          "Rs.": "रु.",
+          "Total": "जम्मा",
+          "Discount": "छुट",
+          "Grand Total": "कुल जम्मा",
+          "13% VAT": "१३% भ्याट",
+          "Billing": "बिलिङ",
         }
       };
 }

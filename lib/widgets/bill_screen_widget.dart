@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:simple_tax/utils/colors.dart';
 import 'package:simple_tax/utils/custom_text_styles.dart';
 
@@ -25,17 +26,17 @@ class BillWidget extends StatelessWidget {
             children: [
               TableRow(
                 children: [
-                  buildTableHeader("S.N", 1),
-                  buildTableHeader("H.S Code", 1),
-                  buildTableHeader("Particulars", 1),
-                  buildTableHeader("Qty.", 1),
-                  buildTableHeader("Rate", 1),
+                  buildTableHeader("S.N".tr, 1),
+                  buildTableHeader("H.S Code".tr, 1),
+                  buildTableHeader("Particulars".tr, 1),
+                  buildTableHeader("Qty.".tr, 1),
+                  buildTableHeader("Rate".tr, 1),
                   TableCell(
                     //verticalAlignment: TableCellVerticalAlignment.fill,
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        buildTableHeader("Amount", 1),
+                        buildTableHeader("Amount".tr, 1),
                         Table(
                           border: TableBorder(
                             left: BorderSide.none,
@@ -48,8 +49,8 @@ class BillWidget extends StatelessWidget {
                           children: [
                             TableRow(
                               children: [
-                                buildTableHeader("Rs.", 1),
-                                buildTableHeader("Rs.", 1),
+                                buildTableHeader("Rs.".tr, 1),
+                                buildTableHeader("Rs.".tr, 1),
                               ],
                             ),
                           ],
@@ -127,14 +128,14 @@ class BillWidget extends StatelessWidget {
                         padding:
                             const EdgeInsets.only(top: 4, bottom: 4, right: 4),
                         child: Text(
-                          "Total",
+                          "Total".tr,
                           style: CustomTextStyles.f10W600(),
                         ),
                       ),
-                      buildFooterTextRow("Discount"),
-                      buildFooterTextRow("Grand Total"),
-                      buildFooterTextRow("13% VAT"),
-                      buildFooterTextRow("Grand Total"),
+                      buildFooterTextRow("Discount".tr),
+                      buildFooterTextRow("Grand Total".tr),
+                      buildFooterTextRow("13% VAT".tr),
+                      buildFooterTextRow("Grand Total".tr),
                     ],
                   ),
                 ),
@@ -164,13 +165,13 @@ class BillWidget extends StatelessWidget {
         ),
         SizedBox(height: 30),
         Text(
-          " ______________________",
+          " ______________________".tr,
         ),
         Padding(
           padding: const EdgeInsets.only(right: 30, top: 5),
           child: Text(
-            "Signature",
-            style: CustomTextStyles.f14W400(),
+            "Signature".tr,
+            style: CustomTextStyles.f14W600(),
           ),
         )
       ],
@@ -183,7 +184,7 @@ Widget buildTableHeader(String title, int flex) {
     padding: const EdgeInsets.only(bottom: 9, right: 3, top: 3, left: 3),
     child: Text(
       title,
-      style: CustomTextStyles.f12W600(),
+      style: CustomTextStyles.f10W600(),
       textAlign: TextAlign.center,
     ),
   );
