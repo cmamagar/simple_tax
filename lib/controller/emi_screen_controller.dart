@@ -6,9 +6,8 @@ class EmiController extends GetxController {
   final TextEditingController loanAmountController = TextEditingController();
   final TextEditingController tenureYearsController = TextEditingController();
   final TextEditingController interestRateController = TextEditingController();
-  final TextEditingController emiAdvanceController = TextEditingController();
-  final TextEditingController emiArrearsController = TextEditingController();
-  final TextEditingController emiTypeController = TextEditingController();
+  final TextEditingController emiTypeController =
+      TextEditingController(); // Removed unnecessary controllers
 
   // Variables to hold the calculated EMI and related details
   var emiResult = 0.0.obs;
@@ -16,7 +15,12 @@ class EmiController extends GetxController {
   var totalInterestAmount = 0.0.obs;
 
   var selectedEmiTypeOption = "".obs;
-  final List<String> typeOptions = ['In Advance', 'In Arrear'];
+  final List<String> typeOptions = [
+    'Monthly',
+    '3 Months',
+    '6 Months',
+    'Yearly'
+  ];
 
   void updateSelected(String value) {
     selectedEmiTypeOption.value = value;
@@ -37,26 +41,34 @@ class EmiController extends GetxController {
       return;
     }
 
-    // Common parameters
-    double monthlyInterestRate = interestRate / (12 * 100);
-    double tenureMonths = tenureYears * 12;
-    double emi = 0.0;
-
-    // Check which EMI type is selected and apply the appropriate formula
-    if (selectedEmiTypeOption.value == 'In Arrear') {
-      // Formula for EMI in Arrears: EMI = [P * r * (1+r)^n] / [(1+r)^n-1]
-      emi = (loanAmount *
-              monthlyInterestRate *
-              pow(1 + monthlyInterestRate, tenureMonths)) /
-          (pow(1 + monthlyInterestRate, tenureMonths) - 1);
-    } else if (selectedEmiTypeOption.value == 'In Advance') {
-      // Formula for EMI in Advance: EMI = P * r * (1 + r)^n / [(1 + r)^n - 1]
-      emi = (loanAmount *
-              pow(1 + monthlyInterestRate, tenureMonths) *
-              monthlyInterestRate) /
-          (pow(1 + monthlyInterestRate, tenureMonths) - 1);
+    // Determine the number of months based on the selected EMI type
+    double tenureMonths;
+    if (selectedEmiTypeOption.value == 'Monthly') {
+      tenureMonths = tenureYears * 12; // Convert years to months
+    } else if (selectedEmiTypeOption.value == '3 Months/Quarterly') {
+      tenureMonths = tenureYears * 4; // Convert years to quarters
+    } else if (selectedEmiTypeOption.value == '6 Months/Semi-Annually') {
+      tenureMonths = tenureYears * 2; // Convert years to semi-annual periods
+    } else if (selectedEmiTypeOption.value == 'Yearly/Annually') {
+      tenureMonths = tenureYears; // Already in years, so same value
+    } else {
+      emiResult.value = 0.0;
+      totalAmountWithInterest.value = 0.0;
+      totalInterestAmount.value = 0.0;
+      return; // Exit if no valid type is selected
     }
 
+    // Common parameters
+    double monthlyInterestRate = interestRate / (12 * 100);
+    double emi;
+
+    // Formula for EMI
+    emi = (loanAmount *
+            monthlyInterestRate *
+            pow(1 + monthlyInterestRate, tenureMonths)) /
+        (pow(1 + monthlyInterestRate, tenureMonths) - 1);
+
+    // Set the calculated values
     emiResult.value = emi.isNaN ? 0.0 : emi;
     totalAmountWithInterest.value = emiResult.value * tenureMonths;
     totalInterestAmount.value = totalAmountWithInterest.value - loanAmount;

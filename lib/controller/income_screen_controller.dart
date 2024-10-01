@@ -1,6 +1,7 @@
 import 'dart:developer';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:simple_tax/l10n/nepali_numbers.dart';
 
 class IncomeTaxController extends GetxController {
   final formKey = GlobalKey<FormState>();
@@ -20,84 +21,80 @@ class IncomeTaxController extends GetxController {
       isNepali.value = true;
     }
   }
+  
+void calculateTax() {
+  if (formKey.currentState?.validate() ?? false) {
+    final double incomeValue =
+        double.tryParse(convertToEnglishNumber(incomeController.text)) ?? 0;
+    final double bonusValue =
+        double.tryParse(convertToEnglishNumber(bonusController.text)) ?? 0;
+    final double deductionsValue =
+        double.tryParse(convertToEnglishNumber(deductionController.text)) ?? 0;
 
-  void calculateTax() {
-    if (formKey.currentState?.validate() ?? false) {
-      final double incomeValue =
-          double.tryParse(convertToEnglishNumber(incomeController.text)) ?? 0;
-      final double bonusValue =
-          double.tryParse(convertToEnglishNumber(bonusController.text)) ?? 0;
-      final double deductionsValue =
-          double.tryParse(convertToEnglishNumber(deductionController.text)) ??
-              0;
-
-      double totalIncome = incomeValue + bonusValue - deductionsValue;
-
-      double taxAmount;
-      if (selectYearMonthOption.value == 'Year') {
-        taxAmount = totalIncome * 0.13 * 12; // Annual tax rate
-      } else {
-        taxAmount = totalIncome * 0.13; // Monthly tax rate
-      }
-
-      double effectiveTaxRate = (taxAmount / totalIncome) * 100;
-
-      if (isNepali.value) {
-        result.value =
-            '${'Tax Amount'}: ${convertToNepaliNumber(taxAmount.toStringAsFixed(2))}\n${'Effective Tax Rate'}: ${convertToNepaliNumber(effectiveTaxRate.toStringAsFixed(2))}%';
-      } else {
-        result.value =
-            '${'Tax Amount'}: Rs ${taxAmount.toStringAsFixed(2)}\n${'Effective Tax Rate'}: ${effectiveTaxRate.toStringAsFixed(2)}%';
-      }
+    // Determine if the income is monthly or yearly
+    double totalIncome;
+    if (selectYearMonthOption.value == 'Month') {
+      totalIncome = (incomeValue + bonusValue - deductionsValue) * 12; // Annualize the monthly income
     } else {
-      result.value = ''; // Clear the result if form validation fails
-    }
-  }
-
-  String convertToNepaliNumber(String input) {
-    const Map<String, String> englishToNepaliDigits = {
-      '0': '०',
-      '1': '१',
-      '2': '२',
-      '3': '३',
-      '4': '४',
-      '5': '५',
-      '6': '६',
-      '7': '७',
-      '8': '८',
-      '9': '९',
-    };
-
-    String nepaliNumber = input.split('').map((char) {
-      return englishToNepaliDigits[char] ?? char;
-    }).join();
-
-    return nepaliNumber;
-  }
-
-  String convertToEnglishNumber(String nepaliNumber) {
-    const Map<String, String> nepaliToEnglishDigits = {
-      '०': '0',
-      '१': '1',
-      '२': '2',
-      '३': '3',
-      '४': '4',
-      '५': '5',
-      '६': '6',
-      '७': '7',
-      '८': '8',
-      '९': '9'
-    };
-
-    final buffer = StringBuffer();
-
-    for (int i = 0; i < nepaliNumber.length; i++) {
-      String char = nepaliNumber[i];
-      buffer.write(nepaliToEnglishDigits[char] ?? char);
+      totalIncome = incomeValue + bonusValue - deductionsValue; // Already yearly
     }
 
-    return buffer.toString();
+    double taxAmount = 0;
+
+    // Get the appropriate slabs based on marital status
+    List<List<String>> slabs = currentSlabs;
+
+    // Iterate through slabs and calculate the tax amount
+    for (var slab in slabs) {
+      List<String> slabDetails = slab[1].split('_'); // Split salary range
+      double slabStart = double.tryParse(slabDetails[0]) ?? 0;
+      double slabEnd = slabDetails[1] == 'above' ? totalIncome : double.tryParse(slabDetails[1]) ?? 0;
+      double slabRate = double.tryParse(slab[2].replaceAll('_percent', '').replaceAll(',', '')) ?? 0;
+
+      if (totalIncome > slabStart) {
+        double taxableAmount = totalIncome > slabEnd ? slabEnd - slabStart : totalIncome - slabStart;
+        taxAmount += taxableAmount * (slabRate / 100);
+      }
+    }
+
+    // Calculate the effective tax rate
+    double effectiveTaxRate = (taxAmount / totalIncome) * 100;
+
+    // If the input was monthly, calculate monthly tax by dividing the yearly tax by 12
+    if (selectYearMonthOption.value == 'Month') {
+      taxAmount /= 12; // Convert yearly tax to monthly
+    }
+
+    // Display the result in Nepali or English
+    if (isNepali.value) {
+      result.value =
+          '${'Tax Amount'}: ${convertToNepaliNumber(taxAmount.toStringAsFixed(2))}\n${'Effective Tax Rate'}: ${convertToNepaliNumber(effectiveTaxRate.toStringAsFixed(2))}%';
+    } else {
+      result.value =
+          '${'Tax Amount'}: Rs ${taxAmount.toStringAsFixed(2)}\n${'Effective Tax Rate'}: ${effectiveTaxRate.toStringAsFixed(2)}%';
+    }
+  } else {
+    result.value = ''; // Clear the result if form validation fails
   }
+}
+
+//  String convertToNepaliNumber(String input) {
+//   const Map<String, String> englishToNepaliDigits = {
+//     '0': '०', '1': '१', '2': '२', '3': '३', '4': '४',
+//     '5': '५', '6': '६', '7': '७', '8': '८', '9': '९',
+//   };
+
+//   return input.split('').map((char) => englishToNepaliDigits[char] ?? char).join();
+// }
+
+// String convertToEnglishNumber(String nepaliNumber) {
+//   const Map<String, String> nepaliToEnglishDigits = {
+//     '०': '0', '१': '1', '२': '2', '३': '3', '४': '4',
+//     '५': '5', '६': '6', '७': '7', '८': '8', '९': '9'
+//   };
+
+//   return nepaliNumber.split('').map((char) => nepaliToEnglishDigits[char] ?? char).join();
+// }
 
   final List<String> yearOptions = ['2024', '2025', '2026'];
   final List<String> statusOptions = ['Single', 'Married'];

@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 
 class HomeScreenController extends GetxController {
   var currentFlag = 'assets/images/usa.png'.obs;
+
   void switchLanguage(String languageCode) {
     if (languageCode == 'en') {
       Get.updateLocale(Locale('en'));
