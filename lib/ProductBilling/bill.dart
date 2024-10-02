@@ -1,12 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:simple_tax/controller/bill_screen_controller.dart';
+import 'package:simple_tax/model/product.dart';
 import 'package:simple_tax/utils/colors.dart';
 import 'package:simple_tax/utils/custom_text_styles.dart';
 import 'package:simple_tax/widgets/bill_screen_widget.dart';
 
 class Bill extends StatelessWidget {
   final c = Get.put(BillScreenController());
+  Bill({super.key, required this.product});
+  final Product product;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -39,9 +43,7 @@ class Bill extends StatelessWidget {
                         CustomTextStyles.f32W600(color: AppColors.primaryColor),
                   ),
                 ),
-                SizedBox(
-                  height: 20,
-                ),
+                SizedBox(height: 20),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
@@ -60,22 +62,22 @@ class Bill extends StatelessWidget {
                 ),
                 SizedBox(height: 8),
                 Text(
-                  "Vat no:".tr, // Replaced with translation key
+                  "Vat No:".tr, // Replaced with translation key
                   style: CustomTextStyles.f12W600(color: AppColors.borderColor),
                 ),
                 SizedBox(height: 8),
                 Text(
-                  "Name of Buyers:".tr, // Replaced with translation key
+                  "Name of Buyers: ${product.customerName}"
+                      .tr, // Included customer name
                   style: CustomTextStyles.f12W600(color: AppColors.borderColor),
                 ),
                 SizedBox(height: 8),
                 Text(
-                  "Address:".tr, // Replaced with translation key
+                  "Address: ${product.address}"
+                      .tr, // Included address from product
                   style: CustomTextStyles.f12W600(color: AppColors.borderColor),
                 ),
-                SizedBox(
-                  height: 15,
-                ),
+                SizedBox(height: 15),
                 BillWidget(),
               ],
             ),

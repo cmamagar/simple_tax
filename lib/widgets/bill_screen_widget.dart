@@ -1,10 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:simple_tax/controller/bill_screen_controller.dart';
 import 'package:simple_tax/utils/colors.dart';
 import 'package:simple_tax/utils/custom_text_styles.dart';
 
+
 class BillWidget extends StatelessWidget {
-  const BillWidget({super.key});
+  final BillScreenController billController = Get.put(BillScreenController());
+  BillWidget({super.key});
 
   @override
   Widget build(BuildContext context) {

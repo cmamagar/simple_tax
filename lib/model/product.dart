@@ -1,21 +1,42 @@
-import 'package:get/get.dart';
+class Product {
+  // Customer details
+  final String customerName;
+  final String address;
+  final String productName;
+  final double productPrice;
+  final int productQuantity;
+  final double discount;
+  // final String hsCode;
+  final String particulars;
+  // final int quantity;
+  // final double rate;
+  // final double amountRs1; // Assume Rs1 and Rs2 are for amount breakdown
+  // final double amountRs2;
 
-class BillScreenController extends GetxController {
-  // Example list of products
-  var _products = <Product>[].obs;
+  Product({
+    required this.customerName,
+    required this.address,
+    required this.productName,
+    required this.productPrice,
+    required this.productQuantity,
+    required this.discount,
+    // required this.hsCode,
+    required this.particulars,
+    // required this.quantity,
+    // required this.rate,
+    // required this.amountRs1,
+    // required this.amountRs2,
+  });
 
-  // Assuming Product is a class with name, rate, and quantity
-  void addProduct(String name, double rate, int quantity) {
-    _products.add(Product(name: name, rate: rate, quantity: quantity));
+  double get totalPrice {
+    // Calculate the total price with discount
+    double total = productPrice * productQuantity;
+    return total - (discount > total ? total : discount);
   }
 
-  // You can add more methods for subtotal, tax calculation, etc.
-}
+  double get productAmount {
+    // Calculate the amount for the product
+    return productPrice * productQuantity;
+  }
 
-class Product {
-  String name;
-  double rate;
-  int quantity;
-
-  Product({required this.name, required this.rate, required this.quantity});
 }
