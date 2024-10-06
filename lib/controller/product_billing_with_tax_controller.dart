@@ -1,6 +1,4 @@
 import 'package:get/get.dart';
-
-
 class ProductBillingWithTaxController extends GetxController {
   // final RxList<Product> _products = <Product>[].obs;
   // final RxString _customerName = ''.obs;

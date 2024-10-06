@@ -41,6 +41,7 @@ dependencies:
   flutter_rating_bar: ^4.0.1
   carousel_slider: ^5.0.0
   nepali_utils: ^3.0.6
+  fl_chart: ^0.69.0
 
 dev_dependencies:
   flutter_test:

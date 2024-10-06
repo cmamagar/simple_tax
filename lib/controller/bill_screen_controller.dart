@@ -7,7 +7,8 @@ class BillScreenController extends GetxController {
   final TextEditingController customerNameController = TextEditingController();
   final TextEditingController productNameController = TextEditingController();
   final TextEditingController productPriceController = TextEditingController();
-  final TextEditingController productQuantityController = TextEditingController();
+  final TextEditingController productQuantityController =
+      TextEditingController();
   final TextEditingController discountController = TextEditingController();
   final TextEditingController addressController = TextEditingController();
 
@@ -62,10 +63,10 @@ class BillScreenController extends GetxController {
     grandTotal.value = total.value + vat.value - discount.value;
   }
 
-  // BillScreenController() {
-  //   now = DateTime.now();
-  //   _updateFormattedDate();
-  // }
+  BillScreenController() {
+    now = DateTime.now();
+    _updateFormattedDate();
+  }
 
   void _updateFormattedDate() {
     if (Get.locale?.languageCode == 'ne') {
@@ -102,4 +103,3 @@ class BillScreenController extends GetxController {
   //   billItems.clear();
   // }
 }
-
