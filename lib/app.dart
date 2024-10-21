@@ -25,8 +25,8 @@ class MyApp extends StatelessWidget {
         Locale('np', ''),
       ],
       debugShowCheckedModeBanner: false,
-      // home: HomeScreen(),
-      home: SavingGoalCalc(),
+      home: HomeScreen(),
+      // home: SavingGoalCalc(),
     );
   }
 }

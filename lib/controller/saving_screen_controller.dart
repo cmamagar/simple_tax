@@ -1,8 +1,8 @@
 import 'package:get/get.dart';
 
-class SavingScreenController extends GetxController{
-var interestRate = 5.0.obs;
-  var period = 1.obs;
+class SavingScreenController extends GetxController {
+  var interestRate = 0.0.obs;
+  var period = 0.obs;
   var interestType = 'Annual'.obs;
   var periodType = 'Years'.obs;
 
@@ -12,11 +12,11 @@ var interestRate = 5.0.obs;
 
   // Methods to increment/decrement interest rate and period
   void incrementRate() {
-    interestRate.value += 0.1;
+    interestRate.value += 0.5;
   }
 
   void decrementRate() {
-    interestRate.value -= 0.1;
+    interestRate.value -= 0.5;
   }
 
   void incrementPeriod() {

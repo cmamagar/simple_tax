@@ -40,9 +40,30 @@ class SavingGoalCalc extends StatelessWidget {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                // Interest Rate Section
+                // Customer Name
+                Text("Initial Amount".tr,
+                    style:
+                        CustomTextStyles.f14W600(color: AppColors.borderColor)),
+                SizedBox(height: 7),
+                CustomTextField(
+                    hint: "initail_amount".tr,
+                    textInputAction: TextInputAction.done,
+                    textInputType: TextInputType.name),
+                SizedBox(height: 20),
+
+                // Product Name
+                Text("Monthly Contribution".tr,
+                    style:
+                        CustomTextStyles.f14W600(color: AppColors.borderColor)),
+                SizedBox(height: 7),
+                CustomTextField(
+                    hint: "Monthly".tr,
+                    textInputAction: TextInputAction.done,
+                    textInputType: TextInputType.name),
+                SizedBox(height: 20),
                 Text('Interest Rates, (%)',
-                    style: TextStyle(fontWeight: FontWeight.bold)),
+                    style:
+                        CustomTextStyles.f14W600(color: AppColors.borderColor)),
                 Row(
                   children: [
                     // Interest Rate Input Field
@@ -51,12 +72,10 @@ class SavingGoalCalc extends StatelessWidget {
                       child: Row(
                         children: [
                           Expanded(
-                            child: Obx(() => TextField(
-                                  keyboardType: TextInputType.number,
-                                  decoration: InputDecoration(
-                                    hintText: 'Rate(%)',
-                                    border: OutlineInputBorder(),
-                                  ),
+                            child: Obx(() => CustomTextField(
+                                  textInputType: TextInputType.number,
+                                  textInputAction: TextInputAction.done,
+                                  hint: "Rate %",
                                   onChanged: (value) {
                                     double? rate = double.tryParse(value);
                                     if (rate != null) {
@@ -72,10 +91,12 @@ class SavingGoalCalc extends StatelessWidget {
                           Column(
                             children: [
                               IconButton(
+                                color: AppColors.lGrey,
                                 icon: Icon(Icons.arrow_drop_up),
                                 onPressed: controller.incrementRate,
                               ),
                               IconButton(
+                                color: AppColors.lGrey,
                                 icon: Icon(Icons.arrow_drop_down),
                                 onPressed: controller.decrementRate,
                               ),
@@ -109,7 +130,9 @@ class SavingGoalCalc extends StatelessWidget {
                 ),
                 SizedBox(height: 20),
                 // Period Section
-                Text('Period:', style: TextStyle(fontWeight: FontWeight.bold)),
+                Text('Period:',
+                    style:
+                        CustomTextStyles.f14W600(color: AppColors.borderColor)),
                 Row(
                   children: [
                     // Period Input Field
@@ -118,12 +141,10 @@ class SavingGoalCalc extends StatelessWidget {
                       child: Row(
                         children: [
                           Expanded(
-                            child: Obx(() => TextField(
-                                  keyboardType: TextInputType.number,
-                                  decoration: InputDecoration(
-                                    hintText: 'Period',
-                                    border: OutlineInputBorder(),
-                                  ),
+                            child: Obx(() => CustomTextField(
+                                  textInputType: TextInputType.number,
+                                  textInputAction: TextInputAction.done,
+                                  hint: "Period",
                                   onChanged: (value) {
                                     int? period = int.tryParse(value);
                                     if (period != null) {
@@ -138,15 +159,17 @@ class SavingGoalCalc extends StatelessWidget {
                           Column(
                             children: [
                               IconButton(
+                                color: AppColors.lGrey,
                                 icon: Icon(Icons.arrow_drop_up),
                                 onPressed: controller.incrementPeriod,
                               ),
                               IconButton(
+                                color: AppColors.lGrey,
                                 icon: Icon(Icons.arrow_drop_down),
                                 onPressed: controller.decrementPeriod,
                               ),
                             ],
-                          ),
+                          )
                         ],
                       ),
                     ),
@@ -173,192 +196,18 @@ class SavingGoalCalc extends StatelessWidget {
                     ),
                   ],
                 ),
+                SizedBox(
+                  height: 20,
+                ),
+
+                SizedBox(height: 20),
+                CustomElevatedButton(
+                    title: "submit".tr,
+                    onTap: () {
+                      Get.to(() => ResultPage());
+                    })
               ],
             ),
-            // child: Column(
-            //   crossAxisAlignment: CrossAxisAlignment.start,
-            //   children: [
-            //     // Customer Name
-            //     Text("Initial Amount".tr,
-            //         style:
-            //             CustomTextStyles.f14W600(color: AppColors.borderColor)),
-            //     SizedBox(height: 7),
-            //     CustomTextField(
-            //         hint: "initail_amount".tr,
-            //         textInputAction: TextInputAction.done,
-            //         textInputType: TextInputType.name),
-            //     SizedBox(height: 20),
-
-            //     // Product Name
-            //     Text("Monthly Contribution".tr,
-            //         style:
-            //             CustomTextStyles.f14W600(color: AppColors.borderColor)),
-            //     SizedBox(height: 7),
-            //     CustomTextField(
-            //         hint: "Monthly".tr,
-            //         textInputAction: TextInputAction.done,
-            //         textInputType: TextInputType.name),
-            //     SizedBox(height: 20),
-
-            //     // Product Price
-            //     Text("Interest Rate %".tr,
-            //         style:
-            //             CustomTextStyles.f14W600(color: AppColors.borderColor)),
-            //     SizedBox(height: 7),
-            //     Container(
-            //       padding: EdgeInsets.symmetric(horizontal: 8.0),
-            //       decoration: BoxDecoration(
-            //         border: Border.all(
-            //             color: AppColors.borderColor), // Light grey border
-            //         borderRadius: BorderRadius.circular(5.0), // Rounded corners
-            //       ),
-            //       child: Row(
-            //         children: [
-            //           // Text field for "Rate (%)"
-            //           Expanded(
-            //             child: TextField(
-            //               decoration: InputDecoration(
-            //                 hintText: 'Rate %',
-            //                 hintStyle: CustomTextStyles.f12W400(
-            //                     color: AppColors.secondaryTextColor),
-            //                 border: InputBorder.none, // Removes default border
-            //               ),
-            //               keyboardType: TextInputType.number,
-            //             ),
-            //           ),
-            //           // Up/down arrow buttons
-            //           Column(
-            //             mainAxisAlignment: MainAxisAlignment
-            //                 .center, // Centers icons vertically
-            //             children: [
-            //               SizedBox(
-            //                 width: 14.78, // Set width
-            //                 height: 14.78, // Set height
-            //                 child: Icon(
-            //                   Icons.arrow_drop_up,
-            //                   color: Colors.grey,
-            //                   size: 25, // Icon size
-            //                 ),
-            //               ),
-            //               SizedBox(
-            //                 width: 14.78, // Set width
-            //                 height: 14.78, // Set height
-            //                 child: Icon(
-            //                   Icons.arrow_drop_down,
-            //                   color: Colors.grey,
-            //                   size: 25, // Icon size
-            //                 ),
-            //               ),
-            //             ],
-            //           ),
-            //           SizedBox(
-            //               width:
-            //                   8.0), // Space between icons and the next element
-
-            //           // Blue Container to mimic the "Annual" button
-            //           Container(
-            //             padding: EdgeInsets.symmetric(
-            //                 vertical: 16.0, horizontal: 50.0),
-            //             decoration: BoxDecoration(
-            //               color: Colors.blue, // Blue color for the container
-            //               borderRadius: BorderRadius.circular(5.0),
-            //             ),
-            //             child: Text(
-            //               'Annual',
-            //               style: CustomTextStyles.f12W400(
-            //                   color: Colors.white), // White text
-            //             ),
-            //           ),
-            //         ],
-            //       ),
-            //     ),
-            //     SizedBox(height: 20),
-            //     Text("Period",
-            //         style:
-            //             CustomTextStyles.f14W600(color: AppColors.borderColor)),
-            //     SizedBox(
-            //       height: 7,
-            //     ),
-            //     Container(
-            //       padding: EdgeInsets.symmetric(horizontal: 5.0),
-            //       decoration: BoxDecoration(
-            //         border: Border.all(
-            //             color: AppColors.borderColor), // Light grey border
-            //         borderRadius: BorderRadius.circular(8.0), // Rounded corners
-            //       ),
-            //       child: Row(
-            //         children: [
-            //           // Text field for "Rate (%)"
-            //           Expanded(
-            //             child: TextField(
-            //               decoration: InputDecoration(
-            //                 hintText: 'Period',
-            //                 hintStyle: CustomTextStyles.f12W400(
-            //                     color: AppColors.secondaryTextColor),
-            //                 border: InputBorder.none, // Removes default border
-            //               ),
-            //               keyboardType: TextInputType.number,
-            //             ),
-            //           ),
-            //           // Up/down arrow buttons
-            //           Column(
-            //             mainAxisAlignment: MainAxisAlignment
-            //                 .center, // Centers icons vertically
-            //             children: [
-            //               SizedBox(
-            //                 width: 14.78, // Set width
-            //                 height: 14.78, // Set height
-            //                 child: Icon(
-            //                   Icons.arrow_drop_up,
-            //                   color: Colors.grey,
-            //                   size: 25, // Icon size
-            //                 ),
-            //               ),
-            //               SizedBox(
-            //                 width: 14.78, // Set width
-            //                 height: 14.78, // Set height
-            //                 child: Icon(
-            //                   Icons.arrow_drop_down,
-            //                   color: Colors.grey,
-            //                   size: 25, // Icon size
-            //                 ),
-            //               ),
-            //             ],
-            //           ),
-            //           SizedBox(
-            //               width:
-            //                   8.0), // Space between icons and the next element
-
-            //           // Blue Container to mimic the "Annual" button
-            //           Container(
-            //             padding: EdgeInsets.symmetric(
-            //                 vertical: 15.0, horizontal: 50.0),
-            //             decoration: BoxDecoration(
-            //               color: Colors.blue, // Blue color for the container
-            //               borderRadius: BorderRadius.circular(5.0),
-            //             ),
-            //             child: Text(
-            //               'Years',
-            //               style: CustomTextStyles.f12W400(
-            //                   color: Colors.white), // White text
-            //             ),
-            //           ),
-            //         ],
-            //       ),
-            //     ),
-
-            //     SizedBox(
-            //       height: 20,
-            //     ),
-
-            //     SizedBox(height: 20),
-            //     CustomElevatedButton(
-            //         title: "submit".tr,
-            //         onTap: () {
-            //           Get.to(() => ResultPage());
-            //         })
-            //   ],
-            // ),
           ),
         ),
       ),
