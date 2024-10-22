@@ -7,6 +7,8 @@ class AppColors {
   static const Color backGroundColor = Color(0xFFF8F9FA);
   static const Color whiteColor = Color(0xFFFFFFFF);
   static const Color TextFormField = Color(0x7C7A7A);
+  static const Color shopping = Color(0xFFFBAB19);
+  static const Color food = Color(0xFFFBAB19);
 
   static const Color lGrey = Color(0xFF7D7D7D);
   static const Color lightGrey = Color(0xFFE5E5E5);

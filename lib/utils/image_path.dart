@@ -11,6 +11,9 @@ class ImagePath {
   static const String emi = "$baseImagePath/emi.png";
   static const String sort_up = "$baseImagePath/sort_up.png";
   static const String sort_down = "$baseImagePath/sort_down.png";
+  static const String shopping = "$baseImagePath/shopping.png";
+  static const String travel = "$baseImagePath/travel.png";
+  static const String food = "$baseImagePath/food.png";
 
   static const String textFieldIcon = "$baseIconPath/down_arrow.svg";
 }
