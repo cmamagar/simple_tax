@@ -42,6 +42,12 @@ dependencies:
   carousel_slider: ^5.0.0
   nepali_utils: ^3.0.6
   fl_chart: ^0.69.0
+  flutter_launcher_icons: ^0.14.1
+
+flutter_launcher_icons:
+  android: true
+  ios: true
+  image_path: "assets/icons/logo.jpeg"
 
 dev_dependencies:
   flutter_test:
@@ -69,6 +75,7 @@ flutter:
   assets:
     - assets/images/
     - assets/icons/
+    - assets/icons/logo.jpeg
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware

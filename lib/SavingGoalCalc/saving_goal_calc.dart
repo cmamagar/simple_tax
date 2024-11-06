@@ -9,7 +9,8 @@ import 'package:simple_tax/widgets/custom/elevated_button.dart';
 
 class SavingGoalCalc extends StatelessWidget {
   SavingGoalCalc({super.key});
-  final controller = Get.put(SavingScreenController());
+  final SavingScreenController controller = Get.put(SavingScreenController());
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -40,27 +41,33 @@ class SavingGoalCalc extends StatelessWidget {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                // Customer Name
+                // Initial Amount
                 Text("Initial Amount".tr,
                     style:
                         CustomTextStyles.f14W600(color: AppColors.borderColor)),
                 SizedBox(height: 7),
                 CustomTextField(
-                    hint: "initail_amount".tr,
-                    textInputAction: TextInputAction.done,
-                    textInputType: TextInputType.name),
+                  hint: "initial_amount".tr,
+                  textInputAction: TextInputAction.done,
+                  textInputType: TextInputType.number,
+                  onChanged: (value) => controller.interestRate.value = value,
+                ),
                 SizedBox(height: 20),
 
-                // Product Name
+                // Monthly Contribution
                 Text("Monthly Contribution".tr,
                     style:
                         CustomTextStyles.f14W600(color: AppColors.borderColor)),
                 SizedBox(height: 7),
                 CustomTextField(
-                    hint: "Monthly".tr,
-                    textInputAction: TextInputAction.done,
-                    textInputType: TextInputType.name),
+                  hint: "Monthly".tr,
+                  textInputAction: TextInputAction.done,
+                  textInputType: TextInputType.number,
+                  onChanged: (value) => controller.period.value = value,
+                ),
                 SizedBox(height: 20),
+
+                // Interest Rates
                 Text('Interest Rates, (%)',
                     style:
                         CustomTextStyles.f14W600(color: AppColors.borderColor)),
@@ -72,21 +79,17 @@ class SavingGoalCalc extends StatelessWidget {
                       child: Row(
                         children: [
                           Expanded(
-                            child: Obx(() => CustomTextField(
-                                  textInputType: TextInputType.number,
-                                  textInputAction: TextInputAction.done,
-                                  hint: "Rate %",
-                                  onChanged: (value) {
-                                    double? rate = double.tryParse(value);
-                                    if (rate != null) {
-                                      controller.interestRate.value = rate;
-                                    }
-                                  },
-                                  controller: TextEditingController(
-                                    text: controller.interestRate.value
-                                        .toString(),
-                                  ),
-                                )),
+                            child: CustomTextField(
+                              textInputType: TextInputType.number,
+                              textInputAction: TextInputAction.done,
+                              hint: "Rate %",
+                              onChanged: (value) {
+                                controller.updateInterestRate(value);
+                              },
+                              controller: TextEditingController(
+                                text: controller.interestRate.value,
+                              ),
+                            ),
                           ),
                           Column(
                             children: [
@@ -106,29 +109,31 @@ class SavingGoalCalc extends StatelessWidget {
                       ),
                     ),
                     SizedBox(width: 10),
+
                     // Interest Type Dropdown
                     Expanded(
                       flex: 1,
-                      child: Obx(() => DropdownButton<String>(
-                            value: controller.interestType.value,
-                            isExpanded: true,
-                            onChanged: (String? newValue) {
-                              if (newValue != null) {
-                                controller.interestType.value = newValue;
-                              }
-                            },
-                            items: controller.interestTypes
-                                .map<DropdownMenuItem<String>>((String value) {
-                              return DropdownMenuItem<String>(
-                                value: value,
-                                child: Text(value),
-                              );
-                            }).toList(),
-                          )),
+                      child: DropdownButton<String>(
+                        value: controller.interestType.value,
+                        isExpanded: true,
+                        onChanged: (String? newValue) {
+                          if (newValue != null) {
+                            controller.interestType.value = newValue;
+                          }
+                        },
+                        items: controller.interestTypes
+                            .map<DropdownMenuItem<String>>((String value) {
+                          return DropdownMenuItem<String>(
+                            value: value,
+                            child: Text(value),
+                          );
+                        }).toList(),
+                      ),
                     ),
                   ],
                 ),
                 SizedBox(height: 20),
+
                 // Period Section
                 Text('Period:',
                     style:
@@ -146,13 +151,10 @@ class SavingGoalCalc extends StatelessWidget {
                                   textInputAction: TextInputAction.done,
                                   hint: "Period",
                                   onChanged: (value) {
-                                    int? period = int.tryParse(value);
-                                    if (period != null) {
-                                      controller.period.value = period;
-                                    }
+                                    controller.updatePeriod(value);
                                   },
                                   controller: TextEditingController(
-                                    text: controller.period.value.toString(),
+                                    text: controller.period.value,
                                   ),
                                 )),
                           ),
@@ -169,11 +171,12 @@ class SavingGoalCalc extends StatelessWidget {
                                 onPressed: controller.decrementPeriod,
                               ),
                             ],
-                          )
+                          ),
                         ],
                       ),
                     ),
                     SizedBox(width: 10),
+
                     // Period Type Dropdown
                     Expanded(
                       flex: 1,
@@ -196,16 +199,14 @@ class SavingGoalCalc extends StatelessWidget {
                     ),
                   ],
                 ),
-                SizedBox(
-                  height: 20,
-                ),
-
                 SizedBox(height: 20),
+
                 CustomElevatedButton(
-                    title: "submit".tr,
-                    onTap: () {
-                      Get.to(() => ResultPage());
-                    })
+                  title: "submit".tr,
+                  onTap: () {
+                    Get.to(() => ResultPage());
+                  },
+                ),
               ],
             ),
           ),
