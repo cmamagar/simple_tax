@@ -9,6 +9,8 @@ class ImagePath {
   static const String Billing = "$baseImagePath/billing.png";
   static const String pp = "$baseImagePath/pp.webp";
   static const String emi = "$baseImagePath/emi.png";
+  static const String saving_goal_calc = "$baseImagePath/savingGoalCalc.png";
+  static const String expensesDetails = "$baseImagePath/expensesDetails.png";
   static const String sort_up = "$baseImagePath/sort_up.png";
   static const String sort_down = "$baseImagePath/sort_down.png";
   static const String shopping = "$baseImagePath/shopping.png";

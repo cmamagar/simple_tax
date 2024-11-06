@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:simple_tax/ExpensesDetails/expensesDetails.dart';
-import 'package:simple_tax/SavingGoalCalc/saving_goal_calc.dart';
 import 'package:simple_tax/l10n/app_translations.dart';
 import 'package:simple_tax/utils/theme.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
@@ -27,8 +25,6 @@ class MyApp extends StatelessWidget {
       ],
       debugShowCheckedModeBanner: false,
       home: SplashScreen(),
-      // home: SavingGoalCalc(),
-      // home: ExpensesDetails(),
     );
   }
 }

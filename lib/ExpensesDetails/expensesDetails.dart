@@ -19,7 +19,7 @@ class ExpensesDetails extends StatelessWidget {
       appBar: AppBar(
         backgroundColor: AppColors.primaryColor,
         title: Text(
-          "Expenses Details".tr,
+          "Expenses Details Calculator".tr,
           style: CustomTextStyles.f18W600(color: AppColors.whiteColor),
         ),
         leading: InkWell(
@@ -115,8 +115,8 @@ class ExpensesDetails extends StatelessWidget {
             value: 34.4,
             title: '',
             radius: radius,
-            badgeWidget:
-                donutPieChart(iconData: Icons.star, title: '34.4%', color: Colors.white),
+            badgeWidget: donutPieChart(
+                iconData: Icons.star, title: '34.4%', color: Colors.white),
             badgePositionPercentageOffset: 0.50, // Adjust the position
           );
         case 1:
@@ -125,8 +125,8 @@ class ExpensesDetails extends StatelessWidget {
             value: 14.6,
             title: '',
             radius: radius,
-            badgeWidget:
-                donutPieChart(iconData: Icons.thumb_up, title: '14.6%', color: Colors.white),
+            badgeWidget: donutPieChart(
+                iconData: Icons.thumb_up, title: '14.6%', color: Colors.white),
             badgePositionPercentageOffset: 0.50,
           );
         case 2:
@@ -135,8 +135,8 @@ class ExpensesDetails extends StatelessWidget {
             value: 51,
             title: '',
             radius: radius,
-            badgeWidget:
-                donutPieChart(iconData: Icons.pie_chart, title: '51%', color: Colors.white),
+            badgeWidget: donutPieChart(
+                iconData: Icons.pie_chart, title: '51%', color: Colors.white),
             badgePositionPercentageOffset: 0.50,
           );
         default:
@@ -145,5 +145,3 @@ class ExpensesDetails extends StatelessWidget {
     });
   }
 }
-
-

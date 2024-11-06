@@ -18,7 +18,7 @@ class SavingGoalCalc extends StatelessWidget {
       appBar: AppBar(
         backgroundColor: AppColors.primaryColor,
         title: Text(
-          "Saving Goal Calc".tr,
+          "Saving Goal Calculator".tr,
           style: CustomTextStyles.f24W600(color: AppColors.whiteColor),
         ),
         leading: InkWell(
@@ -68,7 +68,7 @@ class SavingGoalCalc extends StatelessWidget {
                 SizedBox(height: 20),
 
                 // Interest Rates
-                Text('Interest Rates, (%)',
+                Text('Interest Rates (%)',
                     style:
                         CustomTextStyles.f14W600(color: AppColors.borderColor)),
                 Row(

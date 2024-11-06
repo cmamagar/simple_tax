@@ -2,7 +2,9 @@ import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:simple_tax/EMICalculator/emiCalc.dart';
+import 'package:simple_tax/ExpensesDetails/expensesDetails.dart';
 import 'package:simple_tax/ProductBilling/prodBillTaxCalc%20.dart';
+import 'package:simple_tax/SavingGoalCalc/saving_goal_calc.dart';
 import 'package:simple_tax/controller/home_screen_controller.dart';
 import 'package:simple_tax/incomeTaxCalculator/incomeTaxCalc.dart';
 import 'package:simple_tax/interestCalculator/interestCalc.dart';
@@ -164,6 +166,39 @@ class HomeScreen extends StatelessWidget {
                           imagePath: ImagePath.emi,
                           containerName: "EMI".tr,
                           text2: 'Calculator'.tr,
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+              Padding(
+                padding: const EdgeInsets.only(left: 18, right: 18, bottom: 14),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Expanded(
+                      child: InkWell(
+                        onTap: () {
+                          Get.to(() => SavingGoalCalc());
+                        },
+                        child: CustomContainer(
+                          imagePath: ImagePath.saving_goal_calc,
+                          containerName: "Saving Goal".tr,
+                          text2: 'Calculator'.tr,
+                        ),
+                      ),
+                    ),
+                    SizedBox(width: 12),
+                    Expanded(
+                      child: InkWell(
+                        onTap: () {
+                          Get.to(() => ExpensesDetails());
+                        },
+                        child: CustomContainer(
+                          imagePath: ImagePath.expensesDetails,
+                          containerName: "Expenses Details".tr,
+                          text2: 'Calc'.tr,
                         ),
                       ),
                     ),
