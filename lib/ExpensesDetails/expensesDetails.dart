@@ -1,16 +1,26 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:simple_tax/ExpensesDetails/incomeDetails.dart';
 import 'package:simple_tax/controller/expenses_screen_controller.dart';
 import 'package:simple_tax/utils/colors.dart';
 import 'package:simple_tax/utils/custom_text_styles.dart';
 import 'package:fl_chart/fl_chart.dart';
-import 'package:simple_tax/widgets/custom/expenses_screen_widget.dart'; // Import the PieChart package
+import 'package:simple_tax/utils/image_path.dart';
+import 'package:simple_tax/widgets/custom/expenses_screen_widget.dart';
+import 'package:simple_tax/widgets/expenses_widget.dart';
 
-class ExpensesDetails extends StatelessWidget {
+class ExpensesDetails extends StatefulWidget {
   ExpensesDetails({super.key});
 
+  @override
+  _ExpensesDetailsState createState() => _ExpensesDetailsState();
+}
+
+class _ExpensesDetailsState extends State<ExpensesDetails> {
   final ExpensesScreenController controller =
       Get.put(ExpensesScreenController());
+
+  bool isExpensesSelected = true; // Track selected button
 
   @override
   Widget build(BuildContext context) {
@@ -31,74 +41,161 @@ class ExpensesDetails extends StatelessWidget {
         height: MediaQuery.of(context).size.height * 1.5,
         margin: EdgeInsets.only(top: 20),
         decoration: BoxDecoration(
-            color: AppColors.whiteColor,
-            borderRadius: BorderRadius.only(topLeft: Radius.circular(15))),
+          color: AppColors.whiteColor,
+          borderRadius: BorderRadius.only(topLeft: Radius.circular(15)),
+        ),
         child: Padding(
           padding: EdgeInsets.all(20),
           child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Container(
-                height: 47,
-                width: 250,
-                decoration: BoxDecoration(
-                  border:
-                      Border.all(color: AppColors.secondaryTextColor, width: 1),
-                  borderRadius: BorderRadius.circular(20),
-                ),
-                child: Row(
-                  children: [
-                    Padding(
-                      padding: const EdgeInsets.only(left: 10),
-                      child: TextButton(
-                        style: ButtonStyle(
-                          backgroundColor:
-                              MaterialStateProperty.all(AppColors.primaryColor),
-                        ),
-                        onPressed: () {},
-                        child: Row(
-                          // Use Row to place icon and text together
-                          children: [
-                            Icon(
-                              Icons.shopping_cart,
-                              color: AppColors.whiteColor, // Set icon color
+              Center(
+                child: Container(
+                  height: 47,
+                  width: 270,
+                  decoration: BoxDecoration(
+                    border: Border.all(
+                        color: AppColors.secondaryTextColor, width: 1),
+                    borderRadius: BorderRadius.circular(20),
+                  ),
+                  child: Row(
+                    children: [
+                      Expanded(
+                        child: TextButton(
+                          style: ButtonStyle(
+                            backgroundColor: MaterialStateProperty.all(
+                              isExpensesSelected
+                                  ? AppColors.primaryColor
+                                  : Colors.transparent,
                             ),
-                            const SizedBox(
-                                width: 4), // Add spacing between icon and text
-                            Text(
-                              "Expenses",
-                              style: CustomTextStyles.f16W600(
-                                  color: AppColors.whiteColor),
-                            ),
-                          ],
+                          ),
+                          onPressed: () {
+                            setState(() {
+                              isExpensesSelected = true;
+                            });
+                          },
+                          child: Row(
+                            children: [
+                              if (isExpensesSelected)
+                                Icon(
+                                  Icons.shopping_cart,
+                                  color: AppColors.whiteColor,
+                                ),
+                              const SizedBox(width: 4),
+                              Text(
+                                "Expenses",
+                                style: CustomTextStyles.f16W600(
+                                  color: isExpensesSelected
+                                      ? AppColors.whiteColor
+                                      : AppColors.textColor,
+                                ),
+                              ),
+                            ],
+                          ),
                         ),
                       ),
-                    ),
-                    TextButton(
-                      onPressed: () {},
-                      child: Text(
-                        "Income",
-                        style: CustomTextStyles.f16W600(
-                            color: AppColors.textColor),
+                      // Income Button
+                      Expanded(
+                        child: TextButton(
+                          style: ButtonStyle(
+                            backgroundColor: MaterialStateProperty.all(
+                              !isExpensesSelected
+                                  ? AppColors.primaryColor
+                                  : Colors.transparent,
+                            ),
+                          ),
+                          onPressed: () {
+                            setState(() {
+                              isExpensesSelected = false;
+                            });
+                            Get.to(() => Incomedetails());
+                          },
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              if (!isExpensesSelected)
+                                Image.asset(
+                                  ImagePath.income,
+                                  color: AppColors.whiteColor,
+                                  height: 20,
+                                  width: 20,
+                                ),
+                              const SizedBox(width: 4),
+                              Text(
+                                "Income",
+                                style: CustomTextStyles.f16W600(
+                                  color: !isExpensesSelected
+                                      ? AppColors.whiteColor
+                                      : AppColors.textColor,
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
                       ),
-                    ),
-                  ],
+                    ],
+                  ),
                 ),
               ),
               SizedBox(height: 35),
+              // Pie Chart Section
               Center(
                 child: AspectRatio(
                   aspectRatio: 1.3,
                   child: PieChart(
                     PieChartData(
-                        centerSpaceRadius: 95,
-                        sectionsSpace: 2,
-                        borderData: FlBorderData(show: false),
-                        sections: _showingSections()),
+                      centerSpaceRadius: 95,
+                      sectionsSpace: 2,
+                      borderData: FlBorderData(show: false),
+                      sections: _showingSections(),
+                    ),
                   ),
                 ),
               ),
+              SizedBox(height: 20),
+              Text(
+                "Expenses",
+                style: CustomTextStyles.f24W600(color: AppColors.textColor),
+              ),
+              SizedBox(
+                height: 20,
+              ),
+              ExpensesWidget(
+                icon: Icons.shopping_bag,
+                name: "Shopping",
+                amount: "51",
+                colors: Colors.amber,
+              ),
+              SizedBox(
+                height: 20,
+              ),
+              ExpensesWidget(
+                icon: Icons.travel_explore,
+                name: "Travel",
+                amount: "51",
+                colors: Colors.blue,
+              ),
+              SizedBox(
+                height: 20,
+              ),
+              ExpensesWidget(
+                  icon: Icons.food_bank,
+                  name: "Food",
+                  amount: "51",
+                  colors: Colors.red)
             ],
           ),
+        ),
+      ),
+      floatingActionButton: Container(
+        height: 55,
+        width: 55,
+        decoration: BoxDecoration(
+            color: AppColors.primaryColor,
+            borderRadius: BorderRadius.circular(100)),
+        child: Icon(
+          Icons.add,
+          color: AppColors.whiteColor,
         ),
       ),
     );

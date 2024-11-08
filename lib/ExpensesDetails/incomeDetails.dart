@@ -25,8 +25,8 @@ class Incomedetails extends StatelessWidget {
         ),
       ),
       body: Container(
-        margin: EdgeInsets.all(20),
-        height: MediaQuery.of(context).size.height * 1.3,
+        margin: EdgeInsets.only(top: 20),
+        height: MediaQuery.of(context).size.height * 1.5,
         decoration: BoxDecoration(
             color: AppColors.whiteColor,
             borderRadius: BorderRadius.only(topLeft: Radius.circular(15))),
