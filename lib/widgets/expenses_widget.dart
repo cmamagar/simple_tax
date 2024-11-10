@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:simple_tax/utils/colors.dart';
+import 'package:simple_tax/utils/custom_text_styles.dart';
 
 class ExpensesWidget extends StatelessWidget {
   const ExpensesWidget({
@@ -24,6 +26,8 @@ class ExpensesWidget extends StatelessWidget {
       child: Row(
         children: [
           Container(
+            height: 44,
+            width: 44,
             padding: EdgeInsets.all(8),
             decoration: BoxDecoration(
               color: colors,
@@ -42,17 +46,13 @@ class ExpensesWidget extends StatelessWidget {
               children: [
                 Text(
                   name,
-                  style: TextStyle(
-                    fontSize: 16,
-                    fontWeight: FontWeight.bold,
-                    color: Colors.grey.shade800,
+                  style: CustomTextStyles.f14W600(
+                    color: AppColors.textColor,
                   ),
                 ),
                 Text(
                   "- Rs. ${amount}",
-                  style: TextStyle(
-                    fontSize: 16,
-                    fontWeight: FontWeight.bold,
+                  style: CustomTextStyles.f14W600(
                     color: Colors.red,
                   ),
                 ),

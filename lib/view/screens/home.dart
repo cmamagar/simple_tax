@@ -2,7 +2,7 @@ import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:simple_tax/EMICalculator/emiCalc.dart';
-import 'package:simple_tax/ExpensesDetails/expensesDetails.dart';
+import 'package:simple_tax/ExpensesDetails/expenses_details.dart';
 import 'package:simple_tax/ProductBilling/prodBillTaxCalc%20.dart';
 import 'package:simple_tax/SavingGoalCalc/saving_goal_calc.dart';
 import 'package:simple_tax/controller/home_screen_controller.dart';
@@ -22,8 +22,8 @@ class HomeScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: AppColors.whiteColor,
-      body: SingleChildScrollView(
-        child: SafeArea(
+      body: SafeArea(
+        child: SingleChildScrollView(
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
@@ -193,7 +193,7 @@ class HomeScreen extends StatelessWidget {
                     Expanded(
                       child: InkWell(
                         onTap: () {
-                          Get.to(() => ExpensesDetails());
+                          Get.to(() => ExpensesDetailsScreen());
                         },
                         child: CustomContainer(
                           imagePath: ImagePath.expensesDetails,
