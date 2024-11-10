@@ -5,11 +5,11 @@ import 'package:simple_tax/utils/colors.dart';
 import 'package:simple_tax/widgets/custom/expenses_screen_widget.dart';
 
 class ExpensesScreenController extends GetxController {
+  
   var selectedIndex = 0.obs;
-  void changeTab(int index){
+  void changeTab(int index) {
     selectedIndex.value = index;
   }
-
 
   List<PieChartSectionData> showingSections() {
     return List.generate(3, (i) {

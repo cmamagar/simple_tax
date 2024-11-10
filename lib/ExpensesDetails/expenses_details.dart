@@ -1,6 +1,8 @@
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:simple_tax/ExpensesDetails/expenses_category_setting.dart';
+import 'package:simple_tax/ExpensesDetails/income_category_setting.dart';
 import 'package:simple_tax/controller/expenses_screen_controller.dart';
 import 'package:simple_tax/utils/colors.dart';
 import 'package:simple_tax/utils/custom_text_styles.dart';
@@ -118,9 +120,9 @@ class ExpensesDetailsScreen extends StatelessWidget {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Container(
-                            margin: EdgeInsets.all(20),
+                            margin: EdgeInsets.only(top: 20, bottom: 20),
                             height: 204,
-                            width: 353,
+                            width: double.infinity,
                             decoration: BoxDecoration(
                               color: AppColors.primaryColor,
                               borderRadius: BorderRadius.circular(25),
@@ -134,18 +136,18 @@ class ExpensesDetailsScreen extends StatelessWidget {
                                     style: CustomTextStyles.f18W600(
                                         color: AppColors.whiteColor),
                                   ),
-                                  SizedBox(
-                                      height:
-                                          10), // Adds space between the texts
+                                  SizedBox(height: 10),
                                   Text(
                                     "Rs 6,890,000",
                                     style: CustomTextStyles.f24W600(
                                         color: AppColors.whiteColor),
                                   ),
                                   SizedBox(
-                                    height: 50,
+                                    height: 42,
                                   ),
                                   Row(
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceBetween,
                                     children: [
                                       Row(
                                         crossAxisAlignment:
@@ -158,16 +160,12 @@ class ExpensesDetailsScreen extends StatelessWidget {
                                                 color: AppColors.whiteColor,
                                                 shape: BoxShape.circle),
                                             child: Icon(
-                                              Icons
-                                                  .arrow_downward, // Use an icon that fits the context, e.g., money_off for expenses
+                                              Icons.arrow_downward,
                                               color: AppColors.lGrey,
                                               size: 24,
                                             ),
                                           ),
-
-                                          SizedBox(
-                                              width:
-                                                  8), // Space between the icon and text
+                                          SizedBox(width: 12),
                                           Column(
                                             crossAxisAlignment:
                                                 CrossAxisAlignment.start,
@@ -188,33 +186,24 @@ class ExpensesDetailsScreen extends StatelessWidget {
                                           ),
                                         ],
                                       ),
-                                      SizedBox(
-                                        width: 20,
-                                      ),
                                       Row(
                                         crossAxisAlignment:
                                             CrossAxisAlignment.start,
                                         children: [
                                           Container(
-                                            height:
-                                                35, // Size of the circular background
+                                            height: 35,
                                             width: 35,
                                             decoration: BoxDecoration(
-                                              color: AppColors
-                                                  .whiteColor, // Background color
+                                              color: AppColors.whiteColor,
                                               shape: BoxShape.circle,
                                             ),
                                             child: Icon(
-                                              Icons
-                                                  .arrow_upward, // Use an appropriate icon for income
-                                              color:
-                                                  AppColors.lGrey, // Icon color
-                                              size: 24, // Icon size
+                                              Icons.arrow_upward,
+                                              color: AppColors.lGrey,
+                                              size: 24,
                                             ),
                                           ),
-                                          SizedBox(
-                                              width:
-                                                  8), // Space between the icon and text
+                                          SizedBox(width: 12),
                                           Column(
                                             crossAxisAlignment:
                                                 CrossAxisAlignment.start,
@@ -247,7 +236,7 @@ class ExpensesDetailsScreen extends StatelessWidget {
                                 color: AppColors.textColor),
                           ),
                           SizedBox(
-                            height: 20,
+                            height: 12,
                           ),
                           ExpensesWidget(
                               icon: Icons.shopping_bag,
@@ -285,11 +274,23 @@ class ExpensesDetailsScreen extends StatelessWidget {
         height: 55,
         width: 55,
         decoration: BoxDecoration(
-            color: AppColors.primaryColor,
-            borderRadius: BorderRadius.circular(100)),
-        child: Icon(
-          Icons.add,
-          color: AppColors.whiteColor,
+          color: AppColors.primaryColor,
+          borderRadius: BorderRadius.circular(100),
+        ),
+        child: InkWell(
+          onTap: () {
+            if (controller.selectedIndex.value == 0) {
+              Get.to(() => ExpensesCategorySetting());
+            } else {
+              Get.to(() => IncomeCategorySetting());
+            }
+          },
+          child: Center(
+            child: Icon(
+              Icons.add,
+              color: AppColors.whiteColor,
+            ),
+          ),
         ),
       ),
     );
