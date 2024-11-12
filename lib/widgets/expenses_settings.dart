@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:simple_tax/utils/colors.dart';
 import 'package:simple_tax/utils/custom_text_styles.dart';
 
 class ExpensesSettings extends StatelessWidget {
@@ -8,42 +7,49 @@ class ExpensesSettings extends StatelessWidget {
     required this.icon,
     required this.name,
     required this.colors,
+    this.onTap, 
   });
-  final IconData icon;
+
+  final String icon;
   final Color colors;
   final String name;
+  final VoidCallback? onTap; 
+
   @override
   Widget build(BuildContext context) {
-    return Container(
-      padding: EdgeInsets.symmetric(horizontal: 14, vertical: 10),
-      decoration: BoxDecoration(
-        color: Colors.white,
-        borderRadius: BorderRadius.circular(21),
-      ),
-      child: Column(
-        children: [
-          Container(
-            height: 44,
-            width: 44,
-            padding: EdgeInsets.all(8),
-            decoration: BoxDecoration(
-              color: colors,
-              borderRadius: BorderRadius.circular(100),
+    return InkWell(
+      onTap: onTap,
+      child: Container(
+        padding: EdgeInsets.symmetric(horizontal: 22, vertical: 10),
+        decoration: BoxDecoration(
+          color: Colors.white,
+          borderRadius: BorderRadius.circular(21),
+        ),
+        child: Column(
+          children: [
+            Container(
+              height: 44,
+              width: 44,
+              padding: EdgeInsets.all(8),
+              decoration: BoxDecoration(
+                color: colors,
+                borderRadius: BorderRadius.circular(100),
+              ),
+              child: Image.asset(
+                icon,
+                color: Colors.white,
+                width: 24,
+                height: 24,
+                fit: BoxFit.contain,
+              ),
             ),
-            child: Icon(
-              icon,
-              color: Colors.white,
-              size: 24,
+            SizedBox(height: 5),
+            Text(
+              name,
+              style: CustomTextStyles.f12W600(),
             ),
-          ),
-          SizedBox(height: 05),
-          Text(
-            name,
-            style: CustomTextStyles.f12W600(
-              color: AppColors.textColor,
-            ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }

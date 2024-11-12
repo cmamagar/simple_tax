@@ -1,14 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:simple_tax/ExpensesDetails/expenses_added_category.dart';
+import 'package:simple_tax/ExpensesDetails/expenses_category_setting.dart';
+import 'package:simple_tax/ExpensesDetails/expenses_details.dart';
 import 'package:simple_tax/controller/expenses_screen_controller.dart';
 import 'package:simple_tax/utils/colors.dart';
 import 'package:simple_tax/utils/custom_text_styles.dart';
 import 'package:simple_tax/utils/image_path.dart';
+import 'package:simple_tax/widgets/added_category.dart';
+import 'package:simple_tax/widgets/custom/elevated_button.dart';
 import 'package:simple_tax/widgets/expenses_settings.dart';
 
-class ExpensesCategorySetting extends StatelessWidget {
-  ExpensesCategorySetting({super.key});
+class ExpensesAddedCategory extends StatelessWidget {
+  ExpensesAddedCategory({super.key});
   final controller = Get.put(ExpensesScreenController());
 
   @override
@@ -18,7 +21,7 @@ class ExpensesCategorySetting extends StatelessWidget {
       appBar: AppBar(
         backgroundColor: AppColors.primaryColor,
         title: Text(
-          "Category Settings",
+          "Added Category",
           style: CustomTextStyles.f24W600(color: AppColors.whiteColor),
         ),
         leading: InkWell(
@@ -30,7 +33,6 @@ class ExpensesCategorySetting extends StatelessWidget {
         ),
       ),
       body: Container(
-        height: MediaQuery.of(context).size.height * 1.3,
         width: double.infinity,
         margin: EdgeInsets.only(top: 15),
         padding: EdgeInsets.only(top: 20),
@@ -65,75 +67,35 @@ class ExpensesCategorySetting extends StatelessWidget {
                   case 0:
                     return SingleChildScrollView(
                       child: Wrap(
+                        spacing: 10,
                         runSpacing: 10,
                         children: [
-                          ExpensesSettings(
+                          AddedCategory(
                             icon: ImagePath.shopping,
                             name: "Shopping",
                             colors: Colors.amber,
                           ),
-                          ExpensesSettings(
+                          Divider(
+                            color: AppColors.secondaryTextColor,
+                            thickness: 1,
+                          ),
+                          AddedCategory(
                             icon: ImagePath.food,
-                            name: "Food",
+                            name: "Groceries",
                             colors: Colors.red,
                           ),
-                          ExpensesSettings(
-                            icon: ImagePath.travel,
-                            name: "Travel",
-                            colors: AppColors.primaryColor,
+                          Divider(
+                            color: AppColors.secondaryTextColor,
+                            thickness: 1,
                           ),
-                          ExpensesSettings(
+                          AddedCategory(
                             icon: ImagePath.education,
                             name: "Education",
-                            colors: Color.fromARGB(255, 102, 227, 106),
+                            colors: Colors.green,
                           ),
-                          ExpensesSettings(
-                            icon: ImagePath.car,
-                            name: "Car",
-                            colors: Color.fromARGB(255, 110, 210, 165),
-                          ),
-                          ExpensesSettings(
-                            icon: ImagePath.beauty,
-                            name: "Beauty",
-                            colors: Color.fromARGB(255, 250, 189, 210),
-                          ),
-                          ExpensesSettings(
-                            icon: ImagePath.donate,
-                            name: "Donate",
-                            colors: Color.fromARGB(255, 235, 72, 63),
-                          ),
-                          ExpensesSettings(
-                            icon: ImagePath.social,
-                            name: "Social",
-                            colors: Color.fromARGB(255, 143, 130, 234),
-                          ),
-                          ExpensesSettings(
-                            icon: ImagePath.liquar,
-                            name: "Liquor",
-                            colors: Color.fromARGB(255, 243, 161, 210),
-                          ),
-                          ExpensesSettings(
-                            icon: ImagePath.child,
-                            name: "Child",
-                            colors: const Color.fromARGB(255, 163, 205, 239),
-                          ),
-                          ExpensesSettings(
-                            icon: ImagePath.health,
-                            name: "Health",
-                            colors: Color.fromARGB(255, 244, 110, 100),
-                          ),
-                          ExpensesSettings(
-                            icon: ImagePath.repair,
-                            name: "Repair",
-                            colors: const Color.fromARGB(255, 234, 170, 147),
-                          ),
-                          ExpensesSettings(
-                            icon: ImagePath.add,
-                            name: "Add More",
-                            colors: Color.fromARGB(255, 42, 57, 61),
-                            onTap: () {
-                              Get.to(() => ExpensesAddedCategory());
-                            },
+                          Divider(
+                            color: AppColors.secondaryTextColor,
+                            thickness: 1,
                           ),
                         ],
                       ),
@@ -174,7 +136,18 @@ class ExpensesCategorySetting extends StatelessWidget {
                     return Container();
                 }
               }),
-            )
+            ),
+            Padding(
+              padding: EdgeInsets.symmetric(vertical: 50, horizontal: 50),
+              child: CustomElevatedButton(
+                icon: ImagePath.add,
+                height: 54,
+                title: "Add Category",
+                onTap: () {
+                  Get.to(() => ExpensesCategorySetting());
+                },
+              ),
+            ),
           ],
         ),
       ),

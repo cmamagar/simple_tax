@@ -2,7 +2,6 @@ import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:simple_tax/ExpensesDetails/expenses_category_setting.dart';
-import 'package:simple_tax/ExpensesDetails/income_category_setting.dart';
 import 'package:simple_tax/controller/expenses_screen_controller.dart';
 import 'package:simple_tax/utils/colors.dart';
 import 'package:simple_tax/utils/custom_text_styles.dart';
@@ -270,29 +269,35 @@ class ExpensesDetailsScreen extends StatelessWidget {
           ),
         ),
       ),
-      floatingActionButton: Container(
-        height: 55,
-        width: 55,
-        decoration: BoxDecoration(
-          color: AppColors.primaryColor,
-          borderRadius: BorderRadius.circular(100),
-        ),
-        child: InkWell(
-          onTap: () {
-            if (controller.selectedIndex.value == 0) {
-              Get.to(() => ExpensesCategorySetting());
-            } else {
-              Get.to(() => IncomeCategorySetting());
-            }
-          },
-          child: Center(
-            child: Icon(
-              Icons.add,
-              color: AppColors.whiteColor,
+      floatingActionButton: Obx(() {
+        // Only show the button if the selected tab is 'Expense' (index 0)
+        if (controller.selectedIndex.value == 0) {
+          return Container(
+            height: 55,
+            width: 55,
+            decoration: BoxDecoration(
+              color: AppColors.primaryColor,
+              borderRadius: BorderRadius.circular(100),
             ),
-          ),
-        ),
-      ),
+            child: InkWell(
+              onTap: () {
+                if (controller.selectedIndex.value == 0) {
+                  Get.to(() => ExpensesCategorySetting());
+                }
+              },
+              child: Center(
+                child: Icon(
+                  Icons.add,
+                  color: AppColors.whiteColor,
+                ),
+              ),
+            ),
+          );
+        } else {
+          return SizedBox
+              .shrink(); // Return an empty widget if the tab is 'Income'
+        }
+      }),
     );
   }
 
@@ -327,15 +332,11 @@ class ExpensesDetailsScreen extends StatelessWidget {
                 ),
               SizedBox(width: 10), // Spacing between icon and text
               Text(
-                title,
-                style: TextStyle(
-                  fontSize: 14,
-                  fontFamily: "Poppins",
-                  color: controller.selectedIndex.value == index
-                      ? AppColors.whiteColor
-                      : AppColors.textColor,
-                  fontWeight: FontWeight.w400,
-                ),
+                title.tr,
+                style: CustomTextStyles.f14W400(
+                    color: controller.selectedIndex.value == index
+                        ? AppColors.whiteColor
+                        : AppColors.textColor),
               ),
             ],
           ),
